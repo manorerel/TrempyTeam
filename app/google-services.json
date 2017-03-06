@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "349700175088",
+    "firebase_url": "https://trempyteam.firebaseio.com",
+    "project_id": "trempyteam",
+    "storage_bucket": "trempyteam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349700175088:android:7eacac2a72f1d2f1",
+        "android_client_info": {
+          "package_name": "com.example.hadar.trempyteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349700175088-bkcfu3pmoog0uutsopksvm0d2rn98mpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hadar.trempyteam",
+            "certificate_hash": "75f6a30b7eca5321bec0654c30ad3f27e96956a8"
+          }
+        },
+        {
+          "client_id": "349700175088-87lvapvr6v00f8hq2u4hl8cett2rsh42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuz_F4jRWKt5i2KLHXBP2rnFzkRBhGEOo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349700175088-87lvapvr6v00f8hq2u4hl8cett2rsh42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

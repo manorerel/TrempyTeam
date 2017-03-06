@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TrempyTeam</string>
+    <string name="facebook_app_id">101297530401287</string>
+    <string name="firebase_error_login">Firebase Login Error</string>
+
+
+</resources>
