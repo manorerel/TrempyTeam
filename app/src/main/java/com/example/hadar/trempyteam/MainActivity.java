@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.Tremp;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,8 +30,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import org.json.JSONObject;
+
+import java.util.Date;
 
 public class MainActivity extends Activity {
 
@@ -39,12 +43,19 @@ public class MainActivity extends Activity {
     private FirebaseAuth firebaseAuth;
 
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
+    ModelFirebase modelFB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_facebook_login);
+
+        //Try add tremp to fireBase table tremp
+//        modelFB = new ModelFirebase();
+//        Tremp t = new Tremp(3,"manor", new Date(2017,05,15),"Kfar Ahim", "Yavne", "Kia");
+//        modelFB.addTremp(t);
+//        Log.d("FB", "Add new tremp to db");
 
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();

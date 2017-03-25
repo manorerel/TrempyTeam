@@ -11,6 +11,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class pro extends Activity {
 
     private ImageView profileImgView;
@@ -28,6 +31,11 @@ public class pro extends Activity {
         Log.d("url: ", url);
 
         profileImgView = (ImageView) findViewById(R.id.profile_img);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
     }
 
 
