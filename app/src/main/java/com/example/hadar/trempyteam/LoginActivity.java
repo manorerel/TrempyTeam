@@ -5,19 +5,12 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
-import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,16 +21,15 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONObject;
-
-public class MainActivity extends Activity {
+public class LoginActivity extends Activity {
 
 //check
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-    final int PRO = 1;
+    final int main = 1;
     private FirebaseAuth firebaseAuth;
 
+    String userId ="";
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
 
     @Override
@@ -49,38 +41,58 @@ public class MainActivity extends Activity {
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();
             final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-            loginButton.setReadPermissions("email", "public_profile");
+            loginButton.setReadPermissions("email", "public_profile", "user_friends");
             loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
-                    final AccessToken accessToken = loginResult.getAccessToken();
 
 
-                    handleFacebookAccessToken(loginResult.getAccessToken());
-                    GraphRequestAsyncTask request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject user, GraphResponse graphResponse) {
-
-
-
-                            String userId = loginResult.getAccessToken().getUserId();
-                            String accessToken = loginResult.getAccessToken().getToken();
-                            String profileImgUrl = "https://graph.facebook.com/" + userId + "/picture?type=large";
-
-                            Intent intent = new Intent(MainActivity.this, pro.class);
-                            intent.putExtra("user_name",user.optString("name"));
-                            intent.putExtra("urlimage",profileImgUrl);
-                            startActivityForResult(intent, PRO);
-
+                    Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+                    startActivityForResult(intent, main);
 
                         }
 
+/*
+                *//**//* make the API call *//**//*
+                final GraphRequestAsyncTask graphRequestAsyncTask =    new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "/" +userId + "/friends",
+                        null,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
 
-                    }).executeAsync();
 
-                }
 
-                @Override
+
+
+                                *//**//* try
+                                {
+                                    Log.d("userid", userId);
+                                    //  ArrayList a = new ArrayList();
+                                    JSONArray rawName = response.getJSONObject().getJSONArray("data");
+                                    for(int i=0; i<rawName.length(); i++){
+                                        {
+
+                                            //  a.add(i, rawName.getJSONObject(i).getString("name"));
+                                            Log.d("name: ", rawName.getJSONObject(i).getString("name"));
+                                        }
+                                    }
+                                }
+                                catch ( Throwable t )
+                                {
+                                    t.printStackTrace();
+                                }*//**//**/
+
+
+
+
+
+
+
+
+
+                                @Override
                 public void onCancel() {
                       Log.d("OnCancle", "facebook:onCancel");
 
@@ -128,7 +140,7 @@ public class MainActivity extends Activity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             //    Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
 
