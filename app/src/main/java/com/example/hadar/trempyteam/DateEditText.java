@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by Hadar on 17-Dec-16.
  */
-
+//check
 public class DateEditText extends EditText {
     int year;
     int month;
