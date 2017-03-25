@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-
-
 public class searchTrempFragment extends Fragment {
 
     @Override
