@@ -70,9 +70,7 @@ public class MainActivity extends Activity {
                             Intent intent = new Intent(MainActivity.this, pro.class);
                             intent.putExtra("user_name",user.optString("name"));
                             intent.putExtra("urlimage",profileImgUrl);
-                            startActivityForResult(intent, PRO);
-
-
+                          startActivityForResult(intent, PRO);
                         }
 
 
@@ -109,6 +107,10 @@ public class MainActivity extends Activity {
                     // ...
                 }
             };
+
+        //Avia- Go to Share image
+        Intent intent = new Intent(this, ShareImageActivity.class);
+        startActivity(intent);
         }
 
 
