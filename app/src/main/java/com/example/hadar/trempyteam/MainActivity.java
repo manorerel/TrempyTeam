@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
     private CallbackManager callbackManager;
     final int PRO = 1;
     private FirebaseAuth firebaseAuth;
-
+//just check
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     ModelFirebase modelFB;
 
