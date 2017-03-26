@@ -38,6 +38,7 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_facebook_login);
 
+        Log.d("test", "hhhhhhhhhhhhhhhhhhhhhhhh");
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();
             final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -92,7 +93,7 @@ public class LoginActivity extends Activity {
 
 
 
-                                @Override
+                @Override
                 public void onCancel() {
                       Log.d("OnCancle", "facebook:onCancel");
 
