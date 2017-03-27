@@ -85,14 +85,6 @@ public class LoginActivity extends Activity {
                                     t.printStackTrace();
                                 }*//**//**/
 
-
-
-
-
-
-
-
-
                 @Override
                 public void onCancel() {
                       Log.d("OnCancle", "facebook:onCancel");
@@ -122,6 +114,10 @@ public class LoginActivity extends Activity {
                     // ...
                 }
             };
+
+        //Avia- Go to Share image
+        //Intent intent = new Intent(this, ShareImageActivity.class);
+        //startActivity(intent);
         }
 
 
