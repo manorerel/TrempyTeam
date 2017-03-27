@@ -21,9 +21,10 @@ public class Tremp {
     Date CreationDate;
     List<String> TrempistsList;
     static int count = 0;
+    String imageName;
 
     public Tremp(){}
-    public Tremp(int seets, String driverId, Date trempDate, String sourceAdd, String destAdd, String carModel){
+    public Tremp(int seets, String driverId, Date trempDate, String sourceAdd, String destAdd, String carModel, String ImageName){
         CarModel = carModel;
         Seets = seets;
         DriverId = driverId;
@@ -32,7 +33,7 @@ public class Tremp {
         Id = CreateID();
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
-
+        imageName = ImageName;
     }
 
     public String getId(){return Id;}
@@ -43,12 +44,18 @@ public class Tremp {
     public String getDestAddress(){return DestAddress;}
     public Date getTrempDate(){return TrempDate;}
     public Date getCreationDate(){return CreationDate;}
+    public String getImageName() {
+        return imageName;
+    }
 
     public void setCarModel(String carModel){CarModel = carModel;}
     public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
     public void setDestAddress(String destAdd){DestAddress = destAdd;}
     public void setSeets(int seets){Seets = seets;}
     public void setTrempDate(Date trempDate){TrempDate = trempDate;}
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     private String CreateID(){
 
