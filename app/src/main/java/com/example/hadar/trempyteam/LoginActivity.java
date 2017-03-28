@@ -122,6 +122,9 @@ public class LoginActivity extends Activity {
                     // ...
                 }
             };
+
+        Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+        startActivityForResult(intent, main);
         }
 
 

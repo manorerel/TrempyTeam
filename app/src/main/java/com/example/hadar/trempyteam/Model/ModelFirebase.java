@@ -11,7 +11,7 @@ public class ModelFirebase {
 
     public void addTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Tremp").child(tremp.getId());
+        DatabaseReference myRef = database.getReference("Trempy").child(tremp.getId());
         myRef.setValue(tremp);
     }
 
