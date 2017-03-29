@@ -28,7 +28,7 @@ public class LoginActivity extends Activity {
     private CallbackManager callbackManager;
     final int main = 1;
     private FirebaseAuth firebaseAuth;
-
+    String LoginDetails;
     String userId ="";
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
 
@@ -38,20 +38,19 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_facebook_login);
 
-        Log.d("test", "hhhhhhhhhhhhhhhhhhhhhhhh");
-            // Initialize Facebook Login button
-            callbackManager = CallbackManager.Factory.create();
-            final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-            loginButton.setReadPermissions("email", "public_profile", "user_friends");
-            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(final LoginResult loginResult) {
+        // Initialize Facebook Login button
+        callbackManager = CallbackManager.Factory.create();
+        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        LoginDetails = loginButton.getText().toString();
+        loginButton.setReadPermissions("email", "public_profile", "user_friends");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
 
 
-                    Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
-                    startActivityForResult(intent, main);
-
-                        }
+                Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+                startActivityForResult(intent, main);
+            }
 
 /*
                 *//**//* make the API call *//**//*
@@ -85,45 +84,41 @@ public class LoginActivity extends Activity {
                                     t.printStackTrace();
                                 }*//**//**/
 
+            @Override
+            public void onCancel() {
+                Log.d("OnCancle", "facebook:onCancel");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("OnError", "facebook:onError", error);
+                // ...
+            }
+        });
 
 
-
-
-
-
-
-
-                @Override
-                public void onCancel() {
-                      Log.d("OnCancle", "facebook:onCancel");
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuthListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    // Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    // Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
+                // ...
+            }
+        };
 
-                @Override
-                public void onError(FacebookException error) {
-                      Log.d("OnError", "facebook:onError", error);
-                    // ...
-                }
-            });
-
-
-            firebaseAuth = FirebaseAuth.getInstance();
-            firebaseAuthListner = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user != null) {
-                        // User is signed in
-                        // Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    } else {
-                        // User is signed out
-                        // Log.d(TAG, "onAuthStateChanged:signed_out");
-                    }
-                    // ...
-                }
-            };
+        if (LoginDetails.equals("Log out")){
+            Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+            startActivityForResult(intent, main);
         }
-
+    }
 
 
     private void handleFacebookAccessToken(AccessToken token) {

@@ -13,15 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.example.hadar.trempyteam.Model.Model;
-import com.example.hadar.trempyteam.Model.ModelFirebase;
-import com.example.hadar.trempyteam.Model.ModelSql;
-import com.example.hadar.trempyteam.Model.Tremp;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-public class CreateNewTrempActivity extends Activity {
+
+/**
+ * Created by aviac on 3/25/2017.
+ */
+
+public class ShareImageActivity extends Activity{
     private static final int REQUEST_WRITE_STORAGE = 112;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -31,9 +31,9 @@ public class CreateNewTrempActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_tremp);
-        final ModelFirebase fbModel = new ModelFirebase();
+        setContentView(R.layout.share_image);
         imageView = (ImageView) findViewById(R.id.Image);
+        final EditText idIm = (EditText) findViewById(R.id.idImageName);
 
         boolean hasPermission = (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
@@ -45,27 +45,13 @@ public class CreateNewTrempActivity extends Activity {
         }
 
 
-        Button saveBtn = (Button) findViewById(R.id.btnSave);
-        Button cancleBtn = (Button) findViewById(R.id.btnCancel);
-
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        Button add = (Button) findViewById(R.id.addImage);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                EditText phone = (EditText)findViewById(R.id.editTextPhone);
-                EditText source = (EditText)findViewById(R.id.exitfrom);
-                EditText dest = (EditText)findViewById(R.id.dest);
-                EditText seetsText = (EditText)findViewById(R.id.num_of_seats);
-                DateEditText dateText = (DateEditText)findViewById(R.id.date);
-                TimeEditText time = (TimeEditText)findViewById(R.id.time);
-
-                //int seets = int.class.cast(seetsText.getText());
-                int seets = 3;
-                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay());
-                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(), "dd","imageUrl");
-                fbModel.addTremp(newTremp);
-
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                    String imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
+                    String imName = "image_" + idIm.getText().toString() + "_" + timeStamp + ".jpg";
                     Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
                         @Override
                         public void complete(String url) {
@@ -81,10 +67,6 @@ public class CreateNewTrempActivity extends Activity {
                     saveAndClose();
                 }
 
-                //ModelSql sqlLight = new Mod5elSql();
-                //sqlLight.addTremp(newTremp);
-                Log.d("TAG", "Create new tremp and save to db");
-                finish();
             }
         });
 
@@ -94,14 +76,15 @@ public class CreateNewTrempActivity extends Activity {
                 takingPicture();
             }
         });
-    }
 
+    }
     private void saveAndClose(){
 
         Intent resultIntent = new Intent();
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
+
 
     private void takingPicture(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -118,4 +101,5 @@ public class CreateNewTrempActivity extends Activity {
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
 }
