@@ -1,9 +1,13 @@
 package com.example.hadar.trempyteam;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 import com.facebook.AccessToken;
@@ -20,6 +24,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends Activity {
 
@@ -38,7 +45,30 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_facebook_login);
 
-        Log.d("test", "hhhhhhhhhhhhhhhhhhhhhhhh");
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.example.hadar.trempyteam",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+/*
+        Intent intent = new Intent(LoginActivity.this, CreateNewTrempActivity.class);
+        startActivityForResult(intent, main);*/
+
+        if (AccessToken.getCurrentAccessToken() != null
+                ) {
+            Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+            startActivityForResult(intent, main);
+
+        }
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();
             final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);

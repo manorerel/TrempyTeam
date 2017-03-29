@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/exitfrom"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dest"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+        />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
