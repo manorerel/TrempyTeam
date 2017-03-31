@@ -23,30 +23,25 @@ public class Tremp {
     String DriverId;
     long Seets;
     Date TrempDate;
-    String TrempTime;
-    String CreationDate;
-    String CreationTime;
+    Date CreationDate;
     List<String> TrempistsList;
     static int count = 0;
     String imageName;
-
+    String PhoneNumber;
 
     public Tremp(){}
-    public Tremp(int seets, String driverId, Date trempDate, String sourceAdd, String destAdd, String carModel, String ImageName){
+    public Tremp(long seets, String driverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName){
         CarModel = carModel;
-        //Seets = long.class.cast(seets);
-        Seets = 2;
+        Seets = seets;
         DriverId = driverId;
-       // TrempDate = trempDate;
+       TrempDate = trempDate;
        // CreationDate = new Date(2017,03,25);
         TrempDate = trempDate;
-        Calendar d = Calendar.getInstance();
-        CreationDate = new Date(d.get(Calendar.YEAR), d.get(Calendar.MONTH), d.get(Calendar.DAY_OF_MONTH)).toString();
-        CreationTime = new Time(d.get(Calendar.HOUR), d.get(Calendar.MINUTE), d.get(Calendar.SECOND)).toString();
         Id = CreateID();
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
         imageName = ImageName;
+        PhoneNumber = phoneNumber;
     }
 
     public String getId(){return Id;}
@@ -56,10 +51,11 @@ public class Tremp {
     public String getSourceAddress(){return SourceAddress;}
     public String getDestAddress(){return DestAddress;}
     public Date getTrempDate(){return TrempDate;}
-    public String getCreationDate(){return CreationDate;}
+    public Date getCreationDate(){return CreationDate;}
     public String getImageName() {
         return imageName;
     }
+    public String getPhoneNumber(){return PhoneNumber;}
 
     public void setCarModel(String carModel){CarModel = carModel;}
     public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
@@ -69,10 +65,10 @@ public class Tremp {
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
+    public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
 
     private String CreateID(){
-
-        String id = getDriverId()+ count++;
+        String id =ServerValue.TIMESTAMP.toString()+ getDriverId()+ count++;
         return id;
     }
 
@@ -86,6 +82,7 @@ public class Tremp {
         result.put("creationTime", ServerValue.TIMESTAMP);
         result.put("trempDateTime", TrempDate);
         result.put("driverId", DriverId);
+        result.put("phoneNumber", PhoneNumber);
         return result;
     }
 }

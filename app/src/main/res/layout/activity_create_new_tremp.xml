@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/exitfrom"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dest"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,40 +87,16 @@
             android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
-
-
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/num_of_seats"
-            android:layout_marginLeft="120dp"
-            android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-            android:text="Max Seats:"
-            android:id="@+id/num_of_seats_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:layout_width="195dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:id="@+id/avaliable_seats"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="185dp"
             android:inputType="number"/>
         <TextView
             android:layout_width="wrap_content"
@@ -170,6 +146,27 @@
             android:text="Time:"
             android:id="@+id/time_tremp"
             android:layout_marginLeft="20dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/car_model"
+            android:layout_marginLeft="120dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Car Model:"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp" />
 
     </RelativeLayout>
     <RelativeLayout

@@ -53,14 +53,18 @@ public class CreateNewTrempActivity extends Activity {
                 EditText phone = (EditText)findViewById(R.id.editTextPhone);
                 EditText source = (EditText)findViewById(R.id.exitfrom);
                 EditText dest = (EditText)findViewById(R.id.dest);
-                EditText seetsText = (EditText)findViewById(R.id.num_of_seats);
+                EditText seetsText = (EditText)findViewById(R.id.avaliable_seats);
                 DateEditText dateText = (DateEditText)findViewById(R.id.date);
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
+                EditText carModel = (EditText)findViewById(R.id.car_model);
 
-                //int seets = int.class.cast(seetsText.getText());
-                int seets = 3;
-                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay());
-                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(), "dd","imageUrl");
+
+               //int seets = Integer.parseInt(seetsText.getText().toString());
+                long seets = Long.parseLong(seetsText.getText().toString());
+              //  int seets = 3;
+                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
+
+                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 fbModel.addTremp(newTremp);
 
                 if(imageBitmap != null){
@@ -92,6 +96,12 @@ public class CreateNewTrempActivity extends Activity {
             @Override
             public void onClick(View v) {
                 takingPicture();
+            }
+        });
+
+        cancleBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
             }
         });
     }
