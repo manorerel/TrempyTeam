@@ -95,8 +95,8 @@ public class CreateNewTrempActivity extends Activity {
                         exitFromAddr.setText(_Location);
 
                         // Click on the "+" button to add a new student
-                        Button addBtn = (Button) findViewById(R.id.btnSave);
-                        addBtn.setOnClickListener(new View.OnClickListener() {
+                        Button btnMap = (Button) findViewById(R.id.btnMap);
+                        btnMap.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -196,8 +196,8 @@ public class CreateNewTrempActivity extends Activity {
                             exitFromAddr.setText(_Location);
 
 
-                            Button addBtn = (Button) findViewById(R.id.btnSave);
-                            addBtn.setOnClickListener(new View.OnClickListener() {
+                            Button btmMap = (Button) findViewById(R.id.btnMap);
+                            btmMap.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
