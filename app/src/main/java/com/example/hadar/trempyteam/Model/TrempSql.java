@@ -30,7 +30,7 @@ public class TrempSql {
         values.put(DEST, tremp.getDestAddress());
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
-        values.put(DATE, tremp.getCreationDate().toString());
+        values.put(DATE, tremp.getTrempDate().toString());
         values.put(PHONE, tremp.getPhoneNumber());
         values.put(IMAGE_URL, tremp.getImageName());
 
