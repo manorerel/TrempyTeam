@@ -4,11 +4,10 @@
     android:layout_height="fill_parent"
     tools:context=".LoginActivity"
     >
-
     <FrameLayout
         android:id="@+id/My_Container_1_ID"
         android:layout_width="fill_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
     </FrameLayout>
