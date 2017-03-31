@@ -20,7 +20,7 @@ public class TrempSql {
     private static final String DEST = "destination";
     private static final String SEETS = "freeSeets";
     private static final String DATE = "TrempDate";
-    private static final String TIME = "TrempTime";
+    private static final String PHONE = "PhoneNumber";
 
     public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp) {
         ContentValues values = new ContentValues();
@@ -31,9 +31,8 @@ public class TrempSql {
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
         values.put(DATE, tremp.getCreationDate().toString());
-        values.put(TIME, tremp.CreationTime.toString());
-
-//        values.put(IMAGE_URL, .imageUrl);
+        values.put(PHONE, tremp.getPhoneNumber());
+        values.put(IMAGE_URL, tremp.getImageName());
 
         long rowId = writableDatabase.insert(TREMP, ST_ID, values);
         if (rowId <= 0) {
@@ -51,9 +50,10 @@ public class TrempSql {
             String seets = cursor.getString(cursor.getColumnIndex(SEETS));
             String carModel = cursor.getString(cursor.getColumnIndex(CAR_MODEL));
             String date = cursor.getString(cursor.getColumnIndex(DATE));
-            String time = cursor.getString(cursor.getColumnIndex(TIME));
+            String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
+            String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-            tremp = new Tremp(int.class.cast(seets),stId,Date.class.cast(date),source, dest,carModel, "");
+            tremp = new Tremp(Long.getLong(seets),stId,Date.class.cast(date),source, dest,phoneNum,carModel, imageUrl);
 
         }
 
@@ -61,7 +61,7 @@ public class TrempSql {
     }
 
     public static void create(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + TIME + " TEXT, " + IMAGE_URL + " TEXT)");    }
+        sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + PHONE + " TEXT, " + IMAGE_URL + " TEXT)");    }
 
     public static void dropTable(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("DROP TABLE " + TREMP);
