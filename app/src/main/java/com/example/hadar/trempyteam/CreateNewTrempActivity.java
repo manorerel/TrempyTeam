@@ -59,11 +59,8 @@ public class CreateNewTrempActivity extends Activity {
                 EditText carModel = (EditText)findViewById(R.id.car_model);
 
 
-               //int seets = Integer.parseInt(seetsText.getText().toString());
                 long seets = Long.parseLong(seetsText.getText().toString());
-              //  int seets = 3;
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
-
                 Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 fbModel.addTremp(newTremp);
 
@@ -85,8 +82,8 @@ public class CreateNewTrempActivity extends Activity {
                     saveAndClose();
                 }
 
-                //ModelSql sqlLight = new Mod5elSql();
-                //sqlLight.addTremp(newTremp);
+//                ModelSql sqlLight = new ModelSql();
+//                sqlLight.addTremp(newTremp);
                 Log.d("TAG", "Create new tremp and save to db");
                 finish();
             }

@@ -4,6 +4,7 @@ import android.net.NetworkInfo;
 
 import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +69,8 @@ public class Tremp {
     public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
 
     private String CreateID(){
-        String id =ServerValue.TIMESTAMP.toString()+ getDriverId()+ count++;
+//        String id =ServerValue.TIMESTAMP.toString()+ getDriverId()+ count++;
+        String id =new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
         return id;
     }
 
