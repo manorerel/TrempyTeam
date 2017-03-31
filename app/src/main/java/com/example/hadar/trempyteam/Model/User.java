@@ -10,9 +10,10 @@ public class User {
     String Id;
     String FirstName;
     String LastName;
-    String FacebookId;
+
     List<String> JoinToTremps;
     List<String> SuggestedTremps;
+    static User AppUser;
 
     public User(){
 
@@ -23,15 +24,20 @@ public class User {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
-        FacebookId = facebookId;
+    }
+
+    public User(String id){
+        Id = id;
     }
 
     public String getId(){return Id;}
     public String getFirstName(){return FirstName;}
     public String getLastName(){return LastName;}
-    public String getFacebookId(){return FacebookId;}
 
     public void setFirstName(String name){FirstName = name;}
     public void setLastName(String name){LastName = name;}
-    public void setFacebookId(String fbId){FacebookId = fbId;}
+
+    public static User GetAppUser(){return AppUser;}
+    public static void CreateAppUser(String id){AppUser = new User(id);}
+
 }

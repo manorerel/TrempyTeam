@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -46,9 +48,9 @@ public class LoginActivity extends Activity {
 
         // check if is not the first time to use the app - already login to facebook
         if (AccessToken.getCurrentAccessToken() != null)
-                 {
-            Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
-            startActivityForResult(intent, main);
+        {
+            String userID = AccessToken.getCurrentAccessToken().getUserId();
+            startApp(userID);
 
         }
             // Initialize Facebook Login button
@@ -59,8 +61,8 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
 
-                    Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
-                    startActivityForResult(intent, main);
+                    String userID = AccessToken.getCurrentAccessToken().getUserId();
+                    startApp(userID);
 
 
             }
@@ -126,6 +128,13 @@ public class LoginActivity extends Activity {
                 // ...
             }
         };
+    }
+
+    private void startApp(String userId){
+        Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+        startActivityForResult(intent, main);
+        User.CreateAppUser(userId);
+
     }
 
 

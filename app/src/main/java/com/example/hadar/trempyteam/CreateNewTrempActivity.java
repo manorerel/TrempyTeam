@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hadar.trempyteam.Model.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -99,7 +100,8 @@ public class CreateNewTrempActivity extends Activity {
 
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
-                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
+                String createdUserId = User.GetAppUser().getId();
+                Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 fbModel.addTremp(newTremp);
 
                 if(imageBitmap != null){
@@ -120,8 +122,8 @@ public class CreateNewTrempActivity extends Activity {
                     saveAndClose();
                 }
 
-                //ModelSql sqlLight = new Mod5elSql();
-                //sqlLight.addTremp(newTremp);
+                ModelSql sqlLight = new ModelSql();
+                sqlLight.addTremp(newTremp);
                 Log.d("TAG", "Create new tremp and save to db");
                 finish();
             }
@@ -222,6 +224,12 @@ public class CreateNewTrempActivity extends Activity {
 
             }
         }
+
+        cancleBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
