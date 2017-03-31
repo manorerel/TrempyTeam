@@ -120,7 +120,7 @@ public class CreateNewTrempActivity extends Activity {
                         });
 
                         // \n is for new line=
-                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude + "\nAddress: " + _Location + "\nCon: " + g + "\ngggg: " + contry, Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude + "\nAddress: " + _Location + "\nCon: " + g + "\ngggg: " + contry, Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -178,6 +178,7 @@ public class CreateNewTrempActivity extends Activity {
                     // create class object
                     GPSTracker gps = new GPSTracker(CreateNewTrempActivity.this);
 
+
                     // check if GPS enabled
                     if (gps.canGetLocation()) {
 
@@ -186,12 +187,39 @@ public class CreateNewTrempActivity extends Activity {
 
                         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                         try {
+                            TextView exitFromAddr = (TextView) findViewById(R.id.exitfrom);
                             List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            if(null!=listAddresses&&listAddresses.size()>0){
-                                String _Location = listAddresses.get(0).getAddressLine(0);
-                                // \n is for new line
-                                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude + "\nAddress: " + _Location, Toast.LENGTH_LONG).show();
-                            }
+                            String _Location = listAddresses.get(0).getAddressLine(0);
+                            String contry = listAddresses.get(0).getLocality();
+                            String g = listAddresses.get(0).getCountryName();
+
+                            exitFromAddr.setText(_Location);
+
+
+                            Button addBtn = (Button) findViewById(R.id.btnSave);
+                            addBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    TextView toDest = (TextView) findViewById(R.id.dest);
+                                    toDest.getText().toString();
+                                    TextView source = (TextView) findViewById(R.id.exitfrom);
+                                    source.getText().toString();
+
+                                    LatLng c =  getLocationFromAddress(CreateNewTrempActivity.this, toDest.getText().toString());
+                                    LatLng s =  getLocationFromAddress(CreateNewTrempActivity.this, source.getText().toString());
+                                    //   LatLng s = new LatLng(latitude, longitude);
+
+                                    Intent intent = new Intent(CreateNewTrempActivity.this, MapsActivity.class);
+                                    intent.putExtra("DestLocation", c);
+                                    intent.putExtra("SourceLocation", s);
+                                    startActivityForResult(intent, main);
+
+
+
+                                }
+                            });
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

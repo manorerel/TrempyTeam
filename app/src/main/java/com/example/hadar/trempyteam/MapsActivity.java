@@ -1,7 +1,10 @@
 package com.example.hadar.trempyteam;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -35,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -118,12 +124,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (MarkerPoints.size() == 1) {
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         } else if (MarkerPoints.size() == 2) {
+
+            //String urlImageSV = "https://maps.googleapis.com/maps/api/streetview?size=10x10&location=46.414382,10.013988&heading=151.78&pitch=-0.76&key=AIzaSyBfsOnOoNOdRr6K5QdLqs6SGflsLs1gsIE";
+
+
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         }
 
 
         // Add new marker to the Google Map Android API V2
         mMap.addMarker(options);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         // Checks, whether start and end locations are captured
         if (MarkerPoints.size() >= 2) {
@@ -140,12 +159,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //move map camera
             mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+
         }
-
-
-
-
     }
+
 
     private String getUrl(LatLng origin, LatLng dest) {
 
@@ -360,6 +378,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
+
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
@@ -371,6 +390,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+
 
     }
 
@@ -444,4 +464,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // You can add here other case statements according to your requirement.
         }
     }
+
 }

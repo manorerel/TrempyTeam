@@ -30,7 +30,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends Activity {
 
-//check hadarjyr
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     final int main = 1;
@@ -59,12 +58,10 @@ public class LoginActivity extends Activity {
         } catch (NoSuchAlgorithmException e) {
 
         }
-/*
-        Intent intent = new Intent(LoginActivity.this, CreateNewTrempActivity.class);
-        startActivityForResult(intent, main);*/
 
-        if (AccessToken.getCurrentAccessToken() != null
-                ) {
+        // check if is not the first time to use the app - already login to facebook
+        if (AccessToken.getCurrentAccessToken() != null)
+                 {
             Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
             startActivityForResult(intent, main);
 
@@ -76,7 +73,6 @@ public class LoginActivity extends Activity {
             loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
-
 
                     Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
                     startActivityForResult(intent, main);
