@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/exitfrom"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dest"
             android:layout_marginLeft="120dp"
-            android:inputType="number"/>
+        />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,7 +194,6 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="300dp"
@@ -229,6 +228,21 @@
                 android:layout_weight="0.10"
                 android:background="@drawable/rounded_corners"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="fill_parent">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="map"
+                android:id="@+id/btnMap"
+                android:layout_weight="0.10"
+                android:background="@drawable/rounded_corners"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 
