@@ -10,19 +10,26 @@
     android:weightSum="1"
     android:background="#F48FB1">
 
-
-    <ImageView
-        android:layout_width="98dp"
+    <TextView
+        android:text=" חפש טרמפ"
+        android:layout_width="261dp"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:maxHeight="50dp"
-        android:maxWidth="50dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:layout_weight="0.10"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp" />
-
+        android:id="@+id/textView2"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+    <RelativeLayout   android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/space"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
 
 
     <RelativeLayout

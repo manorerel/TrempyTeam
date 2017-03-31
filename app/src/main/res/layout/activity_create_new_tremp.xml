@@ -172,13 +172,33 @@
             android:layout_marginLeft="20dp"/>
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/Image"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Car Image:"
+            android:id="@+id/car_image"
+            android:layout_marginLeft="20dp"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp" >
 
         <LinearLayout

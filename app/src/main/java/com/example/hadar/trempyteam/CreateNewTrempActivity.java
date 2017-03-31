@@ -2,6 +2,7 @@ package com.example.hadar.trempyteam;
 
 import android.*;
 import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,11 +13,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,17 +39,36 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import android.widget.EditText;
+import android.widget.ImageView;
+
+
+import com.example.hadar.trempyteam.Model.Model;
+import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelSql;
+import com.example.hadar.trempyteam.Model.Tremp;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class CreateNewTrempActivity extends Activity {
+    private static final int REQUEST_WRITE_STORAGE = 112;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
 
     private GoogleMap googleMap;
     final int main = 1;
 
+    ImageView imageView;
+    String imageFileName = null;
+    Bitmap imageBitmap = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
+
 
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -241,6 +269,91 @@ public class CreateNewTrempActivity extends Activity {
         }
 
 
+        final ModelFirebase fbModel = new ModelFirebase();
+        imageView = (ImageView) findViewById(R.id.Image);
+
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }
+
+
+        Button saveBtn = (Button) findViewById(R.id.btnSave);
+        Button cancleBtn = (Button) findViewById(R.id.btnCancel);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText phone = (EditText)findViewById(R.id.editTextPhone);
+                EditText source = (EditText)findViewById(R.id.exitfrom);
+                EditText dest = (EditText)findViewById(R.id.dest);
+                EditText seetsText = (EditText)findViewById(R.id.num_of_seats);
+                DateEditText dateText = (DateEditText)findViewById(R.id.date);
+                TimeEditText time = (TimeEditText)findViewById(R.id.time);
+
+                //int seets = int.class.cast(seetsText.getText());
+                int seets = 3;
+                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay());
+                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(), "dd","imageUrl");
+                fbModel.addTremp(newTremp);
+
+                if(imageBitmap != null){
+                    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                    String imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
+                    Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
+                        @Override
+                        public void complete(String url) {
+                            saveAndClose();
+                        }
+
+                        @Override
+                        public void fail() {
+                            saveAndClose();
+                        }
+                    });
+                }else{
+                    saveAndClose();
+                }
+
+                //ModelSql sqlLight = new Mod5elSql();
+                //sqlLight.addTremp(newTremp);
+                Log.d("TAG", "Create new tremp and save to db");
+                finish();
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takingPicture();
+            }
+        });
+    }
+
+    private void saveAndClose(){
+
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private void takingPicture(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+        }
     }
 }
 
