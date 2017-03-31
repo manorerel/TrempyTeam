@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.hadar.trempyteam.TrempDetailsActivity"
+android:measureWithLargestChild="false"
+android:layoutDirection="ltr"
+android:weightSum="1">
+
+
+<ImageView
+    android:layout_width="98dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/imageView"
+    android:maxHeight="50dp"
+    android:maxWidth="50dp"
+    android:minHeight="50dp"
+    android:minWidth="50dp"
+    android:layout_weight="0.10"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp" />
+
+
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsPhone"
+        android:layout_marginLeft="120dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone:"
+        android:id="@+id/student_phone"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp" />
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Exit from :"
+            android:id="@+id/exit_from_"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailsExitfrom"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Exit from"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/exit_from_"
+            android:layout_toEndOf="@+id/exit_from_"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Destination:"
+        android:id="@+id/dest_"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsDest"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dest"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/dest_"
+        android:layout_toEndOf="@+id/dest_"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
+</RelativeLayout>
+
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsAvaliable_seats"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="seets"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/avaliable_seats_"
+        android:layout_toEndOf="@+id/avaliable_seats_"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Avaliable Seats:"
+        android:id="@+id/avaliable_seats_"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp" />
+</RelativeLayout>
+
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.example.hadar.trempyteam.DateEditText
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:enabled="false"
+        android:id="@+id/detailsDate"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Date:"
+        android:id="@+id/date_tremp"
+        android:layout_marginLeft="20dp" />
+
+</RelativeLayout>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.example.hadar.trempyteam.TimeEditText
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:enabled="false"
+        android:id="@+id/detailsTime"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time:"
+        android:id="@+id/time_tremp"
+        android:layout_marginLeft="20dp"/>
+
+</RelativeLayout>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsCar_model"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="seets"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/car_model_"
+        android:layout_toEndOf="@+id/car_model_"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Car Model:"
+        android:id="@+id/car_model_"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp" />
+
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/DetailsImage"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Car Image:"
+        android:id="@+id/car_image"
+        android:layout_marginLeft="20dp"/>
+
+</RelativeLayout>
+
+
+<!--<LinearLayout-->
+<!--android:orientation="horizontal"-->
+<!--android:layout_width="300dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginTop="30dp"-->
+<!--android:layout_marginLeft="40dp" >-->
+
+<!--<LinearLayout-->
+<!--android:layout_width="fill_parent"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content">-->
+<!--<Button-->
+<!--android:layout_width="300dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="CANCEL"-->
+<!--android:id="@+id/btnCancel"-->
+<!--android:layout_weight="0.10"-->
+<!--android:layout_marginLeft="6dp"-->
+<!--android:background="@drawable/rounded_corners"/>-->
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+<!--android:layout_width="fill_parent"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="fill_parent">-->
+<!--<Button-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginLeft="8dp"-->
+<!--android:text="SAVE"-->
+<!--android:id="@+id/btnSave"-->
+<!--android:layout_weight="0.10"-->
+<!--android:background="@drawable/rounded_corners"/>-->
+<!--</LinearLayout>-->
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="40dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:id="@+id/detailsBtnCancel"
+            android:layout_weight="0.10"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/rounded_corners"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
+
+</LinearLayout>
