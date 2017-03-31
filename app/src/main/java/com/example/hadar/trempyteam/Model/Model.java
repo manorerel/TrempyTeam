@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam.Model;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.example.hadar.trempyteam.TrempyApp;
 /**
@@ -25,8 +31,12 @@ public class Model {
 
     private final static Model instance = new Model();
     ModelFirebase modelFirebase;
+    Context Trempy;
+
     private Model(){
         modelFirebase = new ModelFirebase();
+        Trempy = TrempyApp.getAppContext();
+
     }
 
     public static Model getInstance(){

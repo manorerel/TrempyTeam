@@ -67,6 +67,8 @@ public class CreateNewTrempActivity extends Activity {
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                     String imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
                     Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
+
+                        //TO DO: pringts
                         @Override
                         public void complete(String url) {
                             saveAndClose();

@@ -9,14 +9,12 @@ import android.content.Context;
 
 public class TrempyApp extends Application{
 
-        private static Context context;
-        public void onCreate() {
-            super.onCreate();
-            TrempyApp.context = getApplicationContext();
-        }
-        public static Context getAppContext() {
-            return TrempyApp.context;
-        }
+    private static Context context;
+    public void onCreate() {
+        super.onCreate();
+        TrempyApp.context = getApplicationContext();
+    }
+    public static Context getAppContext() {return TrempyApp.context;}
     }
 
 

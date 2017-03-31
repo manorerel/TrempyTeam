@@ -114,10 +114,10 @@ public class LoginActivity extends Activity {
             }
         };
 
-        if (LoginDetails.equals("Log out")){
-            Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
-            startActivityForResult(intent, main);
-        }
+//        if (LoginDetails.equals("Log out")){
+//            Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
+//            startActivityForResult(intent, main);
+//        }
     }
 
 
