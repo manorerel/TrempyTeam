@@ -90,6 +90,7 @@ public class ModelFirebase {
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
+                              String ddd =      trSnapshot.getValue(Tremp.class).getDriverId();
                                     Tremp t = trSnapshot.getValue(Tremp.class);
                                     tremps.add(t);
                                     break;
