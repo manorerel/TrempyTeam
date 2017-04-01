@@ -37,10 +37,10 @@ public class ModelSql {
         return modelSql;
     }
 
-    public void addTremp(Tremp tremp)
+    public void addTremp(Tremp tremp, boolean isCreated)
     {
         try {
-            TrempSql.addTremp(trempHelper.getWritableDatabase(), tremp);
+            TrempSql.addTremp(trempHelper.getWritableDatabase(), tremp, isCreated);
         }
         catch (Exception e)
         {
