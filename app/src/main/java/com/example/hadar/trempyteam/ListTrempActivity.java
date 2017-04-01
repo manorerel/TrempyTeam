@@ -172,7 +172,7 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
 
             // until solve the proble with driver id
-           if (st.getPhoneNumber().contains("342743"))
+           if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
             {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
