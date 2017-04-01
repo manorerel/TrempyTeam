@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+        <item
+            android:id="@+id/personalArea"
+            android:icon="@mipmap/login"
+            />
+
+        <item android:id="@+id/editTremp"
+            android:icon="@mipmap/editsvg"
+            />
+
+    </menu>
+
+</LinearLayout>

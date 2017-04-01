@@ -3,12 +3,12 @@ package com.example.hadar.trempyteam;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,7 +49,6 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -58,8 +57,11 @@ import java.util.jar.Attributes;
 public class ListTrempActivity extends Activity {
 
     String name = "";
+
+
     List<Tremp> trempsList ;
 
+     Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
 
 
@@ -70,44 +72,54 @@ public class ListTrempActivity extends Activity {
         setContentView(R.layout.activity_list_tremps);
 
 
-        ModelFirebase fbModel = new ModelFirebase();
-        fbModel.getAllTremps(new Model.GetAllTrempsListener() {
-                                 @Override
-                                 public void onComplete(List<Tremp> tremps) {
+        // Hadar Part
+        final String dest = (String) getIntent().getExtras().get("dest");
+        final String from = (String) getIntent().getExtras().get("from");
 
-                                     trempsList = tremps;
+            ModelFirebase fbModel = new ModelFirebase();
+            fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
+                @Override
+                public void onComplete(List<Tremp> tremps) {
 
-                                     ListView list = (ListView) findViewById(R.id.Tremps_listView);
+                    trempsList = tremps;
+                    CreateList();
+                }
+            });
 
-                                     list.setAdapter(adapter);
 
-                                     list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
-                                         @Override
-                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        //ManorPart
 
-                                             //send avia tremp object
-                                            Tremp tremp =  trempsList.get(i);
+        }
 
-                                             Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                                             intent.putExtra("phone",  tremp.getPhoneNumber());
-                                             intent.putExtra("source",  tremp.getSourceAddress());
-                                             intent.putExtra("dest",  tremp.getDestAddress());
-                                             intent.putExtra("seets",  tremp.getSeets());
-                                             intent.putExtra("car",  tremp.getCarModel());
-                                             intent.putExtra("image",  tremp.getImageName());
-                                             if (tremp.getTrempDate() != null) {
-                                                 intent.putExtra("date", tremp.getTrempDate().toString());
+    public void CreateList()
+    {
+        ListView list = (ListView) findViewById(R.id.Tremps_listView);
 
-                                             }
-                                             startActivity(intent);
-                                         }
-                                     });
-                                 }
-                             });
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //send avia tremp object
+                Tremp tremp =  trempsList.get(i);
+
+                Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
+                intent.putExtra("phone",  tremp.getPhoneNumber());
+                intent.putExtra("source",  tremp.getSourceAddress());
+                intent.putExtra("dest",  tremp.getDestAddress());
+                intent.putExtra("seets",  tremp.getSeets());
+                intent.putExtra("car",  tremp.getCarModel());
+                intent.putExtra("image",  tremp.getImageName());
+                if (tremp.getTrempDate() != null) {
+                    intent.putExtra("date", tremp.getTrempDate().toString());
+
+                }
+                startActivity(intent);
+            }
+        });
 
     }
-
-
 
     class TrempsAdapter extends BaseAdapter {
 

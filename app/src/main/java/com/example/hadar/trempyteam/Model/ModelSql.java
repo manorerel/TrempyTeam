@@ -8,6 +8,8 @@ import android.util.Log;
 import com.example.hadar.trempyteam.MainAactivity;
 import com.example.hadar.trempyteam.TrempyApp;
 
+import java.util.List;
+
 /**
  * Created by מנור on 27/03/2017.
  */
@@ -16,6 +18,7 @@ public class ModelSql {
     private SQLiteOpenHelper trempHelper;
     private SQLiteOpenHelper userHelper;
     private int version = 2;
+    private static ModelSql modelSql;
 
     public ModelSql(){
         try {
@@ -25,6 +28,13 @@ public class ModelSql {
         catch(Exception e){
             Log.d("exception", "exception while trying to install the local db " + e.getMessage());
         }
+    }
+
+    public static ModelSql getInstance(){
+        if(modelSql == null)
+            modelSql = new ModelSql();
+
+        return modelSql;
     }
 
     public void addTremp(Tremp tremp)
@@ -40,6 +50,10 @@ public class ModelSql {
 
     public Tremp getTrempById(String id){
         return TrempSql.getTrempById(trempHelper.getReadableDatabase(), id);
+    }
+
+    public List<Tremp> getAllTremps(boolean isCreated) {
+        return TrempSql.GetAllTremps(trempHelper.getReadableDatabase(), isCreated);
     }
 
 

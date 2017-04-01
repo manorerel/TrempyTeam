@@ -20,6 +20,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,27 +64,44 @@ public class ModelFirebase {
     }
 
 
-    public void getAllTrempsByFilter(String dest, final Model.GetAllTrempsListener listener)
-    {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Tremp").child("DestAddress");
-
-        if (myRef.getKey().contains("46"))
-
-
+    public void getAllTrempsByFilter(final String dest, final String from ,final Model.GetAllTrempsByFilerListener listener) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 List<Tremp> tremps = new LinkedList<Tremp>();
 
-                for (DataSnapshot trSnapshot : dataSnapshot.getChildren())
-                {
-                    Tremp t = trSnapshot.getValue(Tremp.class);
-                    tremps.add(t);
-                }
-                listener.onComplete(tremps);
-            }
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+                    String d = trSnapshot.child("DestAddress").getValue().toString();
+                    String f = trSnapshot.child("SourceAddress").getValue().toString();
 
+                    List<String> wordsDestUserSearch = Arrays.asList(dest.split(" "));
+                    List<String> wordsDestInFireBase = Arrays.asList(d.split(" "));
+                    List<String> wordsSourceInFireBase = Arrays.asList(f.split(" "));
+                    List<String> wordsSourceUserSearch = Arrays.asList(from.split(" "));
+
+                    for (int j = 0; j < wordsSourceUserSearch.size(); j++)
+                    {
+                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)))
+                        {
+                            for (int i = 0; i < wordsDestUserSearch.size(); i++)
+                            {
+                                if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
+                                {
+                                    Tremp t = trSnapshot.getValue(Tremp.class);
+                                    tremps.add(t);
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                    listener.onComplete(tremps);
+                }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -91,6 +110,9 @@ public class ModelFirebase {
             }
         });
     }
+
+
+
 
 
 
