@@ -1,14 +1,19 @@
 package com.example.hadar.trempyteam;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.hadar.trempyteam.Model.ModelSql;
+import com.example.hadar.trempyteam.Model.Tremp;
+
+import java.util.List;
 
 public class PersonalAreaActivity extends Activity {
-
+ List<Tremp> trempsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +24,10 @@ public class PersonalAreaActivity extends Activity {
         cretedTremps.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ModelSql modelSql = ModelSql.getInstance();
-                modelSql.getAllTremps(true);
+                trempsList = modelSql.getAllTremps(true);
+                Intent intent = new Intent(PersonalAreaActivity.this, ListTrempActivity.class);
+
+                startActivity(intent);
 
             }
         });
