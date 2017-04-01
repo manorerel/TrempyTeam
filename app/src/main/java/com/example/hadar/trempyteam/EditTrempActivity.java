@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.Tremp;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -26,14 +27,14 @@ import java.util.Date;
  */
 
 public class EditTrempActivity extends Activity {
-    String stId = " ";
-    View view;
+
     boolean dateEdited=false;
 
-    protected void onCreate(Bundle savedInstanceState, Tremp trempDetails) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_tremp);
+
         final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
         final TextView DestAddress = (TextView) findViewById(R.id.editDest);
@@ -45,15 +46,36 @@ public class EditTrempActivity extends Activity {
 
 
         //Get the Tremp details
-        TrempDate.setText("" + trempDetails.getTrempDate().getDay() + "/" + (trempDetails.getTrempDate().getMonth() + 1) + "/" + trempDetails.getTrempDate().getYear());
-        TrempTime.setText("" + trempDetails.getTrempDate().getHours() + ":" + trempDetails.getTrempDate().getMinutes() + ":" + trempDetails.getTrempDate().getSeconds());
-        PhoneNumber.setText(trempDetails.getPhoneNumber());
-        SourceAddress.setText(trempDetails.getSourceAddress());
-        DestAddress.setText(trempDetails.getDestAddress());
-        Seets.setText(Long.toString(trempDetails.getSeets()));
-        CarModel.setText(trempDetails.getCarModel());
-        if (trempDetails.getImageName() != null) {
-            Model.getInstance().loadImage(trempDetails.getImageName(), new Model.GetImageListener() {
+        Intent intent = getIntent();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        try {
+            date = format.parse(intent.getExtras().getString("date"));
+            //Get the Date properties from the tremp date
+            TrempDate.year = date.getYear();
+            TrempDate.month = date.getMonth();
+            TrempDate.day = date.getDay();
+
+            //Get the Time properties from the tremp time
+            TrempTime.hour = date.getHours();
+            TrempTime.minute = date.getMinutes();
+            TrempTime.second = date.getSeconds();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        TrempDate.setText("" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear());
+        TrempTime.setText("" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        PhoneNumber.setText(intent.getExtras().getString("phone"));
+        SourceAddress.setText(intent.getExtras().getString("source"));
+        DestAddress.setText(intent.getExtras().getString("dest"));
+        Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
+        CarModel.setText(intent.getExtras().getString("car"));
+        String imageName = intent.getExtras().getString("image");
+        if ((imageName != null)&&(!imageName.equals(""))) {
+            Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
                 @Override
                 public void onSccess(Bitmap imageBmp) {
                     if (imageBmp != null) {
@@ -68,20 +90,14 @@ public class EditTrempActivity extends Activity {
             });
         }
 
-        //Get the Date properties from the tremp date
-        TrempDate.year = trempDetails.getTrempDate().getYear();
-        TrempDate.month = trempDetails.getTrempDate().getMonth();
-        TrempDate.day = trempDetails.getTrempDate().getDay();
-
-        //Get the Time properties from the tremp time
-        TrempTime.hour = trempDetails.getTrempDate().getHours();
-        TrempTime.minute = trempDetails.getTrempDate().getMinutes();
-        TrempTime.second = trempDetails.getTrempDate().getSeconds();
 
 
-        Button save = (Button) view.findViewById(R.id.EditBtnSave);
-        Button cancel = (Button) view.findViewById(R.id.EditBtnCancel);
-        Button delete = (Button) view.findViewById(R.id.EditBtnDelete);
+
+
+
+        Button save = (Button) findViewById(R.id.EditBtnSave);
+        Button cancel = (Button) findViewById(R.id.EditBtnCancel);
+        Button delete = (Button) findViewById(R.id.EditBtnDelete);
 
         // Edit and save the tremp details
         save.setOnClickListener(new View.OnClickListener() {
@@ -94,23 +110,23 @@ public class EditTrempActivity extends Activity {
                 final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
                 final TextView DestAddress = (TextView) findViewById(R.id.editDest);
                 final TextView Seets = (TextView) findViewById(R.id.editAvaliable_seats);
-                DateEditText date = (DateEditText) findViewById(R.id.editDate);
-                TimeEditText time = (TimeEditText) findViewById(R.id.editTime);
+                DateEditText newDate = (DateEditText) findViewById(R.id.editDate);
+                TimeEditText newtime = (TimeEditText) findViewById(R.id.editTime);
                 final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
                 final ImageView image = (ImageView) findViewById(R.id.editImage);
 
 
 
                 // Check if the date or time was changed
-                if (date.didTouchFocusSelect()) {
-                    TrempDate.year = date.year;
-                    TrempDate.month = date.month;
-                    TrempDate.day = date.day;
+                if (newDate.didTouchFocusSelect()) {
+                    TrempDate.year = newDate.year;
+                    TrempDate.month = newDate.month;
+                    TrempDate.day = newDate.day;
                 }
-                if (time.didTouchFocusSelect()) {
-                    TrempTime.hour =  time.hour;
-                    TrempTime.minute = time.minute;
-                    TrempTime.second = time.second;
+                if (newtime.didTouchFocusSelect()) {
+                    TrempTime.hour =  newtime.hour;
+                    TrempTime.minute = newtime.minute;
+                    TrempTime.second = newtime.second;
                 }
 
                 try {
