@@ -78,14 +78,14 @@ public class TrempSql {
         if (cursor.moveToFirst() == true){
             do {
                 String stId = cursor.getString(cursor.getColumnIndex(ST_ID));
-                String driverId = cursor.getString(cursor.getColumnIndex(DRIVER_ID));
+                String phoneNum = cursor.getString(cursor.getColumnIndex(DRIVER_ID));
                 String source = cursor.getString(cursor.getColumnIndex(SOURCE));
                 String dest = cursor.getString(cursor.getColumnIndex(DEST));
                 String seets = cursor.getString(cursor.getColumnIndex(SEETS));
                 String carModel = cursor.getString(cursor.getColumnIndex(CAR_MODEL));
                 String date = cursor.getString(cursor.getColumnIndex(DATE));
                 String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
-                String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
+                String driverId = cursor.getString(cursor.getColumnIndex(PHONE));
 
                 Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);
