@@ -72,20 +72,25 @@ public class TrempSql {
 
     public static List<Tremp> GetAllTremps(SQLiteDatabase readableDatabase, boolean isCreated){
         Tremp tremp = null;
-        Cursor cursor = readableDatabase.query(TREMP,null, null, null, null, null, null, null);
+        String[] selectionArgs = {User.GetAppUser().Id};
+        Cursor cursor;
+
+        if(isCreated)
+            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);
+        else cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " != ?",selectionArgs, null, null, null, null);
         List<Tremp> tremps = new LinkedList<Tremp>();
 
         if (cursor.moveToFirst() == true){
             do {
                 String stId = cursor.getString(cursor.getColumnIndex(ST_ID));
-                String phoneNum = cursor.getString(cursor.getColumnIndex(DRIVER_ID));
+                String driverId = cursor.getString(cursor.getColumnIndex(DRIVER_ID));
                 String source = cursor.getString(cursor.getColumnIndex(SOURCE));
                 String dest = cursor.getString(cursor.getColumnIndex(DEST));
                 String seets = cursor.getString(cursor.getColumnIndex(SEETS));
                 String carModel = cursor.getString(cursor.getColumnIndex(CAR_MODEL));
                 String date = cursor.getString(cursor.getColumnIndex(DATE));
                 String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
-                String driverId = cursor.getString(cursor.getColumnIndex(PHONE));
+                String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
                 Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);

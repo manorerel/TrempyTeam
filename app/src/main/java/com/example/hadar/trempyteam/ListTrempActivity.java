@@ -185,6 +185,8 @@ public class ListTrempActivity extends Activity {
             // until solve the proble with driver id
             if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("1093022"))
             {
+           /* if (st.getPhoneNumber().contains("342743"))
+            {*/
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
                         "/" + st.getPhoneNumber(),
