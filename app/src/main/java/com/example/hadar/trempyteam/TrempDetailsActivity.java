@@ -1,6 +1,5 @@
 package com.example.hadar.trempyteam;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -75,5 +74,6 @@ public class TrempDetailsActivity extends Activity {
             }
         });
     }
+
 
 }

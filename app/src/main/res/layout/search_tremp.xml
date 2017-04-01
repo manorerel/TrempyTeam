@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.hadar.trempyteam.MainAactivity"
@@ -9,6 +10,8 @@
     android:layoutDirection="ltr"
     android:weightSum="1"
     android:background="#F48FB1">
+
+
 
     <TextView
         android:text=" חפש טרמפ"

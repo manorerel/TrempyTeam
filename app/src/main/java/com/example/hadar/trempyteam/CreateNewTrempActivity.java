@@ -29,7 +29,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.facebook.AccessToken;
+
 import com.example.hadar.trempyteam.Model.User;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -97,12 +101,15 @@ public class CreateNewTrempActivity extends Activity {
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
                 EditText carModel = (EditText)findViewById(R.id.car_model);
 
+          //      AccessToken.getCurrentAccessToken().getUserId();
 
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
+
                 String createdUserId = User.GetAppUser().getId();
                 Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 String imName = "";
+
 
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -133,6 +140,7 @@ public class CreateNewTrempActivity extends Activity {
         });
 
         imageView.setOnClickListener(new View.OnClickListener() {
+          
             @Override
             public void onClick(View v) {
                 takingPicture();

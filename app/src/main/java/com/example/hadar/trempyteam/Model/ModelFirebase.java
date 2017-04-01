@@ -1,17 +1,21 @@
 package com.example.hadar.trempyteam.Model;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -29,6 +33,65 @@ public class ModelFirebase {
 
         myRef.setValue(tremp.toMap());
     }
+
+    public void getAllTremps(final Model.GetAllTrempsListener listener)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Tremp> tremps = new LinkedList<Tremp>();
+
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren())
+                {
+                    Tremp t = trSnapshot.getValue(Tremp.class);
+                    tremps.add(t);
+                }
+                listener.onComplete(tremps);
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onComplete(null);
+
+            }
+        });
+    }
+
+
+    public void getAllTrempsByFilter(String dest, final Model.GetAllTrempsListener listener)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp").child("DestAddress");
+
+        if (myRef.getKey().contains("46"))
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Tremp> tremps = new LinkedList<Tremp>();
+
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren())
+                {
+                    Tremp t = trSnapshot.getValue(Tremp.class);
+                    tremps.add(t);
+                }
+                listener.onComplete(tremps);
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onComplete(null);
+
+            }
+        });
+    }
+
 
 
     public void addUser(User user) {
