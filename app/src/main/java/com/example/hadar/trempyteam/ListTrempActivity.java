@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,7 @@ public class ListTrempActivity extends Activity {
     String name = "";
     List<Tremp> trempsList ;
 
+     Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
 
 
@@ -68,35 +70,35 @@ public class ListTrempActivity extends Activity {
         setContentView(R.layout.activity_list_tremps);
 
 
-        ModelFirebase fbModel = new ModelFirebase();
-        fbModel.getAllTremps(new Model.GetAllTrempsListener() {
-                                 @Override
-                                 public void onComplete(List<Tremp> tremps) {
+        final String dest = (String) getIntent().getExtras().get("dest");
+        final String from = (String) getIntent().getExtras().get("from");
 
-                                     trempsList = tremps;
+            ModelFirebase fbModel = new ModelFirebase();
+            fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
+                @Override
+                public void onComplete(List<Tremp> tremps) {
 
-                                     ListView list = (ListView) findViewById(R.id.Tremps_listView);
+                    trempsList = tremps;
 
-                                     list.setAdapter(adapter);
+                    ListView list = (ListView) findViewById(R.id.Tremps_listView);
 
-                                     list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
-                                         @Override
-                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    list.setAdapter(adapter);
 
-                                             //send avia tremp object
-                                            // trempsList.get(i);
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                                             Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                                              //  intent.putExtra(   )
-                                             startActivity(intent);
-                                         }
-                                     });
-                                 }
-                             });
+                            //send avia tremp object
+                            // trempsList.get(i);
 
-    }
-
-
+                            Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
+                            //  intent.putExtra(   )
+                            startActivity(intent);
+                        }
+                    });
+                }
+            });
+        }
 
     class TrempsAdapter extends BaseAdapter {
 
