@@ -111,11 +111,6 @@ public class ModelFirebase {
         });
     }
 
-
-
-
-
-
     public void addUser(User user) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("User").child(user.getId());
