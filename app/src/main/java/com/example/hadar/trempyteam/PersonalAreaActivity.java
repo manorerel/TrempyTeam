@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 
 import java.util.List;
 
 public class PersonalAreaActivity extends Activity {
- List<Tremp> trempsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +23,23 @@ public class PersonalAreaActivity extends Activity {
         Button cretedTremps = (Button)findViewById(R.id.createdTremps);
         cretedTremps.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ModelSql modelSql = ModelSql.getInstance();
-                trempsList = modelSql.getAllTremps(true);
-                Intent intent = new Intent(PersonalAreaActivity.this, ListTrempActivity.class);
+
+                Intent intent = new Intent(getBaseContext(), ListTrempActivity.class);
+                intent.putExtra("cameFrom","personalArea");
+                intent.putExtra("isCreated", "true");
+
+                startActivity(intent);
+
+            }
+        });
+
+        Button joinedTremps = (Button)findViewById(R.id.joinedTremps);
+        joinedTremps.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getBaseContext(), ListTrempActivity.class);
+                intent.putExtra("cameFrom","personalArea");
+                intent.putExtra("isCreated", "false");
 
                 startActivity(intent);
 
