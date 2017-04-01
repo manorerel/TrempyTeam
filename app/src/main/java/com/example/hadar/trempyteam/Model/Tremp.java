@@ -85,6 +85,7 @@ public class Tremp {
         result.put("driverId", DriverId);
         result.put("phoneNumber", PhoneNumber);
         result.put("driverId",DriverId);
+        result.put("imageName", imageName);
         return result;
     }
 }
