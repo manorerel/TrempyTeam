@@ -1,16 +1,26 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Window;
 
 public class MainAactivity extends Activity {
     FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.main_activity);
+//        ActionBar actionBar = this.getActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         //tran
         fragmentManager = getFragmentManager();
@@ -25,5 +35,14 @@ public class MainAactivity extends Activity {
 
         transaction.commit();
 
+    }
+
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        Log.d("TAG", "handle action bar");
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        MenuItem add =  menu.findItem(R.id.personalArea);
+        add.setVisible(true);
     }
 }

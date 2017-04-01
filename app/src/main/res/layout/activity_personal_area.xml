@@ -4,6 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hadar.trempyteam.PersonalAreaActivity">
+    android:background="#F48FB1"
+    android:layoutDirection="ltr"
+    tools:context="com.example.hadar.trempyteam.PersonalAreaActivity"
+    >
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="24sp"
+        android:background="@drawable/rounded_corners"
+        android:text="טרמפים שלי"
+        android:id="@+id/createdTremps"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="24sp"
+        android:background="@drawable/rounded_corners"
+        android:text="טרמפים שהצטרפתי"
+        android:id="@+id/joinedTremps"
+        android:layout_below="@+id/createdTremps"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/h"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
