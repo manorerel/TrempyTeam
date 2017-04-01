@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,10 +25,11 @@ import java.util.List;
  */
 
 public class TrempDetailsActivity extends Activity {
-    protected void onCreate(Bundle savedInstanceState, Tremp trempDetails) {
+    protected void onCreate(Bundle savedInstanceState) {
+      //  protected void onCreate(Bundle savedInstanceState, Tremp trempDetails) {
         super.onCreate(savedInstanceState);
 
-
+/*
         setContentView(R.layout.tremp_details);
         final TextView  PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
@@ -73,7 +75,8 @@ public class TrempDetailsActivity extends Activity {
                 finish();
             }
         });
+    }*/
+
+
     }
-
-
 }
