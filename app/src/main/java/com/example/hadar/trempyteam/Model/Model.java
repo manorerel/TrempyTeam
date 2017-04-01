@@ -38,10 +38,21 @@ public class Model {
         void onComplete(List<Tremp> tremps);
     }
 
+    public interface GetAllTrempsByFilerListener{
+        void onComplete(List<Tremp> tremps);
+    }
+
+    public void getAllTrempsByFilter(String dest, String from, GetAllTrempsByFilerListener listener)
+    {
+        modelFirebase.getAllTrempsByFilter(dest,from, listener);
+    }
+
     public void getAllTremps(GetAllTrempsListener listener)
         {
               modelFirebase.getAllTremps(listener);
        }
+
+
 
 
     public interface SaveImageListener{

@@ -194,7 +194,7 @@ public class CreateNewTrempActivity extends Activity {
                     List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
                     if (null != listAddresses && listAddresses.size() > 0) {
 
-                        String _Location = listAddresses.get(0).getAddressLine(0);
+                        String _Location = listAddresses.get(0).getAddressLine(0) + " " + listAddresses.get(0).getLocality();
                         String contry = listAddresses.get(0).getLocality();
                         String g = listAddresses.get(0).getCountryName();
 
@@ -301,7 +301,7 @@ public class CreateNewTrempActivity extends Activity {
                         try {
                             TextView exitFromAddr = (TextView) findViewById(R.id.exitfrom);
                             List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            String _Location = listAddresses.get(0).getAddressLine(0);
+                            String _Location = listAddresses.get(0).getAddressLine(0) + " " + listAddresses.get(0).getLocality();;
                             String contry = listAddresses.get(0).getLocality();
                             String g = listAddresses.get(0).getCountryName();
 
