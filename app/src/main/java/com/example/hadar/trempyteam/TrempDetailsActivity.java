@@ -27,7 +27,6 @@ import java.util.List;
 public class TrempDetailsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tremp trempDetails = (Tremp) getIntent().getExtras().getCharSequence("tremp");
 
         setContentView(R.layout.tremp_details);
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
@@ -49,9 +48,6 @@ public class TrempDetailsActivity extends Activity {
         {
 
         }
-
-
-
 
         TrempDate.setText("" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear());
         TrempTime.setText("" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
