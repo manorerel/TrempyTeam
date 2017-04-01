@@ -72,7 +72,12 @@ public class TrempSql {
 
     public static List<Tremp> GetAllTremps(SQLiteDatabase readableDatabase, boolean isCreated){
         Tremp tremp = null;
-        Cursor cursor = readableDatabase.query(TREMP,null, null, null, null, null, null, null);
+        String[] selectionArgs = {User.GetAppUser().Id};
+        Cursor cursor;
+
+        if(isCreated)
+            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);
+        else cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " != ?",selectionArgs, null, null, null, null);
         List<Tremp> tremps = new LinkedList<Tremp>();
 
         if (cursor.moveToFirst() == true){

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -58,7 +59,6 @@ public class ListTrempActivity extends Activity {
 
     String name = "";
 
-
     List<Tremp> trempsList ;
 
      Boolean check = false;
@@ -71,13 +71,23 @@ public class ListTrempActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tremps);
 
+        String cameFrom = (String) getIntent().getExtras().get("cameFrom");
+        if(cameFrom != null && cameFrom.equals("personalArea")){
+            String isCreated = (String) getIntent().getExtras().get("isCreated");
+            ModelSql modelSql = ModelSql.getInstance();
 
-        // Hadar Part
-        final String dest = (String) getIntent().getExtras().get("dest");
-        final String from = (String) getIntent().getExtras().get("from");
+            if(isCreated.equals("true"))
+                trempsList = modelSql.getAllTremps(true);
+            else trempsList = modelSql.getAllTremps(false);
+            CreateList();
+        }
+        else {
+            // Hadar Part
+            final String dest = (String) getIntent().getExtras().get("dest");
+            final String from = (String) getIntent().getExtras().get("from");
 
             ModelFirebase fbModel = new ModelFirebase();
-            fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
+            fbModel.getAllTrempsByFilter(dest, from, new Model.GetAllTrempsByFilerListener() {
                 @Override
                 public void onComplete(List<Tremp> tremps) {
 
@@ -85,6 +95,7 @@ public class ListTrempActivity extends Activity {
                     CreateList();
                 }
             });
+        }
 
 
         //ManorPart
@@ -172,7 +183,7 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
 
             // until solve the proble with driver id
-           if (st.getPhoneNumber().contains("342743"))
+            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("1093022"))
             {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
