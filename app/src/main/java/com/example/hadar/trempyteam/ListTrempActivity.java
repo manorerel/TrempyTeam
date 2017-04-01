@@ -172,8 +172,8 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
 
             // until solve the proble with driver id
-           /* if (st.getPhoneNumber().contains("342743"))
-            {*/
+           if (st.getPhoneNumber().contains("342743"))
+            {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
                         "/" + st.getPhoneNumber(),
@@ -191,13 +191,13 @@ public class ListTrempActivity extends Activity {
                                 }
                             }
                         }).executeAsync();
-          /*  }
+           }
             else
-            {*/
+           {
                 //just until solve thr bug
                 name.setText("null");
                 seats.setText(String.valueOf(st.getSeets()));
-            //}
+            }
 
             return view;
         }
