@@ -57,6 +57,8 @@ import java.util.jar.Attributes;
 public class ListTrempActivity extends Activity {
 
     String name = "";
+
+
     List<Tremp> trempsList ;
 
      Boolean check = false;
@@ -70,6 +72,7 @@ public class ListTrempActivity extends Activity {
         setContentView(R.layout.activity_list_tremps);
 
 
+        // Hadar Part
         final String dest = (String) getIntent().getExtras().get("dest");
         final String from = (String) getIntent().getExtras().get("from");
 
@@ -79,26 +82,35 @@ public class ListTrempActivity extends Activity {
                 public void onComplete(List<Tremp> tremps) {
 
                     trempsList = tremps;
-
-                    ListView list = (ListView) findViewById(R.id.Tremps_listView);
-
-                    list.setAdapter(adapter);
-
-                    list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            //send avia tremp object
-                            // trempsList.get(i);
-
-                            Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                            //  intent.putExtra(   )
-                            startActivity(intent);
-                        }
-                    });
+                    CreateList();
                 }
             });
+
+
+        //ManorPart
+
         }
+
+    public void CreateList()
+    {
+        ListView list = (ListView) findViewById(R.id.Tremps_listView);
+
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //send avia tremp object
+                // trempsList.get(i);
+
+                Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
+                //  intent.putExtra(   )
+                startActivity(intent);
+            }
+        });
+
+    }
 
     class TrempsAdapter extends BaseAdapter {
 
