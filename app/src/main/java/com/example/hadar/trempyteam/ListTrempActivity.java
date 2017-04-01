@@ -165,11 +165,10 @@ public class ListTrempActivity extends Activity {
 
             // until solve the proble with driver id
 
-            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("1093022"))
-            {
+
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getPhoneNumber(),
+                        "/" + st.getDriverId(),
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
@@ -184,14 +183,6 @@ public class ListTrempActivity extends Activity {
                                 }
                             }
                         }).executeAsync();
-           }
-            else
-           {
-                //just until solve thr bug
-                name.setText("null");
-                seats.setText(String.valueOf(st.getSeets()));
-            }
-
             return view;
         }
     }
