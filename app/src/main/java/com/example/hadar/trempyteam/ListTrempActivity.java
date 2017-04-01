@@ -151,25 +151,6 @@ public class ListTrempActivity extends Activity {
             return i;
         }
 
-
-        public String getUserName(String userId)
-        {
-           GraphRequest d = new GraphRequest(AccessToken.getCurrentAccessToken(),
-                    "/" + userId,
-                    null,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                @Override
-                public void onCompleted(GraphResponse response) {
-
-                }
-            });
-
-
-            return name;
-
-        }
-
         @Override
         public View  getView(final int i, View view, ViewGroup viewGroup) {
 
@@ -183,6 +164,7 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
 
             // until solve the proble with driver id
+
             if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("1093022"))
             {
                 //until solve the problem with droiver id
