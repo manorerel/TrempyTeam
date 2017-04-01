@@ -125,7 +125,7 @@ public class CreateNewTrempActivity extends Activity {
                 newTremp.setImageName(imName);
                 fbModel.addTremp(newTremp);
 
-                ModelSql sqlLight = new ModelSql();
+                ModelSql sqlLight = ModelSql.getInstance();
                 sqlLight.addTremp(newTremp);
                 Log.d("TAG", "Create new tremp and save to db");
                 finish();
