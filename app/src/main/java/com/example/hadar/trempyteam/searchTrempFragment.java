@@ -85,29 +85,6 @@ public class searchTrempFragment extends Fragment {
             }
         } else {
 
-    @Override
-    public void onCreateOptionsMenu(
-            Menu menu, MenuInflater inflater) {
-        Log.d("TAG", "handle action bar");
-        inflater.inflate(R.menu.menu_buttons, menu);
-
-        MenuItem personalArea =  menu.findItem(R.id.personalArea);
-        personalArea.setVisible(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle item selection
-        switch (item.getItemId()) {
-            case R.id.personalArea:{
-//                getActivity().getFragmentManager().beginTransaction().replace(R.id.main_container, new NewStudentFragment()).addToBackStack(null).commit();
-                Intent intent = new Intent(getActivity(), PersonalAreaActivity.class);
-                startActivity(intent);
-                return true;}
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 
             // create class object
@@ -161,9 +138,34 @@ public class searchTrempFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        Log.d("TAG", "handle action bar");
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.personalArea:{
+//                getActivity().getFragmentManager().beginTransaction().replace(R.id.main_container, new NewStudentFragment()).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), PersonalAreaActivity.class);
+                startActivity(intent);
+                return true;}
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
-            @Override
+
+
+    @Override
                 public void onResume () {
                     super.onResume();
 
