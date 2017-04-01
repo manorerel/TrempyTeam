@@ -102,11 +102,11 @@ public class CreateNewTrempActivity extends Activity {
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
                 String createdUserId = User.GetAppUser().getId();
                 Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
-                fbModel.addTremp(newTremp);
+                String imName = "";
 
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                    String imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
+                    imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
                     Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
                         @Override
                         public void complete(String url) {
@@ -121,6 +121,9 @@ public class CreateNewTrempActivity extends Activity {
                 }else{
                     saveAndClose();
                 }
+
+                newTremp.setImageName(imName);
+                fbModel.addTremp(newTremp);
 
                 ModelSql sqlLight = new ModelSql();
                 sqlLight.addTremp(newTremp);
