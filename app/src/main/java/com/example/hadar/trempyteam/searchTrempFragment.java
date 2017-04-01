@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.List;
@@ -137,6 +138,7 @@ public class searchTrempFragment extends Fragment {
         }
         return rootView;
     }
+
 
     @Override
     public void onCreateOptionsMenu(

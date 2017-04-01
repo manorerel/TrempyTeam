@@ -25,12 +25,12 @@ import java.util.List;
  */
 
 public class TrempDetailsActivity extends Activity {
-    protected void onCreate(Bundle savedInstanceState) {
-      //  protected void onCreate(Bundle savedInstanceState, Tremp trempDetails) {
+ //   protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState, Tremp trempDetails) {
         super.onCreate(savedInstanceState);
 
-/*
-        setContentView(R.layout.tremp_details);
+
+     /*   setContentView(R.layout.tremp_details);
         final TextView  PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
         final TextView  DestAddress = (TextView) findViewById(R.id.detailsDest);
@@ -75,8 +75,8 @@ public class TrempDetailsActivity extends Activity {
                 finish();
             }
         });
-    }*/
-
+    }*//*
+*/
 
     }
 }
