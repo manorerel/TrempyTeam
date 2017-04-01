@@ -40,6 +40,7 @@ public class TrempDetailsActivity extends Activity {
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
 
         Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
         Date date = trempDetails.getTrempDate();
 
         TrempDate.setText("" + trempDetails.getTrempDate().getDay() + "/" + (trempDetails.getTrempDate().getMonth()+1) + "/" + trempDetails.getTrempDate().getYear());

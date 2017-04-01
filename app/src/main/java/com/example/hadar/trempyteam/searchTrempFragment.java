@@ -42,9 +42,8 @@ public class searchTrempFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //GOOD
-              //  Intent intent = new Intent(getActivity(), ListTrempActivity.class);
-              //  startActivity(intent);
+                Intent intent = new Intent(getActivity(), ListTrempActivity.class);
+                startActivity(intent);
 
                 /*EditText phone = (EditText)rootView.findViewById(R.id.editTextPhone);
                 EditText source = (EditText)rootView.findViewById(R.id.exitfrom);
