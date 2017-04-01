@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam.Model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.hadar.trempyteam.MainAactivity;
 import com.example.hadar.trempyteam.TrempyApp;
@@ -17,13 +18,24 @@ public class ModelSql {
     private int version = 2;
 
     public ModelSql(){
-        trempHelper = new TrempHelper(TrempyApp.getAppContext());
-        userHelper = new UserHelper(TrempyApp.getAppContext());
+        try {
+            trempHelper = new TrempHelper(TrempyApp.getAppContext());
+            userHelper = new UserHelper(TrempyApp.getAppContext());
+        }
+        catch(Exception e){
+            Log.d("exception", "exception while trying to install the local db " + e.getMessage());
+        }
     }
 
     public void addTremp(Tremp tremp)
     {
-        TrempSql.addTremp(trempHelper.getWritableDatabase(),tremp);
+        try {
+            TrempSql.addTremp(trempHelper.getWritableDatabase(), tremp);
+        }
+        catch (Exception e)
+        {
+            Log.d("exception:" , "exception while trying add tremp to local db " + e.getMessage());
+        }
     }
 
     public Tremp getTrempById(String id){

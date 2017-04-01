@@ -69,8 +69,7 @@ public class Tremp {
     public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
 
     private String CreateID(){
-//        String id =ServerValue.TIMESTAMP.toString()+ getDriverId()+ count++;
-        String id =new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
+        String id =DriverId + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
         return id;
     }
 
@@ -85,6 +84,8 @@ public class Tremp {
         result.put("trempDateTime", TrempDate);
         result.put("driverId", DriverId);
         result.put("phoneNumber", PhoneNumber);
+        result.put("driverId",DriverId);
+        result.put("imageName", imageName);
         return result;
     }
 }
