@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -84,10 +86,19 @@ public class ListTrempActivity extends Activity {
                                          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                                              //send avia tremp object
-                                            // trempsList.get(i);
+                                            Tremp tremp =  trempsList.get(i);
 
                                              Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                                              //  intent.putExtra(   )
+                                             intent.putExtra("phone",  tremp.getPhoneNumber());
+                                             intent.putExtra("source",  tremp.getSourceAddress());
+                                             intent.putExtra("dest",  tremp.getDestAddress());
+                                             intent.putExtra("seets",  tremp.getSeets());
+                                             intent.putExtra("car",  tremp.getCarModel());
+                                             intent.putExtra("image",  tremp.getImageName());
+                                             if (tremp.getTrempDate() != null) {
+                                                 intent.putExtra("date", tremp.getTrempDate().toString());
+
+                                             }
                                              startActivity(intent);
                                          }
                                      });

@@ -128,23 +128,44 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference httpsReference = storage.getReferenceFromUrl(url);
+
+        StorageReference storageRef = storage.getReference();
+        StorageReference islandRef = storageRef.child("images/" + url);
+
         final long ONE_MEGABYTE = 1024 * 1024;
-        httpsReference.getBytes(3* ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        islandRef.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
+                // Data for "images/island.jpg" is returns, use this as needed
                 Bitmap image = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                 listener.onSccess(image);
-                // Data for "images/island.jpg" is returns, use this as needed
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception exception) {
+                // Handle any errors
                 Log.d("TAG",exception.getMessage());
                 listener.onFail();
-                // Handle any errors
             }
         });
+
+//        StorageReference httpsReference = storage.getReferenceFromUrl(url);
+//        final long ONE_MEGABYTE = 1024 * 1024;
+//        httpsReference.getBytes(3* ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//                Bitmap image = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+//                listener.onSccess(image);
+//                // Data for "images/island.jpg" is returns, use this as needed
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(Exception exception) {
+//                Log.d("TAG",exception.getMessage());
+//                listener.onFail();
+//                // Handle any errors
+//            }
+//        });
 
     }
 
