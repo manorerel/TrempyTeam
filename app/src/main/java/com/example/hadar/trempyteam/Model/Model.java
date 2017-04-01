@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import com.example.hadar.trempyteam.TrempyApp;
 /**
@@ -32,6 +33,16 @@ public class Model {
     public static Model getInstance(){
         return instance;
     }
+
+    public interface GetAllTrempsListener{
+        void onComplete(List<Tremp> tremps);
+    }
+
+    public void getAllTremps(GetAllTrempsListener listener)
+        {
+              modelFirebase.getAllTremps(listener);
+       }
+
 
     public interface SaveImageListener{
         void complete(String url);

@@ -59,43 +59,15 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
 
+                    loginResult.getAccessToken().getUserId();
+
+
+
                     Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
                     startActivityForResult(intent, main);
 
 
             }
-
-/*
-                *//**//* make the API call *//**//*
-                final GraphRequestAsyncTask graphRequestAsyncTask =    new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/" +userId + "/friends",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-
-
-
-
-
-                                *//**//* try
-                                {
-                                    Log.d("userid", userId);
-                                    //  ArrayList a = new ArrayList();
-                                    JSONArray rawName = response.getJSONObject().getJSONArray("data");
-                                    for(int i=0; i<rawName.length(); i++){
-                                        {
-
-                                            //  a.add(i, rawName.getJSONObject(i).getString("name"));
-                                            Log.d("name: ", rawName.getJSONObject(i).getString("name"));
-                                        }
-                                    }
-                                }
-                                catch ( Throwable t )
-                                {
-                                    t.printStackTrace();
-                                }*//**//**/
 
             @Override
             public void onCancel() {

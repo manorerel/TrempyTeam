@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -96,10 +97,11 @@ public class CreateNewTrempActivity extends Activity {
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
                 EditText carModel = (EditText)findViewById(R.id.car_model);
 
+          //      AccessToken.getCurrentAccessToken().getUserId();
 
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
-                Tremp newTremp = new Tremp(seets, "dd", date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
+                Tremp newTremp = new Tremp(seets, AccessToken.getCurrentAccessToken().getUserId(), date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 fbModel.addTremp(newTremp);
 
                 if(imageBitmap != null){
