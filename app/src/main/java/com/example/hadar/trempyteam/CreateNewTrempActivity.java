@@ -140,7 +140,7 @@ public class CreateNewTrempActivity extends Activity {
         });
 
         imageView.setOnClickListener(new View.OnClickListener() {
-          
+
             @Override
             public void onClick(View v) {
                 takingPicture();
@@ -200,38 +200,10 @@ public class CreateNewTrempActivity extends Activity {
 
                         exitFromAddr.setText(_Location);
 
-                        // Click on the "+" button to add a new student
-                        Button btnMap = (Button) findViewById(R.id.btnMap);
-                        btnMap.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                TextView toDest = (TextView) findViewById(R.id.dest);
-                                toDest.getText().toString();
-                                TextView source = (TextView) findViewById(R.id.exitfrom);
-                                source.getText().toString();
-
-                                LatLng c =  getLocationFromAddress(CreateNewTrempActivity.this, toDest.getText().toString());
-                                LatLng s =  getLocationFromAddress(CreateNewTrempActivity.this, source.getText().toString());
-                                //   LatLng s = new LatLng(latitude, longitude);
-
-                                Intent intent = new Intent(CreateNewTrempActivity.this, MapsActivity.class);
-                                intent.putExtra("DestLocation", c);
-                                intent.putExtra("SourceLocation", s);
-                                startActivityForResult(intent, main);
-
-
-
-                            }
-                        });
-
-                        // \n is for new line=
-                        //  Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude + "\nAddress: " + _Location + "\nCon: " + g + "\ngggg: " + contry, Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
             }
         }

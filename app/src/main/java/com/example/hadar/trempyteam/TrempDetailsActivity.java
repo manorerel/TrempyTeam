@@ -1,8 +1,11 @@
 package com.example.hadar.trempyteam;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,6 +41,8 @@ public class TrempDetailsActivity extends Activity {
         TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
+        final String de;
+       final  String so;
 
         Intent intent = getIntent();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -54,6 +60,9 @@ public class TrempDetailsActivity extends Activity {
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
+         de = intent.getExtras().getString("dest");
+         so = intent.getExtras().getString("source");
+
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
        String imageName = intent.getExtras().getString("image");
@@ -82,7 +91,60 @@ public class TrempDetailsActivity extends Activity {
                 finish();
             }
         });
+
+
+        // Click on the "+" button to add a new student
+        Button btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LatLng c =  getLocationFromAddress(TrempDetailsActivity.this, de);
+                LatLng s =  getLocationFromAddress(TrempDetailsActivity.this, so);
+                //   LatLng s = new LatLng(latitude, longitude);
+
+                Intent intent = new Intent(TrempDetailsActivity.this, MapsActivity.class);
+                intent.putExtra("DestLocation", c);
+                intent.putExtra("SourceLocation", s);
+                startActivity(intent);
+
+
+
+            }
+        });
+
+
+
     }
+
+
+    public LatLng getLocationFromAddress(Context context, String strAddress)
+    {
+        Geocoder coder= new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try
+        {
+            address = coder.getFromLocationName(strAddress, 5);
+            if(address==null)
+            {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return p1;
+
+    }
+
 
 
 }
