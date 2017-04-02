@@ -57,6 +57,10 @@ public class ModelSql {
         return TrempSql.GetAllTremps(trempHelper.getReadableDatabase(), isCreated);
     }
 
+    public void deleteTremp(String id){
+        TrempSql.DeleteTremp(trempHelper.getWritableDatabase(), id);
+    }
+
 
     class TrempHelper extends SQLiteOpenHelper{
 

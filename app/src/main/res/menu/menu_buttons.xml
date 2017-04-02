@@ -14,5 +14,12 @@
         android:title="edit"
 
         android:visible="false"/>
+
+    <item android:id="@+id/deleteTremp"
+        android:icon="@mipmap/delete"
+        android:showAsAction ="always"
+        android:title="delete"
+
+        android:visible="false"/>
     <!--android:showAsAction="always"-->
 </menu>

@@ -136,6 +136,15 @@ public class TrempSql {
         sqLiteDatabase.execSQL("DROP TABLE " + TREMP);
     }
 
+    public static void DeleteTremp(SQLiteDatabase sqLiteDatabase, String trempId){
+        String[] selectionArgs = {trempId};
+        try {
+            sqLiteDatabase.delete(TREMP,ST_ID + "= ?", selectionArgs);
+        }
+        catch (Exception e){}
+
+    }
+
     private static String[] getTableColumn(){
         String[] column = {ST_ID,SOURCE,DEST,PHONE,CAR_MODEL,DATE,IMAGE_URL};
         return column;
