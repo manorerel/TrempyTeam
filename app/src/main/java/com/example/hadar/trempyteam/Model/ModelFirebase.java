@@ -35,7 +35,20 @@ public class ModelFirebase {
 
         myRef.setValue(tremp.toMap());
     }
-
+    public void deleteTremp(Tremp tremp){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       database.getReference("Tremp").child(tremp.getId()).removeValue();
+    }
+    public void deleteTremp(String id){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Tremp").child(id).removeValue();
+    }
+    public void deleteTremp(String id, String image){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Tremp").child(id).removeValue();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storage.getReference().child("images").child(image).delete();
+    }
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

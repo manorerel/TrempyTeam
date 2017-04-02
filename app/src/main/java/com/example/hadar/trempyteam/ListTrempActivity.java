@@ -116,6 +116,7 @@ public class ListTrempActivity extends Activity {
                 Tremp tremp =  trempsList.get(i);
 
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
+                intent.putExtra("id",  tremp.getId());
                 intent.putExtra("phone",  tremp.getPhoneNumber());
                 intent.putExtra("source",  tremp.getSourceAddress());
                 intent.putExtra("dest",  tremp.getDestAddress());
