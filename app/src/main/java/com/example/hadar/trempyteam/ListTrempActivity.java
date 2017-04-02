@@ -120,7 +120,7 @@ public class ListTrempActivity extends Activity {
         });
 
     }
-
+//check its the master
     class TrempsAdapter extends BaseAdapter {
 
         @Override
