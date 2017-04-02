@@ -62,6 +62,7 @@ public class CreateNewTrempActivity extends Activity {
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
 
+    //check
     private GoogleMap googleMap;
     final int main = 1;
 
