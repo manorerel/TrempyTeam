@@ -21,8 +21,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -62,7 +67,7 @@ public class ModelFirebase {
             }
         });
     }
-//get
+
 
     public void getAllTrempsByFilter(final String dest, final String from ,final Model.GetAllTrempsByFilerListener listener) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -90,8 +95,21 @@ public class ModelFirebase {
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+                                    Date date = new Date();
+                                    try {
+                                        date = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
+                                    }
+                                    catch (Exception e)
+                                    {
+
+                                    }
+
                                     Tremp t = trSnapshot.getValue(Tremp.class);
+                                    t.CreationDate = date;
                                     tremps.add(t);
+                                 //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
+
                                     break;
                                 }
                             }
@@ -110,11 +128,6 @@ public class ModelFirebase {
             }
         });
     }
-
-
-
-
-
 
     public void addUser(User user) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

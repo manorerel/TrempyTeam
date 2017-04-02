@@ -26,7 +26,7 @@ public class TrempSql {
     private static final String DEST = "destination";
     private static final String DRIVER_ID = "driverId";
     private static final String SEETS = "freeSeets";
-    private static final String DATE = "TrempDate";
+    private static final String DATE = "trempDateTime";
     private static final String PHONE = "PhoneNumber";
 
     public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp) {
@@ -38,7 +38,7 @@ public class TrempSql {
         values.put(DEST, tremp.getDestAddress());
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
-        values.put(DATE, convertDateToString(tremp.getTrempDate()));
+        values.put(DATE, convertDateToString(tremp.getTrempDateTime()));
         values.put(PHONE, tremp.getPhoneNumber());
         values.put(IMAGE_URL, tremp.getImageName());
 
@@ -72,7 +72,12 @@ public class TrempSql {
 
     public static List<Tremp> GetAllTremps(SQLiteDatabase readableDatabase, boolean isCreated){
         Tremp tremp = null;
-        Cursor cursor = readableDatabase.query(TREMP,null, null, null, null, null, null, null);
+        String[] selectionArgs = {User.GetAppUser().Id};
+        Cursor cursor;
+
+        if(isCreated)
+            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);
+        else cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " != ?",selectionArgs, null, null, null, null);
         List<Tremp> tremps = new LinkedList<Tremp>();
 
         if (cursor.moveToFirst() == true){

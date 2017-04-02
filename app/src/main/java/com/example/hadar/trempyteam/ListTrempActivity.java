@@ -111,8 +111,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("seets",  tremp.getSeets());
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
-                if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", tremp.getTrempDate().toString());
+                if (tremp.getTrempDateTime() != null) {
+                    intent.putExtra("date", tremp.getTrempDateTime().toString());
 
                 }
                 startActivity(intent);
@@ -171,12 +171,14 @@ public class ListTrempActivity extends Activity {
             final   TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-            // until solve the proble with driver id
+
+           String ddddd = st.getDriverId();
+            /*// until solve the proble with driver id
            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
-            {
+            {*/
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getPhoneNumber(),
+                        "/" + st.getDriverId(),
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
@@ -190,14 +192,19 @@ public class ListTrempActivity extends Activity {
                                     e.printStackTrace();
                                 }
                             }
-                        }).executeAsync();
-           }
-            else
-           {
+                        });
+
+            String fff = "gggg";
+          /* }
+
+
+           */
+           // else
+      /*     {*//*
                 //just until solve thr bug
                 name.setText("null");
                 seats.setText(String.valueOf(st.getSeets()));
-            }
+            }*/
 
             return view;
         }
