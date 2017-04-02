@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +8,9 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +36,10 @@ public class TrempDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tremp_details);
+        ActionBar actionBar = this.getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
         final TextView DestAddress = (TextView) findViewById(R.id.detailsDest);
@@ -143,6 +150,32 @@ public class TrempDetailsActivity extends Activity {
         }
         return p1;
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        MenuItem edit =  menu.findItem(R.id.editTremp);
+        edit.setVisible(true);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.personalArea:{
+//                getActivity().getFragmentManager().beginTransaction().replace(R.id.main_container, new NewStudentFragment()).addToBackStack(null).commit();
+//                Intent intent = new Intent(getActivity(), PersonalAreaActivity.class);
+//                startActivity(intent);
+                return true;}
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
