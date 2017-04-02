@@ -109,24 +109,8 @@ public class searchTrempFragment extends Fragment {
                         source.setText(_Location);
 
 
-                        Button btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
+
                         EditText dest = (EditText) rootView.findViewById(R.id.destination);
-
-                        btnSearch.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                EditText dest = (EditText) rootView.findViewById(R.id.destination);
-                                EditText from = (EditText) rootView.findViewById(R.id.from);
-                                Intent intent = new Intent(getActivity(), ListTrempActivity.class);
-                                String d = dest.getText().toString();
-                                String f = from.getText().toString();
-                                intent.putExtra("dest", d);
-                                intent.putExtra("from", f);
-                                startActivity(intent);
-
-                            }
-                        });
 
                     }
                 } catch (IOException e) {
@@ -134,6 +118,22 @@ public class searchTrempFragment extends Fragment {
                 }
             }
 
+            Button btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
+            btnSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    EditText dest = (EditText) rootView.findViewById(R.id.destination);
+                    EditText from = (EditText) rootView.findViewById(R.id.from);
+                    Intent intent = new Intent(getActivity(), ListTrempActivity.class);
+                    String d = dest.getText().toString();
+                    String f = from.getText().toString();
+                    intent.putExtra("dest", d);
+                    intent.putExtra("from", f);
+                    startActivity(intent);
+
+                }
+            });
         }
         return rootView;
     }

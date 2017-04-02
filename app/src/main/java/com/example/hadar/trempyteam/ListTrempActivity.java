@@ -158,18 +158,20 @@ public class ListTrempActivity extends Activity {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
 
             }
-           final TextView name = (TextView) view.findViewById(R.id.DriverName);
-          final   TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
-            final   TextView seats = (TextView) view.findViewById(R.id.ava_seats);
+            final TextView name = (TextView) view.findViewById(R.id.DriverName);
+            final TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
+            final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
+
+            seats.setText(String.valueOf(st.getSeets()));
+
 
             // until solve the proble with driver id
 
-            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("1093022"))
-            {
+            try {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getPhoneNumber(),
+                        "/" + st.getDriverId(),
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
@@ -178,20 +180,15 @@ public class ListTrempActivity extends Activity {
 
                                 try {
                                     name.setText(response.getJSONObject().getString("name"));
-                                    seats.setText(String.valueOf(st.getSeets()));
-                                } catch (JSONException e) {
+                                    } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }).executeAsync();
-           }
-            else
-           {
-                //just until solve thr bug
-                name.setText("null");
-                seats.setText(String.valueOf(st.getSeets()));
             }
-
+            catch (Exception e){
+                Log.d("exception", "can't get user name " + e.getMessage());
+            }
             return view;
         }
     }

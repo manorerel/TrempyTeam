@@ -91,25 +91,26 @@ public class ModelFirebase {
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
+                                    Tremp t;
                                     try {
-//                                        String id = (String)trSnapshot.child("id").getValue();
-//                                        String driverId = (String) trSnapshot.child("driverId").getValue();
-//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
-//                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
-//                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
-//                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
-//                                        long seets = (long) trSnapshot.child("seets").getValue();
-//                                        String phone = (String) trSnapshot.child("phoneNumber").getValue();
-//                                        String imageName = (String) trSnapshot.child("imageName").getValue();
-
-                                        Tremp t = trSnapshot.getValue(Tremp.class);
-//                                        Tremp t = new Tremp(id, seets, driverId, trempDate, source, dest, phone, carModel, imageName);
-                                        tremps.add(t);
+                                        t = trSnapshot.getValue(Tremp.class);
                                     }
                                     catch (Exception e){
                                         Log.d("Exception", "Can't create tremp " + e.getMessage());
+
+                                        String id = (String)trSnapshot.child("id").getValue();
+                                        String driverId = (String) trSnapshot.child("driverId").getValue();
+//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
+                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
+                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
+                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
+                                        long seets = (long) trSnapshot.child("seets").getValue();
+                                        String phone = (String) trSnapshot.child("phoneNumber").getValue();
+                                        String imageName = (String) trSnapshot.child("imageName").getValue();
+                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName);
                                     }
 
+                                    tremps.add(t);
                                     break;
                                 }
                             }
@@ -117,8 +118,10 @@ public class ModelFirebase {
                         }
                     }
 
-                    listener.onComplete(tremps);
+
                 }
+
+                listener.onComplete(tremps);
             }
 
             @Override
