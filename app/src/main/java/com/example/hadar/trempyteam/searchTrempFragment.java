@@ -38,7 +38,6 @@ import java.util.Locale;
 
 public class searchTrempFragment extends Fragment {
 
-    //h
     FragmentManager fragmentManager;
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
     @Override
@@ -86,6 +85,7 @@ public class searchTrempFragment extends Fragment {
                 // result of the request.
             }
         } else {
+
 
 
             // create class object
@@ -166,7 +166,8 @@ public class searchTrempFragment extends Fragment {
 
 
 
-            @Override
+
+    @Override
                 public void onResume () {
                     super.onResume();
 
