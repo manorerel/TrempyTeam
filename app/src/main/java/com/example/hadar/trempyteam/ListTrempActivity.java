@@ -171,18 +171,19 @@ public class ListTrempActivity extends Activity {
             final   TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-            // until solve the proble with driver id
+
+           final String driver_id = st.getDriverId();
+            /*// until solve the proble with driver id
            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
-            {
+            {*/
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getPhoneNumber(),
+                        "/" + driver_id,
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
                             @Override
                             public void onCompleted(GraphResponse response) {
-
                                 try {
                                     name.setText(response.getJSONObject().getString("name"));
                                     seats.setText(String.valueOf(st.getSeets()));
@@ -191,13 +192,6 @@ public class ListTrempActivity extends Activity {
                                 }
                             }
                         }).executeAsync();
-           }
-            else
-           {
-                //just until solve thr bug
-                name.setText("null");
-                seats.setText(String.valueOf(st.getSeets()));
-            }
 
             return view;
         }
