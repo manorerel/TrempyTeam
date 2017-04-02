@@ -122,8 +122,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("seets",  tremp.getSeets());
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
-                if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", tremp.getTrempDate().toString());
+                if (tremp.getTrempDateTime() != null) {
+                    intent.putExtra("date", tremp.getTrempDateTime().toString());
 
                 }
                 startActivity(intent);
@@ -178,6 +178,7 @@ public class ListTrempActivity extends Activity {
                                 try {
                                     name.setText(response.getJSONObject().getString("name"));
                                     seats.setText(String.valueOf(st.getSeets()));
+                                    time.setText(st.getCreationDate().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

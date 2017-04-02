@@ -32,6 +32,7 @@ public class TrempDetailsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.tremp_details);
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);

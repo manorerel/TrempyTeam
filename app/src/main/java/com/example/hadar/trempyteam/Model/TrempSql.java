@@ -26,7 +26,7 @@ public class TrempSql {
     private static final String DEST = "destination";
     private static final String DRIVER_ID = "driverId";
     private static final String SEETS = "freeSeets";
-    private static final String DATE = "TrempDate";
+    private static final String DATE = "trempDateTime";
     private static final String PHONE = "PhoneNumber";
 
     public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp) {
@@ -38,7 +38,7 @@ public class TrempSql {
         values.put(DEST, tremp.getDestAddress());
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
-        values.put(DATE, convertDateToString(tremp.getTrempDate()));
+        values.put(DATE, convertDateToString(tremp.getTrempDateTime()));
         values.put(PHONE, tremp.getPhoneNumber());
         values.put(IMAGE_URL, tremp.getImageName());
 
