@@ -48,6 +48,7 @@ public class ModelSql {
         }
     }
 
+
     public Tremp getTrempById(String id){
         return TrempSql.getTrempById(trempHelper.getReadableDatabase(), id);
     }
