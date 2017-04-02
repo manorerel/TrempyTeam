@@ -41,7 +41,20 @@ public class ModelFirebase {
 
         myRef.setValue(tremp.toMap());
     }
-
+    public void deleteTremp(Tremp tremp){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       database.getReference("Tremp").child(tremp.getId()).removeValue();
+    }
+    public void deleteTremp(String id){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Tremp").child(id).removeValue();
+    }
+    public void deleteTremp(String id, String image){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Tremp").child(id).removeValue();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storage.getReference().child("images").child(image).delete();
+    }
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -182,12 +195,10 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        StorageReference storageRef = storage.getReference();
-        StorageReference islandRef = storageRef.child("images/" + url);
+        StorageReference httpsReference = storage.getReferenceFromUrl(url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
-        islandRef.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        httpsReference.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 // Data for "images/island.jpg" is returns, use this as needed
@@ -202,24 +213,6 @@ public class ModelFirebase {
                 listener.onFail();
             }
         });
-
-//        StorageReference httpsReference = storage.getReferenceFromUrl(url);
-//        final long ONE_MEGABYTE = 1024 * 1024;
-//        httpsReference.getBytes(3* ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
-//                Bitmap image = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-//                listener.onSccess(image);
-//                // Data for "images/island.jpg" is returns, use this as needed
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(Exception exception) {
-//                Log.d("TAG",exception.getMessage());
-//                listener.onFail();
-//                // Handle any errors
-//            }
-//        });
 
     }
 

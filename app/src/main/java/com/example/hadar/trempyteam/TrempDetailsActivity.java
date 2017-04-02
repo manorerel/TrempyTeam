@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,7 +51,7 @@ public class TrempDetailsActivity extends Activity {
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
         final String de;
        final  String so;
-
+        final String seet;
         Intent intent = getIntent();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
@@ -69,6 +70,7 @@ public class TrempDetailsActivity extends Activity {
         DestAddress.setText(intent.getExtras().getString("dest"));
          de = intent.getExtras().getString("dest");
          so = intent.getExtras().getString("source");
+        seet = (Long.toString(intent.getExtras().getLong("seets")));
 
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
@@ -99,8 +101,20 @@ public class TrempDetailsActivity extends Activity {
             }
         });
 
+        Button delete = (Button) findViewById(R.id.btnDelete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ModelFirebase fbModel = new ModelFirebase();
+                Intent resultIntent = getIntent();
+                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
-        // Click on the "+" button to add a new student
+                setResult(Activity.RESULT_CANCELED, resultIntent);
+                finish();
+            }
+        });
+
+
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
