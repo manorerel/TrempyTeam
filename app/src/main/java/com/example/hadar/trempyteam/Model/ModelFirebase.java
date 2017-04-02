@@ -24,6 +24,7 @@ import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -108,6 +109,25 @@ public class ModelFirebase {
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
+                                    Tremp t;
+                                    try {
+                                        t = trSnapshot.getValue(Tremp.class);
+                                    }
+                                    catch (Exception e){
+                                        Log.d("Exception", "Can't create tremp " + e.getMessage());
+
+                                        String id = (String)trSnapshot.child("id").getValue();
+                                        String driverId = (String) trSnapshot.child("driverId").getValue();
+//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
+                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
+                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
+                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
+                                        long seets = (long) trSnapshot.child("seets").getValue();
+                                        String phone = (String) trSnapshot.child("phoneNumber").getValue();
+                                        String imageName = (String) trSnapshot.child("imageName").getValue();
+                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName);
+                                    }
+
                                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
                                     Date date = new Date();
                                     try {
@@ -118,7 +138,6 @@ public class ModelFirebase {
 
                                     }
 
-                                    Tremp t = trSnapshot.getValue(Tremp.class);
                                     t.CreationDate = date;
                                     tremps.add(t);
                                  //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();

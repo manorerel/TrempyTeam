@@ -28,8 +28,9 @@ public class TrempSql {
     private static final String SEETS = "freeSeets";
     private static final String DATE = "trempDateTime";
     private static final String PHONE = "PhoneNumber";
+    private static final String IS_CREATED = "isCreated";
 
-    public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp) {
+    public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp, boolean isCreated) {
         ContentValues values = new ContentValues();
 
         values.put(ST_ID, tremp.Id);
@@ -41,6 +42,10 @@ public class TrempSql {
         values.put(DATE, convertDateToString(tremp.getTrempDateTime()));
         values.put(PHONE, tremp.getPhoneNumber());
         values.put(IMAGE_URL, tremp.getImageName());
+
+        if(isCreated)
+        values.put(IS_CREATED, "true");
+        else values.put(IS_CREATED, "false");
 
         long rowId = writableDatabase.insert(TREMP, ST_ID, values);
         if (rowId <= 0) {
@@ -63,7 +68,7 @@ public class TrempSql {
             String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
             String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-            tremp = new Tremp(Long.getLong(seets),stId,Date.class.cast(date),source, dest,phoneNum,carModel, imageUrl);
+//            tremp = new Tremp(Long.getLong(seets),stId,Date.class.cast(date),source, dest,phoneNum,carModel, imageUrl);
 
         }
 
@@ -72,12 +77,14 @@ public class TrempSql {
 
     public static List<Tremp> GetAllTremps(SQLiteDatabase readableDatabase, boolean isCreated){
         Tremp tremp = null;
-        String[] selectionArgs = {User.GetAppUser().Id};
         Cursor cursor;
 
-        if(isCreated)
-            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);
-        else cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " != ?",selectionArgs, null, null, null, null);
+        if(isCreated){
+            String[] selectionArgs = {"true"};
+            cursor = readableDatabase.query(TREMP,null, IS_CREATED + " = ?",selectionArgs, null, null, null, null);}
+        else {
+            String[] selectionArgs = {"false"};
+            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);}
         List<Tremp> tremps = new LinkedList<Tremp>();
 
         if (cursor.moveToFirst() == true){
@@ -123,7 +130,7 @@ public class TrempSql {
     }
 
     public static void create(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, "+ DRIVER_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + PHONE + " TEXT, " + IMAGE_URL + " TEXT)");    }
+        sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, "+ DRIVER_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + PHONE + " TEXT, " + IMAGE_URL +" TEXT, " + IS_CREATED+ " TEXT)");    }
 
     public static void dropTable(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("DROP TABLE " + TREMP);

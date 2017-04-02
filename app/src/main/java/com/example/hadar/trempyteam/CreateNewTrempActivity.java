@@ -58,6 +58,7 @@ import java.util.Date;
 public class CreateNewTrempActivity extends Activity {
     private static final int REQUEST_WRITE_STORAGE = 112;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static int count = 0;
 
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -108,7 +109,8 @@ public class CreateNewTrempActivity extends Activity {
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
                 String createdUserId = User.GetAppUser().getId();
-                Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
+                String trempId = CreateID();
+                Tremp newTremp = new Tremp(trempId,seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
                 String imName = "";
 
 
@@ -134,7 +136,7 @@ public class CreateNewTrempActivity extends Activity {
                 fbModel.addTremp(newTremp);
 
                 ModelSql sqlLight = ModelSql.getInstance();
-                sqlLight.addTremp(newTremp);
+                sqlLight.addTremp(newTremp,true);
                 Log.d("TAG", "Create new tremp and save to db");
                 finish();
             }
@@ -217,7 +219,10 @@ public class CreateNewTrempActivity extends Activity {
     }
 
 
-
+    private String CreateID(){
+        String id =User.GetAppUser().getId() + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
+        return id;
+    }
 
 
     public LatLng getLocationFromAddress(Context context, String strAddress)

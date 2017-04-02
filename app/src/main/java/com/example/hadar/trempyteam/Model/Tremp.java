@@ -31,12 +31,11 @@ public class Tremp {
     String PhoneNumber;
 
     public Tremp(){}
-    public Tremp(String trempId, long seets, String driverId, Date trempDateTime, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName){
+    public Tremp(String trempId, long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName){
         CarModel = carModel;
         Seets = seets;
-        driverId = driverId;
-        trempDateTime = trempDateTime;
-        trempDateTime = trempDateTime;
+        driverId = DriverId;
+        trempDateTime = trempDate;
         Id = trempId;
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
@@ -44,12 +43,12 @@ public class Tremp {
         PhoneNumber = phoneNumber;
 
     }
-    public Tremp(long seets, String driverId, Date trempDateTime, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName) {
+    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName) {
         CarModel = carModel;
         Seets = seets;
-        driverId = driverId;
-        trempDateTime = trempDateTime;
-        trempDateTime = trempDateTime;
+        driverId = DriverId;
+        trempDateTime = trempDate;
+
         Id = CreateID();
         SourceAddress = sourceAdd;
         DestAddress = destAdd;

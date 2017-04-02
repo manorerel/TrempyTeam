@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -70,14 +71,26 @@ public class ListTrempActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tremps);
+        String cameFrom = (String) getIntent().getExtras().get("cameFrom");
+        if (cameFrom != null && cameFrom.equals("personalArea")) {
+            String isCreated = (String) getIntent().getExtras().get("isCreated");
+            ModelSql modelSql = ModelSql.getInstance();
+
+            if(isCreated.equals("true"))
+                trempsList = modelSql.getAllTremps(true);
+            else trempsList = modelSql.getAllTremps(false);
+
+            CreateList();
 
 
-        // Hadar Part
-        final String dest = (String) getIntent().getExtras().get("dest");
-        final String from = (String) getIntent().getExtras().get("from");
+        } else {
+
+            // Hadar Part
+            final String dest = (String) getIntent().getExtras().get("dest");
+            final String from = (String) getIntent().getExtras().get("from");
 
             ModelFirebase fbModel = new ModelFirebase();
-            fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
+            fbModel.getAllTrempsByFilter(dest, from, new Model.GetAllTrempsByFilerListener() {
                 @Override
                 public void onComplete(List<Tremp> tremps) {
 
@@ -87,9 +100,9 @@ public class ListTrempActivity extends Activity {
             });
 
 
-        //ManorPart
-
         }
+
+    }
 
     public void CreateList()
     {
@@ -167,16 +180,21 @@ public class ListTrempActivity extends Activity {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
 
             }
-           final TextView name = (TextView) view.findViewById(R.id.DriverName);
-          final   TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
-            final   TextView seats = (TextView) view.findViewById(R.id.ava_seats);
+            final TextView name = (TextView) view.findViewById(R.id.DriverName);
+            final TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
+            final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
+            seats.setText(String.valueOf(st.getSeets()));
+
+
+            // until solve the proble with driver id
 
            final String driver_id = st.getDriverId();
             /*// until solve the proble with driver id
            if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
             {*/
+            try {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
                         "/" + driver_id,
@@ -187,13 +205,16 @@ public class ListTrempActivity extends Activity {
                             public void onCompleted(GraphResponse response) {
                                 try {
                                     name.setText(response.getJSONObject().getString("name"));
-                                    seats.setText(String.valueOf(st.getSeets()));
-                                } catch (JSONException e) {
+                                    } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }).executeAsync();
 
+            }
+            catch (Exception e){
+                Log.d("exception", "can't get user name " + e.getMessage());
+            }
             return view;
         }
     }
