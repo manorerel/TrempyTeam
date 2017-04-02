@@ -61,7 +61,7 @@ public class ListTrempActivity extends Activity {
 
     List<Tremp> trempsList ;
 
-     Boolean check = false;
+    Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
 
 
@@ -76,20 +76,20 @@ public class ListTrempActivity extends Activity {
         final String dest = (String) getIntent().getExtras().get("dest");
         final String from = (String) getIntent().getExtras().get("from");
 
-            ModelFirebase fbModel = new ModelFirebase();
-            fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
-                @Override
-                public void onComplete(List<Tremp> tremps) {
+        ModelFirebase fbModel = new ModelFirebase();
+        fbModel.getAllTrempsByFilter(dest ,from ,new Model.GetAllTrempsByFilerListener() {
+            @Override
+            public void onComplete(List<Tremp> tremps) {
 
-                    trempsList = tremps;
-                    CreateList();
-                }
-            });
+                trempsList = tremps;
+                CreateList();
+            }
+        });
 
 
         //ManorPart
 
-        }
+    }
 
     public void CreateList()
     {
@@ -104,7 +104,10 @@ public class ListTrempActivity extends Activity {
                 //send avia tremp object
                 Tremp tremp =  trempsList.get(i);
 
+                String id = tremp.getId();
+
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
+                intent.putExtra("id", id);
                 intent.putExtra("phone",  tremp.getPhoneNumber());
                 intent.putExtra("source",  tremp.getSourceAddress());
                 intent.putExtra("dest",  tremp.getDestAddress());
@@ -143,16 +146,16 @@ public class ListTrempActivity extends Activity {
 
         public String getUserName(String userId)
         {
-           GraphRequest d = new GraphRequest(AccessToken.getCurrentAccessToken(),
+            GraphRequest d = new GraphRequest(AccessToken.getCurrentAccessToken(),
                     "/" + userId,
                     null,
                     HttpMethod.GET,
                     new GraphRequest.Callback() {
-                @Override
-                public void onCompleted(GraphResponse response) {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
 
-                }
-            });
+                        }
+                    });
 
 
             return name;
@@ -166,38 +169,32 @@ public class ListTrempActivity extends Activity {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
 
             }
-           final TextView name = (TextView) view.findViewById(R.id.DriverName);
-          final   TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
+            final TextView name = (TextView) view.findViewById(R.id.DriverName);
+            final   TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
             final   TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-            // until solve the proble with driver id
-           if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
-            {
-                //until solve the problem with droiver id
-                new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getPhoneNumber(),
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            @Override
-                            public void onCompleted(GraphResponse response) {
 
-                                try {
-                                    name.setText(response.getJSONObject().getString("name"));
-                                    seats.setText(String.valueOf(st.getSeets()));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+            final String driver_id = st.getDriverId();
+            /*// until solve the proble with driver id
+           if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
+            {*/
+            //until solve the problem with droiver id
+            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    "/" + driver_id,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                name.setText(response.getJSONObject().getString("name"));
+                                //seats.setText(String.valueOf(st.getSeets()));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        }).executeAsync();
-           }
-            else
-           {
-                //just until solve thr bug
-                name.setText("null");
-                seats.setText(String.valueOf(st.getSeets()));
-            }
+                        }
+                    });
 
             return view;
         }

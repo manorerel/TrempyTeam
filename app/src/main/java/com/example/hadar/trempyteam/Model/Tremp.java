@@ -7,6 +7,7 @@ import com.google.firebase.database.ServerValue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -20,44 +21,47 @@ public class Tremp {
     String CarModel;
     String SourceAddress;
     String DestAddress;
-    String Id;
+    String id;
     String DriverId;
     long Seets;
     Date TrempDate;
     Date CreationDate;
-    List<String> TrempistsList;
+    List<String> TrempistsList = new LinkedList<String>();
     static int count = 0;
     String imageName;
     String PhoneNumber;
 
     public Tremp(){}
-    public Tremp(String trempId, long seets, String driverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName){
+    public Tremp(String trempId, long seets, String driverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers){
         CarModel = carModel;
         Seets = seets;
         DriverId = driverId;
         TrempDate = trempDate;
         TrempDate = trempDate;
-        Id = trempId;
+        id = trempId;
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
         imageName = ImageName;
         PhoneNumber = phoneNumber;
+        TrempistsList = passengers;
+
 
     }
-    public Tremp(long seets, String driverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName) {
+    public Tremp(long seets, String driverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers) {
         CarModel = carModel;
         Seets = seets;
         DriverId = driverId;
         TrempDate = trempDate;
         TrempDate = trempDate;
-        Id = CreateID();
+        id = CreateID();
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
         imageName = ImageName;
         PhoneNumber = phoneNumber;
+        TrempistsList = passengers;
     }
 
-    public String getId(){return Id;}
+    public String getId(){return id;}
     public String getDriverId(){return DriverId;}
     public long getSeets(){return Seets;}
     public String getCarModel(){return CarModel;}
@@ -69,6 +73,8 @@ public class Tremp {
         return imageName;
     }
     public String getPhoneNumber(){return PhoneNumber;}
+    public List<String> getTrempistsList(){return TrempistsList;}
+
 
     public void setCarModel(String carModel){CarModel = carModel;}
     public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
@@ -79,6 +85,7 @@ public class Tremp {
         this.imageName = imageName;
     }
     public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
+    public void setNewPassengerToTremp(String user_id) {this.TrempistsList.add(user_id);}
 
     private String CreateID(){
         String id =DriverId + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
@@ -87,7 +94,7 @@ public class Tremp {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", Id);
+        result.put("id", id);
         result.put("SourceAddress", SourceAddress);
         result.put("DestAddress", DestAddress);
         result.put("CarModel", CarModel);
@@ -98,6 +105,7 @@ public class Tremp {
         result.put("phoneNumber", PhoneNumber);
         result.put("driverId",DriverId);
         result.put("imageName", imageName);
+        result.put("Passengers", TrempistsList);
         return result;
     }
 }

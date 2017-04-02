@@ -41,6 +41,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -107,8 +108,10 @@ public class CreateNewTrempActivity extends Activity {
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
+                List<String> TrempistsList = new LinkedList<String>();
+                TrempistsList.add("user_id");
                 String createdUserId = User.GetAppUser().getId();
-                Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl");
+                Tremp newTremp = new Tremp(seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl", TrempistsList);
                 String imName = "";
 
 

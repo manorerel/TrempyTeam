@@ -34,6 +34,18 @@ public class Model {
         return instance;
     }
 
+
+
+    public interface GetTrempByIdListener {
+        void onComplete(List<Tremp> tremps);
+    }
+
+    public void getTrempById(String id, GetTrempByIdListener listener){
+        modelFirebase.getTrempById(id,listener);
+    }
+
+
+
     public interface GetAllTrempsListener{
         void onComplete(List<Tremp> tremps);
     }
@@ -42,15 +54,24 @@ public class Model {
         void onComplete(List<Tremp> tremps);
     }
 
+    public interface UpdateSeatsTrempListener{
+        void onComplete();
+    }
+
     public void getAllTrempsByFilter(String dest, String from, GetAllTrempsByFilerListener listener)
     {
         modelFirebase.getAllTrempsByFilter(dest,from, listener);
     }
 
     public void getAllTremps(GetAllTrempsListener listener)
-        {
-              modelFirebase.getAllTremps(listener);
-       }
+    {
+        modelFirebase.getAllTremps(listener);
+    }
+
+    public void UpdateSeatsTremp(String id, String passenger_id, UpdateSeatsTrempListener listener)
+    {
+        modelFirebase.UpdateSeatsTremp(id, passenger_id, listener);
+    }
 
 
 

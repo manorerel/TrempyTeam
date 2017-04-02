@@ -21,8 +21,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,6 +69,30 @@ public class ModelFirebase {
     }
 
 
+    public void getTrempById(String id, final Model.GetTrempByIdListener listener){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp").child(id);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Tremp> tremps = new LinkedList<Tremp>();
+                Tremp tr = dataSnapshot.getValue(Tremp.class);
+                tremps.add(tr);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onComplete(null);
+            }
+        });
+
+    }
+
+
+
+
+
     public void getAllTrempsByFilter(final String dest, final String from ,final Model.GetAllTrempsByFilerListener listener) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Tremp");
@@ -73,7 +102,9 @@ public class ModelFirebase {
 
                 List<Tremp> tremps = new LinkedList<Tremp>();
 
+
                 for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+                    Tremp t = trSnapshot.getValue(Tremp.class);
                     String d = trSnapshot.child("DestAddress").getValue().toString();
                     String f = trSnapshot.child("SourceAddress").getValue().toString();
 
@@ -84,13 +115,12 @@ public class ModelFirebase {
 
                     for (int j = 0; j < wordsSourceUserSearch.size(); j++)
                     {
-                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)))
+                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)) && t.getSeets() != 0)
                         {
                             for (int i = 0; i < wordsDestUserSearch.size(); i++)
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
-                                    Tremp t = trSnapshot.getValue(Tremp.class);
                                     tremps.add(t);
                                     break;
                                 }
@@ -111,16 +141,47 @@ public class ModelFirebase {
         });
     }
 
-
-
-
-
-
     public void addUser(User user) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("User").child(user.getId());
         myRef.setValue(user);
+
+
     }
+
+
+    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, Model.UpdateSeatsTrempListener listener){
+
+        final String tremp_id = Trempid;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+
+                    String t = trSnapshot.getValue(Tremp.class).getId();
+
+                    if (t.equals(tremp_id))
+                    {
+                        Long currSeats = trSnapshot.getValue(Tremp.class).getSeets();
+                        trSnapshot.getRef().child("seets").setValue(currSeats - 1);
+                        trSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // listener.onComplete(null);
+
+            }
+        });
+
+
+    }
+
 
     public void saveImage(Bitmap imageBitmap, String name, final Model.SaveImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
