@@ -90,7 +90,7 @@ public class Model {
 
     public void loadImage(final String url, final GetImageListener listener) {
         //1. first try to find the image on the device
-        String localFileName = getLocalImageFileName(url);
+        String localFileName = url;
         Bitmap image = loadImageFromFile(localFileName);
         if (image == null) {                                      //if image not found - try downloading it from parse
             Log.d("TAG","fail reading cache image: " + localFileName);
@@ -99,6 +99,7 @@ public class Model {
                 @Override
                 public void onSccess(Bitmap image) {
                     //2.  save the image localy
+                   // String localFileName = getLocalImageFileName(url);
                     String localFileName = getLocalImageFileName(url);
                     Log.d("TAG","save image to cache: " + localFileName);
                     saveImageToFile(image,localFileName);
