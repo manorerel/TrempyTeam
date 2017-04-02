@@ -59,6 +59,7 @@ public class ListTrempActivity extends Activity {
 
     String name = "";
 
+
     List<Tremp> trempsList ;
 
      Boolean check = false;
@@ -70,18 +71,20 @@ public class ListTrempActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tremps);
-
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
-        if(cameFrom != null && cameFrom.equals("personalArea")){
+        if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");
             ModelSql modelSql = ModelSql.getInstance();
 
             if(isCreated.equals("true"))
                 trempsList = modelSql.getAllTremps(true);
             else trempsList = modelSql.getAllTremps(false);
+
             CreateList();
-        }
-        else {
+
+
+        } else {
+
             // Hadar Part
             final String dest = (String) getIntent().getExtras().get("dest");
             final String from = (String) getIntent().getExtras().get("from");
@@ -95,12 +98,11 @@ public class ListTrempActivity extends Activity {
                     CreateList();
                 }
             });
+
+
         }
 
-
-        //ManorPart
-
-        }
+    }
 
     public void CreateList()
     {
@@ -122,8 +124,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("seets",  tremp.getSeets());
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
-                if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", tremp.getTrempDate().toString());
+                if (tremp.getTrempDateTime() != null) {
+                    intent.putExtra("date", tremp.getTrempDateTime().toString());
 
                 }
                 startActivity(intent);
@@ -131,7 +133,7 @@ public class ListTrempActivity extends Activity {
         });
 
     }
-
+//check its the master
     class TrempsAdapter extends BaseAdapter {
 
         @Override
@@ -151,6 +153,25 @@ public class ListTrempActivity extends Activity {
             return i;
         }
 
+
+        public String getUserName(String userId)
+        {
+           GraphRequest d = new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    "/" + userId,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                @Override
+                public void onCompleted(GraphResponse response) {
+
+                }
+            });
+
+
+            return name;
+
+        }
+
         @Override
         public View  getView(final int i, View view, ViewGroup viewGroup) {
 
@@ -168,16 +189,19 @@ public class ListTrempActivity extends Activity {
 
             // until solve the proble with driver id
 
+           final String driver_id = st.getDriverId();
+            /*// until solve the proble with driver id
+           if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
+            {*/
             try {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),
-                        "/" + st.getDriverId(),
+                        "/" + driver_id,
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
                             @Override
                             public void onCompleted(GraphResponse response) {
-
                                 try {
                                     name.setText(response.getJSONObject().getString("name"));
                                     } catch (JSONException e) {
@@ -185,6 +209,7 @@ public class ListTrempActivity extends Activity {
                                 }
                             }
                         }).executeAsync();
+
             }
             catch (Exception e){
                 Log.d("exception", "can't get user name " + e.getMessage());

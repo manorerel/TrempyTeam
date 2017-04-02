@@ -87,6 +87,7 @@ public class searchTrempFragment extends Fragment {
         } else {
 
 
+
             // create class object
             GPSTracker gps = new GPSTracker(getActivity());
 
@@ -165,7 +166,8 @@ public class searchTrempFragment extends Fragment {
 
 
 
-            @Override
+
+    @Override
                 public void onResume () {
                     super.onResume();
 

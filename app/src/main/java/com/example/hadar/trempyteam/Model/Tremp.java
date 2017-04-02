@@ -62,7 +62,7 @@ public class Tremp {
     public String getCarModel(){return CarModel;}
     public String getSourceAddress(){return SourceAddress;}
     public String getDestAddress(){return DestAddress;}
-    public Date getTrempDate(){return trempDateTime;}
+    public Date getTrempDateTime(){return trempDateTime;}
     public Date getCreationDate(){return CreationDate;}
     public String getImageName() {
         return imageName;
@@ -73,7 +73,7 @@ public class Tremp {
     public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
     public void setDestAddress(String destAdd){DestAddress = destAdd;}
     public void setSeets(long seets){Seets = seets;}
-    public void setTrempDate(Date trempDateTime){trempDateTime = trempDateTime;}
+    public void settrempDateTime(Date trempDateTime){trempDateTime = trempDateTime;}
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
