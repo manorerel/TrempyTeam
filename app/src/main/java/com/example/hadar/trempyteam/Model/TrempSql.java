@@ -145,6 +145,10 @@ public class TrempSql {
 
     }
 
+    public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, Date date){
+
+    }
+
     private static String[] getTableColumn(){
         String[] column = {ST_ID,SOURCE,DEST,PHONE,CAR_MODEL,DATE,IMAGE_URL};
         return column;

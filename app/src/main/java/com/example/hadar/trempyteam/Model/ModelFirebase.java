@@ -41,6 +41,19 @@ public class ModelFirebase {
 
         myRef.setValue(tremp.toMap());
     }
+
+    public void updateTremp(String id, String dest, String source, String phone, Date date){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference trempToUpdate = database.getReference("Tremp").child(id);
+
+        if(trempToUpdate != null){
+            trempToUpdate.child("phoneNumber").setValue(phone);
+            trempToUpdate.child("SourceAddress").setValue(source);
+            trempToUpdate.child("DestAddress").setValue(dest);
+            trempToUpdate.child("trempDateTime").setValue(date);
+        }
+    }
+
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
        database.getReference("Tremp").child(tremp.getId()).removeValue();

@@ -115,8 +115,6 @@ public class EditTrempActivity extends Activity {
                 final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
                 final ImageView image = (ImageView) findViewById(R.id.editImage);
 
-
-
                 // Check if the date or time was changed
                 if (newDate.didTouchFocusSelect()) {
                     TrempDate.year = newDate.year;
