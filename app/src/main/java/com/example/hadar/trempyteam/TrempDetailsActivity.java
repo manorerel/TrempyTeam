@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +8,9 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +20,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
+import com.example.hadar.trempyteam.Model.User;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +39,10 @@ public class TrempDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tremp_details);
+        ActionBar actionBar = this.getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
         final TextView DestAddress = (TextView) findViewById(R.id.detailsDest);
@@ -94,18 +103,18 @@ public class TrempDetailsActivity extends Activity {
             }
         });
 
-        Button delete = (Button) findViewById(R.id.btnDelete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ModelFirebase fbModel = new ModelFirebase();
-                Intent resultIntent = getIntent();
-                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
-
-                setResult(Activity.RESULT_CANCELED, resultIntent);
-                finish();
-            }
-        });
+//        Button delete = (Button) findViewById(R.id.btnDelete);
+//        delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final ModelFirebase fbModel = new ModelFirebase();
+//                Intent resultIntent = getIntent();
+//                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
+//
+//                setResult(Activity.RESULT_CANCELED, resultIntent);
+//                finish();
+//            }
+//        });
 
 
         Button btnMap = (Button) findViewById(R.id.btnMap);
@@ -156,6 +165,70 @@ public class TrempDetailsActivity extends Activity {
             e.printStackTrace();
         }
         return p1;
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+        Intent intent = getIntent();
+        String driverId = (String)intent.getExtras().getString("driverId");
+        if(driverId.equals(User.GetAppUser().getId())) {
+
+            MenuItem edit = menu.findItem(R.id.editTremp);
+            edit.setVisible(true);
+
+            MenuItem delete = menu.findItem(R.id.deleteTremp);
+            delete.setVisible(true);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.deleteTremp:{
+                final ModelFirebase fbModel = new ModelFirebase();
+                Intent resultIntent = getIntent();
+                ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
+                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
+
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+                return true;}
+            case R.id.editTremp:{
+                startEdit();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void startEdit()
+    {
+        Intent currentIntent = getIntent();
+        Intent intent = new Intent(TrempDetailsActivity.this, EditTrempActivity.class);
+        intent.putExtra("id",  currentIntent.getExtras().getString("id"));
+        intent.putExtra("phone",  currentIntent.getExtras().getString("phone"));
+        intent.putExtra("source",  currentIntent.getExtras().getString("source"));
+        intent.putExtra("dest",  currentIntent.getExtras().getString("dest"));
+        intent.putExtra("seets",  currentIntent.getExtras().getString("seets"));
+        intent.putExtra("car",  currentIntent.getExtras().getString("car"));
+        intent.putExtra("image",  currentIntent.getExtras().getString("image"));
+        intent.putExtra("driverId",  currentIntent.getExtras().getString("driverId"));
+        intent.putExtra("date", currentIntent.getExtras().getString("date"));
+        try {
+            startActivity(intent);
+        }
+        catch (Exception e){
+            Log.d("Exception:" , e.getMessage());
+        }
 
     }
 

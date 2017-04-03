@@ -52,8 +52,17 @@ public class ModelFirebase {
     public void deleteTremp(String id, String image){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference("Tremp").child(id).removeValue();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        storage.getReference().child("images").child(image).delete();
+
+        //check if there is an image to delete
+        if(!image.isEmpty())
+        {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference imageToDelete = storage.getReference().child("images").child(image);
+
+            if(imageToDelete != null)
+                imageToDelete.delete();
+        }
+
     }
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {

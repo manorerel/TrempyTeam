@@ -13,8 +13,8 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <activity android:name=".ShareImageActivity" />
-    <activity android:name=".EditTrempActivity" />
-    <activity android:name=".TrempDetailsActivity" />
+    <!--<activity android:name=".EditTrempActivity" />-->
+    <!--<activity android:name=".TrempDetailsActivity" />-->
 
     <application
         android:name=".TrempyApp"
@@ -66,6 +66,8 @@
 
         <activity android:name=".TrempDetailsActivity" />
         <activity android:name=".ListTrempActivity"></activity>
+
+        <activity android:name=".EditTrempActivity"></activity>
 
         <activity
             android:name=".PersonalAreaActivity"

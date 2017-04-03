@@ -46,14 +46,11 @@ public class searchTrempFragment extends Fragment {
 
         // Inflate the fragment layout file
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.search_tremp, container, false);
-        try {
+
             ActionBar actionBar = getActivity().getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             setHasOptionsMenu(true);
-        }
-        catch (Exception e){
-            Log.d("exception:" , "exception while trying to set action bar " + e.getMessage());
-        }
+
 
 
         // Here, thisActivity is the current activity
