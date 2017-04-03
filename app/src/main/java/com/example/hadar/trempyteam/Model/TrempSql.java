@@ -33,7 +33,7 @@ public class TrempSql {
     public static void addTremp(SQLiteDatabase writableDatabase, Tremp tremp, boolean isCreated) {
         ContentValues values = new ContentValues();
 
-        values.put(ST_ID, tremp.Id);
+        values.put(ST_ID, tremp.id);
         values.put(DRIVER_ID, tremp.getDriverId());
         values.put(SOURCE, tremp.getSourceAddress());
         values.put(DEST, tremp.getDestAddress());
@@ -101,7 +101,7 @@ public class TrempSql {
 
                 Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);
-                tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl);
+              //  tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl);
                 tremps.add(tremp);
             }
             while (cursor.moveToNext());
