@@ -93,8 +93,8 @@ public class Tremp {
         result.put("CarModel", CarModel);
         result.put("seets", Seets);
         result.put("creationTime", ServerValue.TIMESTAMP);
-        result.put("trempDateTime", convertDateToString(trempDateTime));
-        //result.put("trempDateTime", trempDateTime);
+        String NewDate = convertDateToString(trempDateTime);
+        result.put("trempDateTime", NewDate);
         result.put("driverId", driverId);
         result.put("phoneNumber", PhoneNumber);
         result.put("driverId",driverId);

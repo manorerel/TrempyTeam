@@ -26,9 +26,11 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.User;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by aviac on 3/31/2017.
@@ -55,10 +57,10 @@ public class TrempDetailsActivity extends Activity {
        final  String so;
         final String seet;
         Intent intent = getIntent();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+
         Date date = new Date();
         try {
-            date = format.parse(intent.getExtras().getString("date"));
+            date = convertStringToDate(intent.getExtras().getString("date"));
         }
         catch (Exception e)
         {
@@ -67,12 +69,13 @@ public class TrempDetailsActivity extends Activity {
 
         TrempDate.setText("" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear());
         TrempTime.setText("" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
          de = intent.getExtras().getString("dest");
          so = intent.getExtras().getString("source");
-        seet = (Long.toString(intent.getExtras().getLong("seets")));
+
 
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
@@ -233,6 +236,17 @@ public class TrempDetailsActivity extends Activity {
     }
 
 
+    private static Date convertStringToDate(String dateText){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateText);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        return convertedDate;
+    }
 }
 

@@ -62,6 +62,7 @@ public class CreateNewTrempActivity extends Activity {
     private static final int REQUEST_WRITE_STORAGE = 112;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static int count = 0;
+    int YEAR = 1900;
 
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -109,7 +110,7 @@ public class CreateNewTrempActivity extends Activity {
           //      AccessToken.getCurrentAccessToken().getUserId();
 
                 long seets = Long.parseLong(seetsText.getText().toString());
-                Date date = new Date(dateText.getYear()-1900, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
+                Date date = new Date(dateText.getYear()-YEAR, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
                 String createdUserId = User.GetAppUser().getId();
                 String trempId = CreateID();

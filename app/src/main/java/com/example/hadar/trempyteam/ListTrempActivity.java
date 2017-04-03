@@ -50,6 +50,9 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -126,10 +129,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
                 intent.putExtra("driverId",  tremp.getDriverId());
-                if (tremp.getTrempDateTime() != null) {
-                    intent.putExtra("date", tremp.getTrempDateTime().toString());
+                intent.putExtra("date", convertDateToString(tremp.getTrempDateTime()));
 
-                }
                 startActivity(intent);
             }
         });
@@ -231,4 +232,10 @@ public class ListTrempActivity extends Activity {
         }
     }
 
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
+    }
 }
