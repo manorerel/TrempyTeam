@@ -190,9 +190,9 @@ public class ModelFirebase {
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
                                         String imageName = (String) trSnapshot.child("imageName").getValue();
-                                        List<String> TrempistsList = (List<String>) trSnapshot.child("imageName").getValue();
+                                        List<String> TrempistsList = null;
 
-                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, TrempistsList);
+                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, null);
                                     }
 
                                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");

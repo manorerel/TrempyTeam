@@ -18,6 +18,14 @@
             android:icon="@mipmap/delete"
             />
 
+        <item android:id="@+id/daveTremp"
+            android:icon="@mipmap/save"
+            />
+
+        <item android:id="@+id/cancelTremp"
+            android:icon="@mipmap/back"
+            />
+
     </menu>
 
 </LinearLayout>

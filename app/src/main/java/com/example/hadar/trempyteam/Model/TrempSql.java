@@ -68,7 +68,10 @@ public class TrempSql {
             String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
             String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-//            tremp = new Tremp(Long.getLong(seets),stId,Date.class.cast(date),source, dest,phoneNum,carModel, imageUrl);
+            Date trempDate = convertStringToDate(date);
+            long trempSeets = Long.parseLong(seets);
+
+            tremp = new Tremp(stId, trempSeets,driverId,trempDate,source, dest,phoneNum,carModel, imageUrl, null);
 
         }
 
@@ -101,7 +104,7 @@ public class TrempSql {
 
                 Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);
-              //  tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl);
+                tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl, null);
                 tremps.add(tremp);
             }
             while (cursor.moveToNext());
@@ -146,6 +149,14 @@ public class TrempSql {
     }
 
     public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, Date date){
+        String[] selectionArgs = {id};
+        ContentValues cv = new ContentValues();
+        cv.put(DEST,dest);
+        cv.put(SOURCE,source);
+        cv.put(PHONE,phone);
+//        cv.put(DATE,convertDateToString(date));
+        database.update(TREMP,cv, ST_ID+"=?",selectionArgs);
+
 
     }
 

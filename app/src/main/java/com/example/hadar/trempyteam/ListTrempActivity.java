@@ -130,7 +130,7 @@ public class ListTrempActivity extends Activity {
                     intent.putExtra("date", tremp.getTrempDateTime().toString());
 
                 }
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 

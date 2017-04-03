@@ -19,7 +19,18 @@
         android:icon="@mipmap/delete"
         android:showAsAction ="always"
         android:title="delete"
+        android:visible="false"/>
 
+    <item android:id="@+id/saveTremp"
+        android:icon="@mipmap/save"
+        android:showAsAction ="always"
+        android:title="delete"
+        android:visible="false"/>
+
+    <item android:id="@+id/cancelTremp"
+        android:icon="@mipmap/back"
+        android:showAsAction ="always"
+        android:title="delete"
         android:visible="false"/>
     <!--android:showAsAction="always"-->
 </menu>

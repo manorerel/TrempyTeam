@@ -247,6 +247,7 @@ public class TrempDetailsActivity extends Activity {
                 fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
                 Intent returnIntent = new Intent();
+//                resultIntent.putExtra("backFromDelete", "true");
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
                 return true;}
@@ -263,24 +264,63 @@ public class TrempDetailsActivity extends Activity {
     {
         Intent currentIntent = getIntent();
         Intent intent = new Intent(TrempDetailsActivity.this, EditTrempActivity.class);
-        intent.putExtra("id",  currentIntent.getExtras().getString("id"));
-        intent.putExtra("phone",  currentIntent.getExtras().getString("phone"));
-        intent.putExtra("source",  currentIntent.getExtras().getString("source"));
-        intent.putExtra("dest",  currentIntent.getExtras().getString("dest"));
-        intent.putExtra("seets",  currentIntent.getExtras().getString("seets"));
-        intent.putExtra("car",  currentIntent.getExtras().getString("car"));
-        intent.putExtra("image",  currentIntent.getExtras().getString("image"));
-        intent.putExtra("driverId",  currentIntent.getExtras().getString("driverId"));
-        intent.putExtra("date", currentIntent.getExtras().getString("date"));
+        String id = currentIntent.getExtras().getString("id");
+        Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
+        intent.putExtra("id",  id);
+        intent.putExtra("phone",  trempToEdit.getPhoneNumber());
+        intent.putExtra("source",  trempToEdit.getSourceAddress());
+        intent.putExtra("dest",  trempToEdit.getDestAddress());
+        intent.putExtra("date", trempToEdit.getTrempDateTime());
         try {
-            startActivity(intent);
+            startActivityForResult(intent,1);
         }
         catch (Exception e){
             Log.d("Exception:" , e.getMessage());
         }
 
+
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+            refresh();
+        }
+    }
+
+    private void refresh() {
+        Intent currIntent = getIntent();
+        String trempId = currIntent.getExtras().getString("id");
+
+        if(!trempId.isEmpty()){
+            Tremp currTremp = ModelSql.getInstance().getTrempById(trempId);
+            if(currTremp != null){
+                final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
+                final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
+                final TextView DestAddress = (TextView) findViewById(R.id.detailsDest);
+                final TextView Seets = (TextView) findViewById(R.id.detailsAvaliable_seats);
+                DateEditText TrempDate = (DateEditText) findViewById(R.id.detailsDate);
+                TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
+                final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
+                final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
+                final String de;
+                final  String so;
+                final String seet;
+                PhoneNumber.setText(currTremp.getPhoneNumber());
+                SourceAddress.setText(currTremp.getSourceAddress());
+                DestAddress.setText(currTremp.getDestAddress());
+//                Seets.setText(currTremp.getSeets());
+                CarModel.setText(currTremp.getCarModel());
+
+            }
+        }
+    }
+
+    private void refreshValues()
+    {
+
+    }
 
 
 }
