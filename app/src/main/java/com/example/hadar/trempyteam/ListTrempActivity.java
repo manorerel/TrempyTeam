@@ -135,7 +135,18 @@ public class ListTrempActivity extends Activity {
         });
 
     }
-//check its the master
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+            ModelSql modelSql = ModelSql.getInstance();
+            trempsList = modelSql.getAllTremps(true);
+
+            CreateList();
+        }
+    }
+    //check its the master
     class TrempsAdapter extends BaseAdapter {
 
         @Override

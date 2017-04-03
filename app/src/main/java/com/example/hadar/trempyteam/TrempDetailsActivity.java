@@ -194,12 +194,11 @@ public class TrempDetailsActivity extends Activity {
             case R.id.deleteTremp:{
                 final ModelFirebase fbModel = new ModelFirebase();
                 Intent resultIntent = getIntent();
-
                 ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
-
                 fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
-                setResult(Activity.RESULT_CANCELED, resultIntent);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK,returnIntent);
                 finish();
                 return true;}
             case R.id.editTremp:{
