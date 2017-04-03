@@ -31,8 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
-
 public class ModelFirebase {
 
     public void addTremp(Tremp tremp){
@@ -64,6 +62,41 @@ public class ModelFirebase {
         }
 
     }
+
+
+    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, Model.UpdateSeatsTrempListener listener){
+
+        final String tremp_id = Trempid;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+
+                    String t = trSnapshot.getValue(Tremp.class).getId();
+
+                    if (t.equals(tremp_id))
+                    {
+                        Long currSeats = trSnapshot.getValue(Tremp.class).getSeets();
+                        trSnapshot.getRef().child("seets").setValue(currSeats - 1);
+                        trSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // listener.onComplete(null);
+
+            }
+        });
+
+
+    }
+
+
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -102,6 +135,7 @@ public class ModelFirebase {
                 List<Tremp> tremps = new LinkedList<Tremp>();
 
                 for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+                    Tremp t = trSnapshot.getValue(Tremp.class);
                     String d = trSnapshot.child("DestAddress").getValue().toString();
                     String f = trSnapshot.child("SourceAddress").getValue().toString();
 
@@ -112,45 +146,13 @@ public class ModelFirebase {
 
                     for (int j = 0; j < wordsSourceUserSearch.size(); j++)
                     {
-                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)))
+                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)) && t.getSeets() != 0)
                         {
                             for (int i = 0; i < wordsDestUserSearch.size(); i++)
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
-                                    Tremp t;
-                                    try {
-                                        t = trSnapshot.getValue(Tremp.class);
-                                    }
-                                    catch (Exception e){
-                                        Log.d("Exception", "Can't create tremp " + e.getMessage());
-
-                                        String id = (String)trSnapshot.child("id").getValue();
-                                        String driverId = (String) trSnapshot.child("driverId").getValue();
-//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
-                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
-                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
-                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
-                                        long seets = (long) trSnapshot.child("seets").getValue();
-                                        String phone = (String) trSnapshot.child("phoneNumber").getValue();
-                                        String imageName = (String) trSnapshot.child("imageName").getValue();
-                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName);
-                                    }
-
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-                                    Date date = new Date();
-                                    try {
-                                        date = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
-                                    }
-                                    catch (Exception e)
-                                    {
-
-                                    }
-
-                                    t.CreationDate = date;
                                     tremps.add(t);
-                                 //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
-
                                     break;
                                 }
                             }
