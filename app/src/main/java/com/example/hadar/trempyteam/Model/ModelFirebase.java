@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -30,8 +31,6 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-
 
 public class ModelFirebase {
 
@@ -56,7 +55,7 @@ public class ModelFirebase {
 
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-       database.getReference("Tremp").child(tremp.getId()).removeValue();
+        database.getReference("Tremp").child(tremp.getId()).removeValue();
     }
     public void deleteTremp(String id){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -77,6 +76,50 @@ public class ModelFirebase {
         }
 
     }
+
+
+    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, Model.UpdateSeatsTrempListener listener){
+
+        final String tremp_id = Trempid;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+
+
+                    String t = "";
+
+                    try {
+                        t = trSnapshot.getValue(Tremp.class).getId();
+                    }
+                    catch (Exception e){
+                        Log.d("Exception", "Can't create tremp " + e.getMessage());
+                    }
+
+
+                    if (t.equals(tremp_id))
+                    {
+                        Long currSeats = trSnapshot.getValue(Tremp.class).getSeets();
+                        trSnapshot.getRef().child("seets").setValue(currSeats - 1);
+                        trSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // listener.onComplete(null);
+
+            }
+        });
+
+
+    }
+
+
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -147,7 +190,9 @@ public class ModelFirebase {
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
                                         String imageName = (String) trSnapshot.child("imageName").getValue();
-                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName);
+                                        List<String> TrempistsList = (List<String>) trSnapshot.child("imageName").getValue();
+
+                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, TrempistsList);
                                     }
 
                                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -157,12 +202,13 @@ public class ModelFirebase {
                                     }
                                     catch (Exception e)
                                     {
-
                                     }
 
                                     t.CreationDate = date;
-                                    tremps.add(t);
-                                 //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
+                                    if ( t.getSeets() != 0)
+                                    {
+                                        tremps.add(t);
+                                    }
 
                                     break;
                                 }
@@ -217,7 +263,7 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference httpsReference = storage.getReference().child("images/" + url);
+        StorageReference httpsReference = storage.getReferenceFromUrl(url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
         httpsReference.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
