@@ -46,10 +46,10 @@ public class Tremp {
 
 
     }
-    public Tremp(long seets, String driverIdd, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers) {
+    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers) {
         CarModel = carModel;
         Seets = seets;
-        driverId = driverIdd;
+        driverId = DriverId;
         trempDateTime = trempDate;
         trempDateTime = trempDate;
         id = CreateID();

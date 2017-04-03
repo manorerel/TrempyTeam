@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -41,7 +42,7 @@ public class ModelFirebase {
     }
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-       database.getReference("Tremp").child(tremp.getId()).removeValue();
+        database.getReference("Tremp").child(tremp.getId()).removeValue();
     }
     public void deleteTremp(String id){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -75,7 +76,16 @@ public class ModelFirebase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
 
-                    String t = trSnapshot.getValue(Tremp.class).getId();
+
+                    String t = "";
+
+                    try {
+                        t = trSnapshot.getValue(Tremp.class).getId();
+                    }
+                    catch (Exception e){
+                        Log.d("Exception", "Can't create tremp " + e.getMessage());
+                    }
+
 
                     if (t.equals(tremp_id))
                     {
@@ -135,7 +145,6 @@ public class ModelFirebase {
                 List<Tremp> tremps = new LinkedList<Tremp>();
 
                 for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
-                    Tremp t = trSnapshot.getValue(Tremp.class);
                     String d = trSnapshot.child("DestAddress").getValue().toString();
                     String f = trSnapshot.child("SourceAddress").getValue().toString();
 
@@ -146,13 +155,48 @@ public class ModelFirebase {
 
                     for (int j = 0; j < wordsSourceUserSearch.size(); j++)
                     {
-                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)) && t.getSeets() != 0)
+                        if (wordsSourceInFireBase.contains(wordsSourceUserSearch.get(j)))
                         {
                             for (int i = 0; i < wordsDestUserSearch.size(); i++)
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
-                                    tremps.add(t);
+                                    Tremp t;
+                                    try {
+                                        t = trSnapshot.getValue(Tremp.class);
+                                    }
+                                    catch (Exception e){
+                                        Log.d("Exception", "Can't create tremp " + e.getMessage());
+
+                                        String id = (String)trSnapshot.child("id").getValue();
+                                        String driverId = (String) trSnapshot.child("driverId").getValue();
+//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
+                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
+                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
+                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
+                                        long seets = (long) trSnapshot.child("seets").getValue();
+                                        String phone = (String) trSnapshot.child("phoneNumber").getValue();
+                                        String imageName = (String) trSnapshot.child("imageName").getValue();
+                                        List<String> TrempistsList = (List<String>) trSnapshot.child("imageName").getValue();
+
+                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, TrempistsList);
+                                    }
+
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+                                    Date date = new Date();
+                                    try {
+                                        date = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
+                                    }
+                                    catch (Exception e)
+                                    {
+                                    }
+
+                                    t.CreationDate = date;
+                                    if ( t.getSeets() != 0)
+                                    {
+                                        tremps.add(t);
+                                    }
+
                                     break;
                                 }
                             }
@@ -206,7 +250,7 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference httpsReference = storage.getReference().child("images/" + url);
+        StorageReference httpsReference = storage.getReferenceFromUrl(url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
         httpsReference.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

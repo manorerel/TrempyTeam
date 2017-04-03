@@ -181,12 +181,6 @@ public class TrempDetailsActivity extends Activity {
                 });
 
 
-              /*  fbModel.getTrempById(tremp_id, new Model.GetTrempByIdListener(){
-                    @Override
-                    public void onComplete() {
-                    }
-                });*/
-
             }
         });
 
