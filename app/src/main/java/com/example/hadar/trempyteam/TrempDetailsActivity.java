@@ -83,20 +83,26 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
        String imageName = intent.getExtras().getString("image");
         if ((imageName != null)&&(!imageName.equals(""))) {
-            Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-                @Override
-                public void onSccess(Bitmap imageBmp) {
-                    if (imageBmp != null) {
-                        image.setImageBitmap(imageBmp);
+            try {
+                Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
+                    @Override
+                    public void onSccess(Bitmap imageBmp) {
+                        if (imageBmp != null) {
+                            image.setImageBitmap(imageBmp);
+                        }
                     }
-                }
 
-                @Override
-                public void onFail() {
+                    @Override
+                    public void onFail() {
 
-                }
-            });
+                    }
+                });
+            }
+            catch(Exception e){
+                Log.d("EX", e.getMessage());
+            }
         }
+
 
         Button cancel = (Button) findViewById(R.id.detailsBtnCancel);
         cancel.setOnClickListener(new View.OnClickListener() {

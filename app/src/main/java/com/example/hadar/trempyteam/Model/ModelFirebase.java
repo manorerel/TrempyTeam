@@ -206,7 +206,7 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference httpsReference = storage.getReferenceFromUrl(url);
+        StorageReference httpsReference = storage.getReference().child("images/" + url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
         httpsReference.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
