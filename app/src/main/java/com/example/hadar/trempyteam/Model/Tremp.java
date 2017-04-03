@@ -4,6 +4,7 @@ import android.net.NetworkInfo;
 
 import com.google.firebase.database.ServerValue;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,11 +93,19 @@ public class Tremp {
         result.put("CarModel", CarModel);
         result.put("seets", Seets);
         result.put("creationTime", ServerValue.TIMESTAMP);
-        result.put("trempDateTime", trempDateTime);
+        result.put("trempDateTime", convertDateToString(trempDateTime));
+        //result.put("trempDateTime", trempDateTime);
         result.put("driverId", driverId);
         result.put("phoneNumber", PhoneNumber);
         result.put("driverId",driverId);
         result.put("imageName", imageName);
         return result;
+    }
+
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
     }
 }

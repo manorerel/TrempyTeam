@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 
 import android.support.v4.app.ActivityCompat;
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +54,7 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,7 +109,7 @@ public class CreateNewTrempActivity extends Activity {
           //      AccessToken.getCurrentAccessToken().getUserId();
 
                 long seets = Long.parseLong(seetsText.getText().toString());
-                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
+                Date date = new Date(dateText.getYear()-1900, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
                 String createdUserId = User.GetAppUser().getId();
                 String trempId = CreateID();
