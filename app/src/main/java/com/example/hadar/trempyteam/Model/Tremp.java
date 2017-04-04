@@ -88,6 +88,30 @@ public class Tremp {
     public void setNewPassengerToTremp(String user_id) {
         if(trempistsList != null && !trempistsList.contains(user_id))
             this.trempistsList.add(user_id);
+        else if(trempistsList == null){
+            trempistsList = new ArrayList<String>();
+            trempistsList.add(user_id);
+        }
+    }
+
+    public void removePassenger(String passengerId){
+        int index = 0;
+        boolean found = false;
+        if(trempistsList != null) {
+            for (int i = 0; i < trempistsList.size(); i++) {
+                if (trempistsList.get(i).equals(passengerId))
+                {
+                    index = i;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found)
+            {
+                trempistsList.remove(index);
+            }
+        }
     }
 
     private String CreateID(){

@@ -80,22 +80,7 @@ public class EditTrempActivity extends Activity {
         DestAddress.setText(intent.getExtras().getString("dest"));
 //        Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
-//        String imageName = intent.getExtras().getString("image");
-//        if ((imageName != null)&&(!imageName.equals(""))) {
-//            Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-//                @Override
-//                public void onSccess(Bitmap imageBmp) {
-//                    if (imageBmp != null) {
-//                        image.setImageBitmap(imageBmp);
-//                    }
-//                }
-//
-//                @Override
-//                public void onFail() {
-//
-//                }
-//            });
-//        }
+
 
     }
 
@@ -126,19 +111,6 @@ public class EditTrempActivity extends Activity {
                 DateEditText newDate = (DateEditText) findViewById(R.id.editDate);
                 TimeEditText newtime = (TimeEditText) findViewById(R.id.editTime);
                 final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
-//                final ImageView image = (ImageView) findViewById(R.id.editImage);
-
-                // Check if the date or time was changed
-//                if (newDate.didTouchFocusSelect()) {
-//                    TrempDate.year = newDate.year;
-//                    TrempDate.month = newDate.month;
-//                    TrempDate.day = newDate.day;
-//                }
-//                if (newtime.didTouchFocusSelect()) {
-//                    TrempTime.hour =  newtime.hour;
-//                    TrempTime.minute = newtime.minute;
-//                    TrempTime.second = newtime.second;
-//                }
 
                 try {
                     // Update the student (the id can also edited)
