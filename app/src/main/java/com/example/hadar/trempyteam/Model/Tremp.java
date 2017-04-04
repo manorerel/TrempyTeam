@@ -75,9 +75,9 @@ public class Tremp {
     public String getTrempPhoneNumber(){return phoneNumber;}
     public List<String> getTrempTrempistsList(){return trempistsList;}
 
-    public void setTrempCar(String carModel){CarModel = carModel;}
-    public void setTrempSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
-    public void setTrempDestAddress(String destAdd){DestAddress = destAdd;}
+    public void setTrempCar(String CarModel){CarModel = CarModel;}
+    public void setTrempSourceAddress(String SourceAddress){SourceAddress = SourceAddress;}
+    public void setTrempDestAddress(String DestAddress){DestAddress = DestAddress;}
     public void setTrempSeets(long seets){
         this.seets = seets;}
     public void settrempDate(Date TrempDateTime){TrempDateTime = TrempDateTime;}
