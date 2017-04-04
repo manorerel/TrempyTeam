@@ -19,7 +19,31 @@
         android:icon="@mipmap/delete"
         android:showAsAction ="always"
         android:title="delete"
-
         android:visible="false"/>
+
+    <item android:id="@+id/saveTremp"
+        android:icon="@mipmap/save"
+        android:showAsAction ="always"
+        android:title="delete"
+        android:visible="false"/>
+
+    <item android:id="@+id/cancelTremp"
+        android:icon="@mipmap/back"
+        android:showAsAction ="always"
+        android:title="delete"
+        android:visible="false"/>
+
+    <item android:id="@+id/joinTremp"
+        android:icon="@mipmap/join"
+        android:showAsAction ="always"
+        android:title="join"
+        android:visible="false"/>
+
+    <item android:id="@+id/removeTrempist"
+        android:icon="@mipmap/remove"
+        android:showAsAction ="always"
+        android:title="leaf"
+        android:visible="false"/>
+
     <!--android:showAsAction="always"-->
 </menu>

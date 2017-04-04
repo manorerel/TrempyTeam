@@ -92,28 +92,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editAvaliable_seats"
-            android:layout_marginLeft="185dp"
-            android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Avaliable Seats:"
-            android:id="@+id/avaliable_seats_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <com.example.hadar.trempyteam.DateEditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
@@ -169,77 +147,103 @@
             android:layout_marginBottom="20dp" />
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/editImage"
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Image:"
-            android:id="@+id/car_image"
-            android:layout_marginLeft="20dp"/>
-
-    </RelativeLayout>
-    >
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="40dp" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="CANCEL"
-                android:id="@+id/EditBtnCancel"
-                android:layout_weight="0.10"
-                android:layout_marginLeft="6dp"
-                android:background="@drawable/rounded_corners"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="fill_parent">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="DELETE"
-                android:id="@+id/EditBtnDelete"
-                android:layout_weight="0.10"
-                android:background="@drawable/rounded_corners"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="fill_parent">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="SAVE"
-                android:id="@+id/EditBtnSave"
-                android:layout_weight="0.10"
-                android:background="@drawable/rounded_corners"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
 
 </LinearLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<EditText-->
+            <!--android:layout_width="130dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/editAvaliable_seats"-->
+            <!--android:layout_marginLeft="185dp"-->
+            <!--android:inputType="number"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+            <!--android:text="Avaliable Seats:"-->
+            <!--android:id="@+id/avaliable_seats_"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginBottom="20dp" />-->
+    <!--</RelativeLayout>-->
+
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/editImage"-->
+            <!--android:src="@mipmap/ic_launcher"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true" />-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+            <!--android:text="Car Image:"-->
+            <!--android:id="@+id/car_image"-->
+            <!--android:layout_marginLeft="20dp"/>-->
+
+    <!--</RelativeLayout>-->
+    <!--&gt;-->
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginLeft="40dp" >-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<Button-->
+                <!--android:layout_width="300dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="CANCEL"-->
+                <!--android:id="@+id/EditBtnCancel"-->
+                <!--android:layout_weight="0.10"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:background="@drawable/rounded_corners"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="fill_parent">-->
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:text="DELETE"-->
+                <!--android:id="@+id/EditBtnDelete"-->
+                <!--android:layout_weight="0.10"-->
+                <!--android:background="@drawable/rounded_corners"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="fill_parent">-->
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:text="SAVE"-->
+                <!--android:id="@+id/EditBtnSave"-->
+                <!--android:layout_weight="0.10"-->
+                <!--android:background="@drawable/rounded_corners"/>-->
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+
+<!--</LinearLayout>-->

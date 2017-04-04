@@ -1,18 +1,15 @@
 package com.example.hadar.trempyteam.Model;
 
-import android.net.NetworkInfo;
-
 import com.google.firebase.database.ServerValue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.sql.Time;
-import java.util.Calendar;
+
 /**
  * Created by מנור on 25/03/2017.
  */
@@ -23,68 +20,75 @@ public class Tremp {
     String DestAddress;
     String id;
     String driverId;
-    long Seets;
-    Date trempDateTime;
-    Date CreationDate;
-    List<String> TrempistsList;
+    long seets;
+    Date TrempDateTime;
+    Date CreationTime;
+    List<String> trempistsList;
     static int count = 0;
     String imageName;
-    String PhoneNumber;
+    String phoneNumber;
 
     public Tremp(){}
-    public Tremp(String trempId, long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers){
+    public Tremp(String trempId, long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers){
         CarModel = carModel;
-        Seets = seets;
+        this.seets = seets;
         driverId = DriverId;
-        trempDateTime = trempDate;
-        trempDateTime = trempDate;
+        TrempDateTime = trempDate;
         id = trempId;
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
         imageName = ImageName;
-        PhoneNumber = phoneNumber;
-        TrempistsList = passengers;
+        phoneNumber = PhoneNumber;
 
+        if(passengers != null)
+            trempistsList = passengers;
+        else trempistsList = new ArrayList<String>();
 
     }
-    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String phoneNumber, String carModel, String ImageName, List<String> passengers) {
+
+    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
         CarModel = carModel;
-        Seets = seets;
+        this.seets = seets;
         driverId = DriverId;
-        trempDateTime = trempDate;
-        trempDateTime = trempDate;
+        TrempDateTime  = trempDate;
         id = CreateID();
         SourceAddress = sourceAdd;
         DestAddress = destAdd;
         imageName = ImageName;
-        PhoneNumber = phoneNumber;
-        TrempistsList = passengers;
+        phoneNumber = PhoneNumber;
+        if(passengers != null)
+            trempistsList = passengers;
+        else trempistsList = new ArrayList<String>();
     }
 
-    public String getId(){return id;}
-    public String getDriverId(){return driverId;}
-    public long getSeets(){return Seets;}
-    public String getCarModel(){return CarModel;}
-    public String getSourceAddress(){return SourceAddress;}
-    public String getDestAddress(){return DestAddress;}
-    public Date getTrempDateTime(){return trempDateTime;}
-    public Date getCreationDate(){return CreationDate;}
-    public String getImageName() {
+    public String getTrempId(){return id;}
+    public String getTrempDriverId(){return driverId;}
+    public long getTrempSeets(){return seets;}
+    public String getTrempcarModel(){return CarModel;}
+    public String getTrempSourceAddress(){return SourceAddress;}
+    public String getTrempDestAddress(){return DestAddress;}
+    public Date getTrempDate(){return TrempDateTime;}
+    public Date getTrempCreationTime(){return CreationTime;}
+    public String getTrempImageName() {
         return imageName;
     }
-    public String getPhoneNumber(){return PhoneNumber;}
-    public List<String> getTrempistsList(){return TrempistsList;}
+    public String getTrempPhoneNumber(){return phoneNumber;}
+    public List<String> getTrempTrempistsList(){return trempistsList;}
 
-    public void setCarModel(String carModel){CarModel = carModel;}
-    public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
-    public void setDestAddress(String destAdd){DestAddress = destAdd;}
-    public void setSeets(long seets){Seets = seets;}
-    public void settrempDateTime(Date trempDateTime){trempDateTime = trempDateTime;}
-    public void setImageName(String imageName) {
+    public void setTrempCar(String carModel){CarModel = carModel;}
+    public void setTrempSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
+    public void setTrempDestAddress(String destAdd){DestAddress = destAdd;}
+    public void setTrempSeets(long seets){
+        this.seets = seets;}
+    public void settrempDate(Date TrempDateTime){TrempDateTime = TrempDateTime;}
+    public void setTrempImageName(String imageName) {
         this.imageName = imageName;
     }
-    public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
-    public void setNewPassengerToTremp(String user_id) {this.TrempistsList.add(user_id);}
+    public void setTrempPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
+    public void setNewPassengerToTremp(String user_id) {
+        if(trempistsList != null && !trempistsList.contains(user_id))
+            this.trempistsList.add(user_id);
+    }
 
     private String CreateID(){
         String id =driverId + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
@@ -97,15 +101,15 @@ public class Tremp {
         result.put("SourceAddress", SourceAddress);
         result.put("DestAddress", DestAddress);
         result.put("CarModel", CarModel);
-        result.put("seets", Seets);
+        result.put("seets", seets);
         result.put("creationTime", ServerValue.TIMESTAMP);
-        String NewDate = convertDateToString(trempDateTime);
+        String NewDate = convertDateToString(TrempDateTime);
         result.put("trempDateTime", NewDate);
         result.put("driverId", driverId);
-        result.put("phoneNumber", PhoneNumber);
+        result.put("phoneNumber", phoneNumber);
         result.put("driverId",driverId);
         result.put("imageName", imageName);
-        result.put("Passengers", TrempistsList);
+        result.put("Passengers", trempistsList);
         return result;
     }
 

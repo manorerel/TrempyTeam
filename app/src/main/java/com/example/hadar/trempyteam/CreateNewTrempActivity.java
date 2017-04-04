@@ -1,21 +1,14 @@
 package com.example.hadar.trempyteam;
 
-import android.*;
 import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -28,18 +21,12 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.facebook.AccessToken;
 
 import com.example.hadar.trempyteam.Model.User;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -113,7 +100,7 @@ public class CreateNewTrempActivity extends Activity {
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear()-YEAR, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
-                String createdUserId = User.GetAppUser().getId();
+                String createdUserId = User.GetAppUser().Id;
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
 
@@ -123,7 +110,7 @@ public class CreateNewTrempActivity extends Activity {
 
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                    imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
+                    imName = "image_" + newTremp.getTrempId() + "_" + timeStamp + ".jpg";
                     Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
                         @Override
                         public void complete(String url) {
@@ -139,7 +126,7 @@ public class CreateNewTrempActivity extends Activity {
                     saveAndClose();
                 }
 
-                newTremp.setImageName(imName);
+                newTremp.setTrempImageName(imName);
                 fbModel.addTremp(newTremp);
 
                 ModelSql sqlLight = ModelSql.getInstance();
@@ -227,7 +214,7 @@ public class CreateNewTrempActivity extends Activity {
 
 
     private String CreateID(){
-        String id =User.GetAppUser().getId() + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
+        String id =User.GetAppUser().Id + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
         return id;
     }
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.hadar.trempyteam.MainAactivity;
 import com.example.hadar.trempyteam.TrempyApp;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +47,10 @@ public class ModelSql {
         {
             Log.d("exception:" , "exception while trying add tremp to local db " + e.getMessage());
         }
+    }
+
+    public void updateTremp(String id, String dest, String source, String phone, Date date){
+        TrempSql.UpdateTremp(trempHelper.getWritableDatabase(), id, dest, source, phone, date);
     }
 
 

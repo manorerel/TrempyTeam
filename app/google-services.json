@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "349700175088-a3dq8uotb2dvvagk8jg7p2u4hhnciuo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hadar.trempyteam",
+            "certificate_hash": "50701796c8930d1b9c03278e8b94040c384eb15c"
+          }
+        },
+        {
           "client_id": "349700175088-f51tdu9t94djaveaaec9kc140u9j28sq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
