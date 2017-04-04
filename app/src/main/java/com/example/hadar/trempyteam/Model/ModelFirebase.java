@@ -31,6 +31,9 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+
 
 public class ModelFirebase {
 
@@ -161,6 +164,7 @@ public class ModelFirebase {
                             {
                                 if (wordsDestUserSearch.get(i) == "" || wordsDestInFireBase.contains(wordsDestUserSearch.get(i)))
                                 {
+                                    String trempDate = "";
                                     Tremp t;
                                     try {
                                         t = trSnapshot.getValue(Tremp.class);
@@ -170,32 +174,48 @@ public class ModelFirebase {
 
                                         String id = (String)trSnapshot.child("id").getValue();
                                         String driverId = (String) trSnapshot.child("driverId").getValue();
-//                                        Date trempDate = (Date)trSnapshot.child("trempDateTime").getValue();
+                                        trempDate = (String) trSnapshot.child("trempDateTime").getValue();
                                         String carModel = (String) trSnapshot.child("CarModel").getValue();
                                         String source = (String) trSnapshot.child("SourceAddress").getValue();
                                         String dest = (String) trSnapshot.child("DestAddress").getValue();
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
-                                        String imageName = (String) trSnapshot.child("imageName").getValue();
-                                        List<String> TrempistsList = (List<String>) trSnapshot.child("imageName").getValue();
+                                        String imageName = (String) trSnapshot.child("imageName").getValue();                                       
+                                        List<String> TrempistsList = (List<String>) trSnapshot.child("Passengers").getValue();
 
-                                        t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, TrempistsList);
+                                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                        Date date = new Date();
+                                        //date = convertStringToDate(trempDate)
+                                        try {
+                                            if (!trempDate.equals("")) {
+                                                date = format.parse(trempDate);
+                                            }       //format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
+                                        }
+                                        catch (Exception e1)
+                                        {
+                                            String m = e1.getMessage();
+                                        }
+
+                                        t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
                                     }
-
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-                                    Date date = new Date();
+                                        
+                                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                    Date dateCreation = new Date();
                                     try {
-                                        date = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
+                                        dateCreation = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
                                     }
                                     catch (Exception e)
                                     {
                                     }
 
-                                    t.CreationDate = date;
+                                    t.CreationDate = dateCreation;
+                                 //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
+                                   
                                     if ( t.getSeets() != 0)
                                     {
                                         tremps.add(t);
                                     }
+
 
                                     break;
                                 }
@@ -271,4 +291,19 @@ public class ModelFirebase {
 
     }
 
+
+    private static Date convertStringToDate(String dateText){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateText);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return convertedDate;
+    }
+
 }
+
