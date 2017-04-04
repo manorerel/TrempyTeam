@@ -22,6 +22,10 @@ import com.facebook.HttpMethod;
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ListTrempActivity extends Activity {
@@ -96,7 +100,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("image",  tremp.getTrempImageName());
                 intent.putExtra("driverId",  tremp.getTrempDriverId());
                 if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", tremp.getTrempDate().toString());
+                    intent.putExtra("date", convertDateToString(tremp.getTrempDate()));
+
 
                 }
                 startActivityForResult(intent, 1);
@@ -176,4 +181,10 @@ public class ListTrempActivity extends Activity {
         }
     }
 
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
+    }
 }

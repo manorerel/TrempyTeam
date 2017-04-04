@@ -10,6 +10,8 @@ import android.location.Geocoder;
 import android.os.Bundle;
 
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +42,7 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +50,7 @@ public class CreateNewTrempActivity extends Activity {
     private static final int REQUEST_WRITE_STORAGE = 112;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static int count = 0;
+    int YEAR = 1900;
 
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -93,7 +98,7 @@ public class CreateNewTrempActivity extends Activity {
           //      AccessToken.getCurrentAccessToken().getUserId();
 
                 long seets = Long.parseLong(seetsText.getText().toString());
-                Date date = new Date(dateText.getYear(), dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
+                Date date = new Date(dateText.getYear()-YEAR, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
                 String createdUserId = User.GetAppUser().Id;
                 String trempId = CreateID();

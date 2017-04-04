@@ -2,6 +2,7 @@ package com.example.hadar.trempyteam.Model;
 
 import com.google.firebase.database.ServerValue;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -102,12 +103,20 @@ public class Tremp {
         result.put("CarModel", CarModel);
         result.put("seets", seets);
         result.put("creationTime", ServerValue.TIMESTAMP);
-        result.put("trempDateTime", TrempDateTime);
+        String NewDate = convertDateToString(TrempDateTime);
+        result.put("trempDateTime", NewDate);
         result.put("driverId", driverId);
         result.put("phoneNumber", phoneNumber);
         result.put("driverId",driverId);
         result.put("imageName", imageName);
         result.put("Passengers", trempistsList);
         return result;
+    }
+
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
     }
 }
