@@ -143,6 +143,7 @@ public class TrempDetailsActivity extends Activity {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String tremp_id = getIntent().getExtras().getString("id");
 
                 LatLng c =  getLocationFromAddress(TrempDetailsActivity.this, de);
                 LatLng s =  getLocationFromAddress(TrempDetailsActivity.this, so);
