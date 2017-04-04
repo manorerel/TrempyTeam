@@ -64,12 +64,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    final List<String> passengers_Names = new LinkedList<String>();
+     String iddd = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -79,46 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
          LatLng dest = (LatLng) getIntent().getExtras().get("DestLocation");
         LatLng source = (LatLng) getIntent().getExtras().get("SourceLocation");
-        String id = (String) getIntent().getExtras().get("trempId");
-
-
-        ModelFirebase fbModel = new ModelFirebase();
-
-        fbModel.getPassengersByTrempId(id, new Model.GetPassengersListener() {
-
-            String name;
-            @Override
-            public void onComplete(List<String> list) {
-
-                for (int i = 0; i< list.size(); i++)
-                {
-                    String ddddd = list.get(i).toString();
-
-
-                   new GraphRequest(AccessToken.getCurrentAccessToken(),
-                            "/" + ddddd,
-                            null,
-                            HttpMethod.GET,
-                            new GraphRequest.Callback() {
-                                @Override
-                                public void onCompleted(GraphResponse response) {
-                                    try {
-                                        passengers_Names.add(response.getJSONObject().getString("name"));
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }).executeAsync();
-
-                }
-            }
-
-
-
-
-        });
-
+        iddd = (String) getIntent().getExtras().get("trempId");
 
 
 
@@ -192,7 +155,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
-                intent.putExtra("name:", passengers_Names.get(0).toString());
+                intent.putExtra("tremp_id", iddd);
+
                 startActivity(intent);
                 return true;
             }

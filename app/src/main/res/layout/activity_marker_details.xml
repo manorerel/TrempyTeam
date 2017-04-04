@@ -8,17 +8,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hadar.trempyteam.MarkerDetailsActivity">
+    tools:context="com.example.hadar.trempyteam.MarkerDetailsActivity"
+    android:background="#F48FB1">
+
+    <TextView
+        android:text="נוסעים נוספים בטרמפ בזה:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/textView4"
+        android:textSize="36sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="נסיעה טובה :)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:id="@+id/textView5"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="Hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="67dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="241dp"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:textSize="36sp"
+        android:layout_marginTop="59dp"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
