@@ -25,7 +25,6 @@ import org.json.JSONException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ListTrempActivity extends Activity {
@@ -91,16 +90,16 @@ public class ListTrempActivity extends Activity {
                 Tremp tremp =  trempsList.get(i);
 
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                intent.putExtra("id",  tremp.getTrempId());
-                intent.putExtra("phone",  tremp.getTrempPhoneNumber());
-                intent.putExtra("source",  tremp.getTrempSourceAddress());
-                intent.putExtra("dest",  tremp.getTrempDestAddress());
-                intent.putExtra("seets",  tremp.getTrempSeets());
-                intent.putExtra("car",  tremp.getTrempcarModel());
-                intent.putExtra("image",  tremp.getTrempImageName());
-                intent.putExtra("driverId",  tremp.getTrempDriverId());
-                if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", convertDateToString(tremp.getTrempDate()));
+                intent.putExtra("id",  tremp.getId());
+                intent.putExtra("phone",  tremp.getPhoneNumber());
+                intent.putExtra("source",  tremp.getSourceAddress());
+                intent.putExtra("dest",  tremp.getDestAddress());
+                intent.putExtra("seets",  tremp.getSeets());
+                intent.putExtra("car",  tremp.getcarModel());
+                intent.putExtra("image",  tremp.getImageName());
+                intent.putExtra("driverId",  tremp.getDriverId());
+                if (tremp.getTrempDateTime() != null) {
+                    intent.putExtra("date", convertDateToString(tremp.getTrempDateTime()));
 
 
                 }
@@ -151,10 +150,10 @@ public class ListTrempActivity extends Activity {
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-              seats.setText(String.valueOf(st.getTrempSeets()));
+              seats.setText(String.valueOf(st.getSeets()));
 
 
-           final String driver_id = st.getTrempDriverId();
+           final String driver_id = st.getDriverId();
 
             try {
                 //until solve the problem with droiver id

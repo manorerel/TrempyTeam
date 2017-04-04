@@ -61,30 +61,30 @@ public class Tremp {
         else trempistsList = new ArrayList<String>();
     }
 
-    public String getTrempId(){return id;}
-    public String getTrempDriverId(){return driverId;}
-    public long getTrempSeets(){return seets;}
-    public String getTrempcarModel(){return CarModel;}
-    public String getTrempSourceAddress(){return SourceAddress;}
-    public String getTrempDestAddress(){return DestAddress;}
-    public Date getTrempDate(){return TrempDateTime;}
-    public Date getTrempCreationTime(){return CreationTime;}
-    public String getTrempImageName() {
+    public String getId(){return id;}
+    public String getDriverId(){return driverId;}
+    public long getSeets(){return seets;}
+    public String getcarModel(){return CarModel;}
+    public String getSourceAddress(){return SourceAddress;}
+    public String getDestAddress(){return DestAddress;}
+    public Date getTrempDateTime(){return TrempDateTime;}
+    public Date getCreationTime(){return CreationTime;}
+    public String getImageName() {
         return imageName;
     }
-    public String getTrempPhoneNumber(){return phoneNumber;}
-    public List<String> getTrempTrempistsList(){return trempistsList;}
+    public String getPhoneNumber(){return phoneNumber;}
+    public List<String> getTrempistsList(){return trempistsList;}
 
-    public void setTrempCar(String carModel){CarModel = carModel;}
-    public void setTrempSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
-    public void setTrempDestAddress(String destAdd){DestAddress = destAdd;}
-    public void setTrempSeets(long seets){
+    public void setCar(String carModel){CarModel = carModel;}
+    public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
+    public void setDestAddress(String destAdd){DestAddress = destAdd;}
+    public void setSeets(long seets){
         this.seets = seets;}
-    public void settrempDate(Date TrempDateTime){TrempDateTime = TrempDateTime;}
-    public void setTrempImageName(String imageName) {
+    public void settrempDateTime(Date TrempDateTime){TrempDateTime = TrempDateTime;}
+    public void setImageName(String imageName) {
         this.imageName = imageName;
     }
-    public void setTrempPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
+    public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
     public void setNewPassengerToTremp(String user_id) {
         if(trempistsList != null && !trempistsList.contains(user_id))
             this.trempistsList.add(user_id);

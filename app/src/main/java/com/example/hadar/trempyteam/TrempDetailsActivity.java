@@ -32,7 +32,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by aviac on 3/31/2017.
@@ -284,10 +283,10 @@ public class TrempDetailsActivity extends Activity {
         String id = currentIntent.getExtras().getString("id");
         Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
         intent.putExtra("id",  id);
-        intent.putExtra("phone",  trempToEdit.getTrempPhoneNumber());
-        intent.putExtra("source",  trempToEdit.getTrempSourceAddress());
-        intent.putExtra("dest",  trempToEdit.getTrempDestAddress());
-        intent.putExtra("date", trempToEdit.getTrempDate());
+        intent.putExtra("phone",  trempToEdit.getPhoneNumber());
+        intent.putExtra("source",  trempToEdit.getSourceAddress());
+        intent.putExtra("dest",  trempToEdit.getDestAddress());
+        intent.putExtra("date", trempToEdit.getTrempDateTime());
         try {
             startActivityForResult(intent,1);
         }
@@ -324,11 +323,11 @@ public class TrempDetailsActivity extends Activity {
                 final String de;
                 final  String so;
                 final String seet;
-                PhoneNumber.setText(currTremp.getTrempPhoneNumber());
-                SourceAddress.setText(currTremp.getTrempSourceAddress());
-                DestAddress.setText(currTremp.getTrempDestAddress());
+                PhoneNumber.setText(currTremp.getPhoneNumber());
+                SourceAddress.setText(currTremp.getSourceAddress());
+                DestAddress.setText(currTremp.getDestAddress());
 //                Seets.setText(currTremp.getSeets());
-                CarModel.setText(currTremp.getTrempcarModel());
+                CarModel.setText(currTremp.getcarModel());
 
             }
         }
