@@ -124,40 +124,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Creating MarkerOptions
         MarkerOptions options = new MarkerOptions();
+        MarkerOptions opt = new MarkerOptions();
+        options.title("source");
+        opt.title("destination");
 
         // Setting the position of the marker
         options.position(MarkerPoints.get(0));
 
+
         // Setting the position of the marker
-        options.position(MarkerPoints.get(1));
+        opt.position(MarkerPoints.get(1));
 
-        /**
-         * For the start location, the color of marker is GREEN and
-         * for the end location, the color of marker is RED.
-         */
-        if (MarkerPoints.size() == 1) {
+
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            options.title("Show who are the others passengers on this tremp");
-        } else if (MarkerPoints.size() == 2) {
-
-            //String urlImageSV = "https://maps.googleapis.com/maps/api/streetview?size=10x10&location=46.414382,10.013988&heading=151.78&pitch=-0.76&key=AIzaSyBfsOnOoNOdRr6K5QdLqs6SGflsLs1gsIE";
 
 
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            options.title("Show who are the others passengers on this tremp");
-        }
+        opt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+
 
 
         // Add new marker to the Google Map Android API V2
-        mMap.addMarker(options);
+        mMap.addMarker(options).setTitle("source");
+        mMap.addMarker(opt).setTitle("destination");
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
-                intent.putExtra("tremp_id", iddd);
 
-                startActivity(intent);
+                if (marker.getTitle().equals("source") || marker.getTitle().equals("destination"))
+                {
+                    Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
+                    intent.putExtra("tremp_id", iddd);
+
+                    startActivity(intent);
+                }
                 return true;
             }
         });

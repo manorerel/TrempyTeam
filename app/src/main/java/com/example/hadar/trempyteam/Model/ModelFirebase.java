@@ -59,13 +59,21 @@ public class ModelFirebase {
                 List<String> pass_ids=new LinkedList<String>();;
                 Map<String, String> td = ( HashMap<String, String>) dataSnapshot.child("Passengers").getValue();
 
-                for (Map.Entry<String,String> entry : td.entrySet())
-                {
-                    String ss = entry.getValue();
-                    pass_ids.add(ss);
-                }
 
-                listener.onComplete(pass_ids);
+                if (td != null)
+                {
+                    for (Map.Entry<String,String> entry : td.entrySet())
+                    {
+                        String ss = entry.getValue();
+                        pass_ids.add(ss);
+                    }
+
+                    listener.onComplete(pass_ids);
+                }
+                else
+                {
+
+                }
             }
 
             @Override

@@ -31,39 +31,53 @@ public class MarkerDetailsActivity extends Activity {
         ModelFirebase fbModel = new ModelFirebase();
        final String names = "";
 
+        t.setText("\n\n Yet there are no passengers");
+
         fbModel.getPassengersByTrempId(id, new Model.GetPassengersListener() {
 
              String names = "";
             String name;
-            @Override
-            public void onComplete(List<String> list) {
 
-                for (int i = 0; i< list.size(); i++)
-                {
-                    String ddddd = list.get(i).toString();
+                @Override
+                public void onComplete (List < String > list) {
 
+                    int p = list.size();
 
-                    new GraphRequest(AccessToken.getCurrentAccessToken(),
-                            "/" + ddddd,
-                            null,
-                            HttpMethod.GET,
-                            new GraphRequest.Callback() {
-                                @Override
-                                public void onCompleted(GraphResponse response) {
-                                    try {
-                                        names += "\n\n" + response.getJSONObject().getString("name");
-                                        t.setText(names);
-                                        //passengers_Names.add(response.getJSONObject().getString("name"));
+                    if (list.size() != 0) {
+
+                        for (int i = 0; i < list.size(); i++) {
+                            String ddddd = list.get(i).toString();
 
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }).executeAsync();
+                            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                                    "/" + ddddd,
+                                    null,
+                                    HttpMethod.GET,
+                                    new GraphRequest.Callback() {
+                                        @Override
+                                        public void onCompleted(GraphResponse response) {
+                                            try {
+                                                names += "\n\n" + response.getJSONObject().getString("name");
+                                                t.setText(names);
+                                                //passengers_Names.add(response.getJSONObject().getString("name"));
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).executeAsync();
+                        }
+
+
+                    }
                 }
-            }
-        });
+
+
+
+
+            String fff = "";
+});
 
 
 
