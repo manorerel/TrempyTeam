@@ -39,80 +39,87 @@ import java.util.Locale;
  */
 
 public class TrempDetailsActivity extends Activity {
+    boolean wasEdited = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tremp_details);
         ActionBar actionBar = this.getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-        final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
-        final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
-        final TextView DestAddress = (TextView) findViewById(R.id.detailsDest);
-        final TextView Seets = (TextView) findViewById(R.id.detailsAvaliable_seats);
-        DateEditText TrempDate = (DateEditText) findViewById(R.id.detailsDate);
-        TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
-        final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
-        final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
-        final String de;
-       final  String so;
-        final String seet;
-        final String id;
         Intent intent = getIntent();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+        if (wasEdited) {
+            refresh();
 
-        String newDate = "";
-        String newTime = "";
-        try {
-            Date date = convertStringToDate(intent.getExtras().getString("date"));
-            newDate = dateFormat.format(date);
-            newTime = TimeFormat.format(date);
         }
-        catch (Exception e)
+        else
         {
+            final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
+            final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
+            final TextView DestAddress = (TextView) findViewById(R.id.detailsDest);
+            final TextView Seets = (TextView) findViewById(R.id.detailsAvaliable_seats);
+            DateEditText TrempDate = (DateEditText) findViewById(R.id.detailsDate);
+            TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
+            final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
+            final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
 
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+
+            String newDate = "";
+            String newTime = "";
+            try {
+                Date date = convertStringToDate(intent.getExtras().getString("date"));
+                newDate = dateFormat.format(date);
+                newTime = TimeFormat.format(date);
+            } catch (Exception e) {
+
+            }
+
+            TrempDate.setText(newDate);
+            TrempTime.setText(newTime);
+
+            PhoneNumber.setText(intent.getExtras().getString("phone"));
+            SourceAddress.setText(intent.getExtras().getString("source"));
+            DestAddress.setText(intent.getExtras().getString("dest"));
+            Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
+            CarModel.setText(intent.getExtras().getString("car"));
+            String imageName = intent.getExtras().getString("image");
+            if ((imageName != null) && (!imageName.equals(""))) {
+                try {
+                    Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
+                        @Override
+                        public void onSccess(Bitmap imageBmp) {
+                            if (imageBmp != null) {
+                                image.setImageBitmap(imageBmp);
+                            }
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d("EX", e.getMessage());
+                }
+            }
         }
 
 
-        TrempDate.setText(newDate);
-        TrempTime.setText(newTime);
+        final String de;
+        final String so;
+        final String seet;
+        final String id;
 
-        PhoneNumber.setText(intent.getExtras().getString("phone"));
-        SourceAddress.setText(intent.getExtras().getString("source"));
-        DestAddress.setText(intent.getExtras().getString("dest"));
-
-         de = intent.getExtras().getString("dest");
-         so = intent.getExtras().getString("source");
-         id =  intent.getExtras().getString("id");
+        de = intent.getExtras().getString("dest");
+        so = intent.getExtras().getString("source");
+        id = intent.getExtras().getString("id");
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
 
-        Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
-        CarModel.setText(intent.getExtras().getString("car"));
-       String imageName = intent.getExtras().getString("image");
-        if ((imageName != null)&&(!imageName.equals(""))) {
-            try {
-                Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-                    @Override
-                    public void onSccess(Bitmap imageBmp) {
-                        if (imageBmp != null) {
-                            image.setImageBitmap(imageBmp);
-                        }
-                    }
 
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
-            }
-            catch(Exception e){
-                Log.d("EX", e.getMessage());
-            }
-        }
 
 
         Button cancel = (Button) findViewById(R.id.detailsBtnCancel);
@@ -313,6 +320,7 @@ public class TrempDetailsActivity extends Activity {
         String trempId = currIntent.getExtras().getString("id");
 
         if(!trempId.isEmpty()){
+            wasEdited = true;
             Tremp currTremp = ModelSql.getInstance().getTrempById(trempId);
             if(currTremp != null){
                 final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
@@ -326,6 +334,27 @@ public class TrempDetailsActivity extends Activity {
                 final String de;
                 final  String so;
                 final String seet;
+
+                Intent intent = getIntent();
+
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                String newDate = "";
+                String newTime = "";
+                try {
+                    //Date date = convertDateToString(currTremp.getTrempDate());
+                    newDate = dateFormat.format(currTremp.getTrempDate());
+                    newTime = TimeFormat.format(currTremp.getTrempDate());
+                }
+                catch (Exception e)
+                {
+
+                }
+
+
+                TrempDate.setText(newDate);
+                TrempTime.setText(newTime);
                 PhoneNumber.setText(currTremp.getTrempPhoneNumber());
                 SourceAddress.setText(currTremp.getTrempSourceAddress());
                 DestAddress.setText(currTremp.getTrempDestAddress());

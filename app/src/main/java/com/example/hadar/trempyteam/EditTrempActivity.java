@@ -127,7 +127,7 @@ public class EditTrempActivity extends Activity {
 
 
                 try {
-                    // Update the student (the id can also edited)
+                    // Update the  tremp
                     ModelFirebase fb = new ModelFirebase();
                     Intent currIntent = getIntent();
                     String id = currIntent.getExtras().getString("id");
