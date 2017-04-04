@@ -25,7 +25,7 @@ public class Tremp {
     long Seets;
     Date trempDateTime;
     Date CreationDate;
-    List<String> TrempistsList;
+    List<String> Passengers;
     static int count = 0;
     String imageName;
     String PhoneNumber;
@@ -42,7 +42,7 @@ public class Tremp {
         DestAddress = destAdd;
         imageName = ImageName;
         PhoneNumber = phoneNumber;
-        TrempistsList = passengers;
+        Passengers = passengers;
 
 
     }
@@ -57,7 +57,7 @@ public class Tremp {
         DestAddress = destAdd;
         imageName = ImageName;
         PhoneNumber = phoneNumber;
-        TrempistsList = passengers;
+        Passengers = passengers;
     }
 
     public String getId(){return id;}
@@ -72,7 +72,7 @@ public class Tremp {
         return imageName;
     }
     public String getPhoneNumber(){return PhoneNumber;}
-    public List<String> getTrempistsList(){return TrempistsList;}
+    public List<String> getTrempistsList(){return Passengers;}
 
     public void setCarModel(String carModel){CarModel = carModel;}
     public void setSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
@@ -83,7 +83,7 @@ public class Tremp {
         this.imageName = imageName;
     }
     public void setPhoneNumber(String phoneNumber){this.PhoneNumber = phoneNumber;}
-    public void setNewPassengerToTremp(String user_id) {this.TrempistsList.add(user_id);}
+    public void setNewPassengerToTremp(String user_id) {this.Passengers.add(user_id);}
 
     private String CreateID(){
         String id =driverId + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
@@ -103,7 +103,7 @@ public class Tremp {
         result.put("phoneNumber", PhoneNumber);
         result.put("driverId",driverId);
         result.put("imageName", imageName);
-        result.put("Passengers", TrempistsList);
+        result.put("Passengers", Passengers);
         return result;
     }
 }

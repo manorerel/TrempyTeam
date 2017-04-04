@@ -34,6 +34,13 @@ public class Model {
         return instance;
     }
 
+    public interface GetPassengersListener {
+        void onComplete(List<String> passengers);
+    }
+
+    public void getPassengersByTrempId(String id, GetPassengersListener listener){
+        modelFirebase.getPassengersByTrempId(id,listener);
+    }
 
 
     public interface GetAllTrempsListener{

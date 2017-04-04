@@ -58,6 +58,7 @@ public class TrempDetailsActivity extends Activity {
         final String de;
        final  String so;
         final String seet;
+        final String id;
         Intent intent = getIntent();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
@@ -77,6 +78,7 @@ public class TrempDetailsActivity extends Activity {
         final String tremp_id = intent.getExtras().getString("id");
          de = intent.getExtras().getString("dest");
          so = intent.getExtras().getString("source");
+         id =  intent.getExtras().getString("id");
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
@@ -140,6 +142,7 @@ public class TrempDetailsActivity extends Activity {
                 Intent intent = new Intent(TrempDetailsActivity.this, MapsActivity.class);
                 intent.putExtra("DestLocation", c);
                 intent.putExtra("SourceLocation", s);
+                intent.putExtra("trempId", tremp_id);
                 startActivity(intent);
 
 

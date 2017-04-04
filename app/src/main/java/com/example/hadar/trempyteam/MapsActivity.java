@@ -16,6 +16,12 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.hadar.trempyteam.Model.Model;
+import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -43,6 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -70,6 +78,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
          LatLng dest = (LatLng) getIntent().getExtras().get("DestLocation");
         LatLng source = (LatLng) getIntent().getExtras().get("SourceLocation");
+        String id = (String) getIntent().getExtras().get("trempId");
+
+
+        final List<String> passengers_Names = new LinkedList<String>();
+        ModelFirebase fbModel = new ModelFirebase();
+
+        fbModel.getPassengersByTrempId(id, new Model.GetPassengersListener() {
+
+            String name;
+            @Override
+            public void onComplete(List<String> list) {
+
+                for (int i = 0; i< list.size(); i++)
+                {
+                    Log.d("gggg:   ", list.get(i).toString());
+
+                   /* new GraphRequest(AccessToken.getCurrentAccessToken(),
+                            "/" + ddddd,
+                            null,
+                            HttpMethod.GET,
+                            new GraphRequest.Callback() {
+                                @Override
+                                public void onCompleted(GraphResponse response) {
+                                    try {
+                                        name = response.getJSONObject().getString("name");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).executeAsync();*/
+                }
+            }
+        });
+
+
+
 
         MarkerPoints.add(0, source);
         MarkerPoints.add(1, dest);

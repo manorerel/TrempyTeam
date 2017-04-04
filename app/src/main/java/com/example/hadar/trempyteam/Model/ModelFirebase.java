@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam.Model;
 
+import com.google.android.gms.nearby.messages.Strategy;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,11 +27,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ModelFirebase {
 
@@ -40,6 +43,45 @@ public class ModelFirebase {
 
         myRef.setValue(tremp.toMap());
     }
+
+
+
+    public void getPassengersByTrempId(final String tremp_id, final Model.GetPassengersListener listener) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp").child(tremp_id);
+        final String tt = tremp_id;
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<String> pass_ids=new LinkedList<String>();;
+                Map<String, String> td = ( HashMap<String, String>) dataSnapshot.child("Passengers").getValue();
+
+                for (Map.Entry<String,String> entry : td.entrySet())
+                {
+                    String ss = entry.getValue();
+                    pass_ids.add(ss);
+                }
+
+                listener.onComplete(pass_ids);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                 listener.onComplete(null);
+
+            }
+        });
+
+
+
+
+    }
+
+
+
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference("Tremp").child(tremp.getId()).removeValue();
@@ -85,7 +127,6 @@ public class ModelFirebase {
                     catch (Exception e){
                         Log.d("Exception", "Can't create tremp " + e.getMessage());
                     }
-
 
                     if (t.equals(tremp_id))
                     {
@@ -177,7 +218,7 @@ public class ModelFirebase {
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
                                         String imageName = (String) trSnapshot.child("imageName").getValue();
-                                        List<String> TrempistsList = (List<String>) trSnapshot.child("imageName").getValue();
+                                        List<String> TrempistsList = (List<String>) trSnapshot.child("Passengers").getValue();
 
                                         t = new Tremp(id, seets, driverId, null, source, dest, phone, carModel, imageName, TrempistsList);
                                     }
