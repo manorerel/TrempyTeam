@@ -110,7 +110,7 @@ public class Tremp {
     }
 
     private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dateText = df.format(date);
 
         return dateText;

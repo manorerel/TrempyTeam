@@ -110,7 +110,7 @@ public class TrempSql {
     }
 
     private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         Date convertedDate = new Date();
         try {
             convertedDate = dateFormat.parse(dateText);
@@ -123,7 +123,7 @@ public class TrempSql {
     }
 
     private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dateText = df.format(date);
 
         return dateText;

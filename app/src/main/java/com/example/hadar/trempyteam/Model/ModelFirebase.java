@@ -183,7 +183,7 @@ public class ModelFirebase {
                                         String imageName = (String) trSnapshot.child("imageName").getValue();                                       
                                         List<String> TrempistsList = (List<String>) trSnapshot.child("Passengers").getValue();
 
-                                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
                                         Date date = new Date();
                                         //date = convertStringToDate(trempDate)
                                         try {
@@ -199,7 +199,7 @@ public class ModelFirebase {
                                         t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
                                     }
                                         
-                                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
                                     Date dateCreation = new Date();
                                     try {
                                         dateCreation = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
@@ -293,7 +293,7 @@ public class ModelFirebase {
 
 
     private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         Date convertedDate = new Date();
         try {
             convertedDate = dateFormat.parse(dateText);
