@@ -16,11 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.app.AlertDialog;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
@@ -74,7 +71,7 @@ public class TrempDetailsActivity extends Activity {
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
-        final String tremp_id = intent.getExtras().getString("id");
+
          de = intent.getExtras().getString("dest");
          so = intent.getExtras().getString("source");
         seet = (Long.toString(intent.getExtras().getLong("seets")));
@@ -146,13 +143,19 @@ public class TrempDetailsActivity extends Activity {
 
             }
         });
+            }
 
-        // Click on the "+" button to add a new student
-        Button btnJoin = (Button) findViewById(R.id.btnJoin);
-        btnJoin.setOnClickListener(new View.OnClickListener() {
+    private void joinTremp(){
+        final String tremp_id = getIntent().getExtras().getString("id");
+
+
+        String user_id = AccessToken.getCurrentAccessToken().getUserId();
+
+        ModelFirebase fbModel = new ModelFirebase();
+
+        fbModel.UpdateSeatsTremp(tremp_id, user_id , new Model.UpdateSeatsTrempListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onComplete() {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
                 dlgAlert.setMessage("You Are In !!");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
@@ -166,30 +169,9 @@ public class TrempDetailsActivity extends Activity {
                     }
                 });
                 dlgAlert.show();
-
-
-                String user_id = AccessToken.getCurrentAccessToken().getUserId();
-
-                ModelFirebase fbModel = new ModelFirebase();
-
-
-
-                fbModel.UpdateSeatsTremp(tremp_id, user_id , new Model.UpdateSeatsTrempListener() {
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
-
             }
         });
-
-
-
-
     }
-
-
     public LatLng getLocationFromAddress(Context context, String strAddress)
     {
         Geocoder coder= new Geocoder(context);
@@ -224,13 +206,28 @@ public class TrempDetailsActivity extends Activity {
         inflater.inflate(R.menu.menu_buttons, menu);
         Intent intent = getIntent();
         String driverId = (String)intent.getExtras().getString("driverId");
-        if(driverId.equals(User.GetAppUser().getId())) {
+        if(driverId.equals(User.GetAppUser().Id)) {
 
             MenuItem edit = menu.findItem(R.id.editTremp);
             edit.setVisible(true);
 
             MenuItem delete = menu.findItem(R.id.deleteTremp);
             delete.setVisible(true);
+        }
+        else{
+
+            String trempId = intent.getExtras().getString("id");
+            Tremp t = ModelSql.getInstance().getTrempById(trempId);
+            if(t != null)
+            {
+//            if(User.GetAppUser().isTrempContains(trempId)){
+                MenuItem remove = menu.findItem(R.id.removeTrempist);
+                remove.setVisible(true);
+            }
+            else{
+                MenuItem join = menu.findItem(R.id.joinTremp);
+                join.setVisible(true);
+            }
         }
 
         return true;
@@ -255,6 +252,10 @@ public class TrempDetailsActivity extends Activity {
                 startEdit();
                 return true;
             }
+            case R.id.joinTremp:{
+                joinTremp();
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -267,10 +268,10 @@ public class TrempDetailsActivity extends Activity {
         String id = currentIntent.getExtras().getString("id");
         Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
         intent.putExtra("id",  id);
-        intent.putExtra("phone",  trempToEdit.getPhoneNumber());
-        intent.putExtra("source",  trempToEdit.getSourceAddress());
-        intent.putExtra("dest",  trempToEdit.getDestAddress());
-        intent.putExtra("date", trempToEdit.getTrempDateTime());
+        intent.putExtra("phone",  trempToEdit.getTrempPhoneNumber());
+        intent.putExtra("source",  trempToEdit.getTrempSourceAddress());
+        intent.putExtra("dest",  trempToEdit.getTrempDestAddress());
+        intent.putExtra("date", trempToEdit.getTrempDate());
         try {
             startActivityForResult(intent,1);
         }
@@ -307,11 +308,11 @@ public class TrempDetailsActivity extends Activity {
                 final String de;
                 final  String so;
                 final String seet;
-                PhoneNumber.setText(currTremp.getPhoneNumber());
-                SourceAddress.setText(currTremp.getSourceAddress());
-                DestAddress.setText(currTremp.getDestAddress());
+                PhoneNumber.setText(currTremp.getTrempPhoneNumber());
+                SourceAddress.setText(currTremp.getTrempSourceAddress());
+                DestAddress.setText(currTremp.getTrempDestAddress());
 //                Seets.setText(currTremp.getSeets());
-                CarModel.setText(currTremp.getCarModel());
+                CarModel.setText(currTremp.getTrempcarModel());
 
             }
         }

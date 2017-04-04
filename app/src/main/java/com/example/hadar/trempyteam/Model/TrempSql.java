@@ -3,7 +3,6 @@ package com.example.hadar.trempyteam.Model;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -34,14 +33,16 @@ public class TrempSql {
         ContentValues values = new ContentValues();
 
         values.put(ST_ID, tremp.id);
-        values.put(DRIVER_ID, tremp.getDriverId());
-        values.put(SOURCE, tremp.getSourceAddress());
-        values.put(DEST, tremp.getDestAddress());
-        values.put(SEETS, tremp.getSeets());
-        values.put(CAR_MODEL, tremp.getCarModel());
-        values.put(DATE, convertDateToString(tremp.getTrempDateTime()));
-        values.put(PHONE, tremp.getPhoneNumber());
-        values.put(IMAGE_URL, tremp.getImageName());
+        values.put(DRIVER_ID, tremp.getTrempDriverId());
+        values.put(SOURCE, tremp.getTrempSourceAddress());
+        values.put(DEST, tremp.getTrempDestAddress());
+        values.put(SEETS, tremp.getTrempSeets());
+        values.put(CAR_MODEL, tremp.getTrempcarModel());
+        if(tremp.getTrempDate() == null)
+            values.put(DATE, "");
+        else values.put(DATE, convertDateToString(tremp.getTrempDate()));
+        values.put(PHONE, tremp.getTrempPhoneNumber());
+        values.put(IMAGE_URL, tremp.getTrempImageName());
 
         if(isCreated)
         values.put(IS_CREATED, "true");
@@ -87,7 +88,7 @@ public class TrempSql {
             cursor = readableDatabase.query(TREMP,null, IS_CREATED + " = ?",selectionArgs, null, null, null, null);}
         else {
             String[] selectionArgs = {"false"};
-            cursor = readableDatabase.query(TREMP,null, DRIVER_ID + " = ?",selectionArgs, null, null, null, null);}
+            cursor = readableDatabase.query(TREMP,null, IS_CREATED + " = ?",selectionArgs, null, null, null, null);}
         List<Tremp> tremps = new LinkedList<Tremp>();
 
         if (cursor.moveToFirst() == true){

@@ -26,6 +26,14 @@
             android:icon="@mipmap/back"
             />
 
+        <item android:id="@+id/joinTremp"
+            android:icon="@mipmap/join"
+            />
+
+        <item android:id="@+id/removeTrempist"
+            android:icon="@mipmap/remove"
+            />
+
     </menu>
 
 </LinearLayout>

@@ -32,5 +32,18 @@
         android:showAsAction ="always"
         android:title="delete"
         android:visible="false"/>
+
+    <item android:id="@+id/joinTremp"
+        android:icon="@mipmap/join"
+        android:showAsAction ="always"
+        android:title="join"
+        android:visible="false"/>
+
+    <item android:id="@+id/removeTrempist"
+        android:icon="@mipmap/remove"
+        android:showAsAction ="always"
+        android:title="leaf"
+        android:visible="false"/>
+
     <!--android:showAsAction="always"-->
 </menu>
