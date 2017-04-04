@@ -92,9 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (int i = 0; i< list.size(); i++)
                 {
-                    Log.d("gggg:   ", list.get(i).toString());
+                    String ddddd = list.get(i).toString();
 
-                   /* new GraphRequest(AccessToken.getCurrentAccessToken(),
+
+                   new GraphRequest(AccessToken.getCurrentAccessToken(),
                             "/" + ddddd,
                             null,
                             HttpMethod.GET,
@@ -102,14 +103,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 @Override
                                 public void onCompleted(GraphResponse response) {
                                     try {
-                                        name = response.getJSONObject().getString("name");
+                                        passengers_Names.add(response.getJSONObject().getString("name"));
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                            }).executeAsync();*/
+                            }).executeAsync();
+
                 }
             }
+
+
+
+
         });
 
 
