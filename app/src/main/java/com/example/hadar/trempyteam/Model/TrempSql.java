@@ -149,13 +149,13 @@ public class TrempSql {
 
     }
 
-    public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, Date date){
+    public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, String date){
         String[] selectionArgs = {id};
         ContentValues cv = new ContentValues();
         cv.put(DEST,dest);
         cv.put(SOURCE,source);
         cv.put(PHONE,phone);
-//        cv.put(DATE,convertDateToString(date));
+        cv.put(DATE,date);
         database.update(TREMP,cv, ST_ID+"=?",selectionArgs);
 
 

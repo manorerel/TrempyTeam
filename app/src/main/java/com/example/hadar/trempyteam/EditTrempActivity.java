@@ -24,6 +24,8 @@ import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.User;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,7 +36,8 @@ import java.util.Date;
 public class EditTrempActivity extends Activity {
 
     boolean dateEdited=false;
-
+    String dateString = "";
+    String timeString = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -54,48 +57,29 @@ public class EditTrempActivity extends Activity {
 
         //Get the Tremp details
         Intent intent = getIntent();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date date = new Date();
-        try {
-            date = format.parse(intent.getExtras().getString("date"));
-            //Get the Date properties from the tremp date
-            TrempDate.year = date.getYear();
-            TrempDate.month = date.getMonth();
-            TrempDate.day = date.getDay();
 
-            //Get the Time properties from the tremp time
-            TrempTime.hour = date.getHours();
-            TrempTime.minute = date.getMinutes();
-            TrempTime.second = date.getSeconds();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+
+        try {
+            Date date = convertStringToDate(intent.getExtras().getString("date"));
+            dateString = dateFormat.format(date);
+            timeString = TimeFormat.format(date);
+
+
         }
         catch (Exception e)
         {
 
         }
 
-        TrempDate.setText("" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear());
-        TrempTime.setText("" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        TrempDate.setText(dateString);
+        TrempTime.setText(timeString);
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
-//        Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
-//        String imageName = intent.getExtras().getString("image");
-//        if ((imageName != null)&&(!imageName.equals(""))) {
-//            Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-//                @Override
-//                public void onSccess(Bitmap imageBmp) {
-//                    if (imageBmp != null) {
-//                        image.setImageBitmap(imageBmp);
-//                    }
-//                }
-//
-//                @Override
-//                public void onFail() {
-//
-//                }
-//            });
-//        }
+
 
     }
 
@@ -129,24 +113,26 @@ public class EditTrempActivity extends Activity {
 //                final ImageView image = (ImageView) findViewById(R.id.editImage);
 
                 // Check if the date or time was changed
-//                if (newDate.didTouchFocusSelect()) {
-//                    TrempDate.year = newDate.year;
-//                    TrempDate.month = newDate.month;
-//                    TrempDate.day = newDate.day;
-//                }
-//                if (newtime.didTouchFocusSelect()) {
-//                    TrempTime.hour =  newtime.hour;
-//                    TrempTime.minute = newtime.minute;
-//                    TrempTime.second = newtime.second;
-//                }
+
+                if(newDate.didTouchFocusSelect())
+                {
+                    dateString = newDate.getText().toString();
+                }
+                if (newtime.didTouchFocusSelect())
+                {
+                    timeString = newtime.getText().toString();
+                }
+
+                String fullDateString = dateString + " " + timeString;
+
 
                 try {
                     // Update the student (the id can also edited)
                     ModelFirebase fb = new ModelFirebase();
                     Intent currIntent = getIntent();
                     String id = currIntent.getExtras().getString("id");
-                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), null);
-                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), null);
+                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
+                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
 
                     // this.showSucessAlertDialog( "Success", "Student updated successfuly", true);
                 } catch (Exception e) {
@@ -168,4 +154,16 @@ public class EditTrempActivity extends Activity {
         }
     }
 
+    private static Date convertStringToDate(String dateText){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateText);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return convertedDate;
+    }
 }

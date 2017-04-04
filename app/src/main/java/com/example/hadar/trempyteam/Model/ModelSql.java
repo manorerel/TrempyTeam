@@ -49,7 +49,7 @@ public class ModelSql {
         }
     }
 
-    public void updateTremp(String id, String dest, String source, String phone, Date date){
+    public void updateTremp(String id, String dest, String source, String phone, String date){
         TrempSql.UpdateTremp(trempHelper.getWritableDatabase(), id, dest, source, phone, date);
     }
 

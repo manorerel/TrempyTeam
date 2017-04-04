@@ -88,7 +88,7 @@ public class ModelFirebase {
     }
 
 
-    public void updateTremp(String id, String dest, String source, String phone, Date date){
+    public void updateTremp(String id, String dest, String source, String phone, String date){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference trempToUpdate = database.getReference("Tremp").child(id);
 

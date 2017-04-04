@@ -287,7 +287,9 @@ public class TrempDetailsActivity extends Activity {
         intent.putExtra("phone",  trempToEdit.getTrempPhoneNumber());
         intent.putExtra("source",  trempToEdit.getTrempSourceAddress());
         intent.putExtra("dest",  trempToEdit.getTrempDestAddress());
-        intent.putExtra("date", trempToEdit.getTrempDate());
+        intent.putExtra("date", convertDateToString(trempToEdit.getTrempDate()));
+        intent.putExtra("car", trempToEdit.getTrempcarModel());
+
         try {
             startActivityForResult(intent,1);
         }
@@ -350,6 +352,12 @@ public class TrempDetailsActivity extends Activity {
         }
 
         return convertedDate;
+    }
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
     }
 }
 
