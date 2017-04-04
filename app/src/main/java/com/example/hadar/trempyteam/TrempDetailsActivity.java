@@ -30,6 +30,7 @@ import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,17 +63,24 @@ public class TrempDetailsActivity extends Activity {
         final String seet;
         Intent intent = getIntent();
 
-        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+
+        String newDate = "";
+        String newTime = "";
         try {
-            date = convertStringToDate(intent.getExtras().getString("date"));
+            Date date = convertStringToDate(intent.getExtras().getString("date"));
+            newDate = dateFormat.format(date);
+            newTime = TimeFormat.format(date);
         }
         catch (Exception e)
         {
 
         }
 
-        TrempDate.setText("" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear());
-        TrempTime.setText("" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+
+        TrempDate.setText(newDate);
+        TrempTime.setText(newTime);
 
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
@@ -286,7 +294,7 @@ public class TrempDetailsActivity extends Activity {
 
 
     private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date convertedDate = new Date();
         try {
             convertedDate = dateFormat.parse(dateText);
