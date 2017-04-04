@@ -51,6 +51,10 @@ public class Model {
         void onComplete(List<Tremp> tremps);
     }
 
+    public interface GetAllUserListener{
+        void onComplete(List<User> users);
+    }
+
     public interface UpdateSeatsTrempListener{
         void onComplete();
     }

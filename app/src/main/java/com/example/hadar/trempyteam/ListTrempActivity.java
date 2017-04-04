@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,42 +17,16 @@ import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 
-import android.app.Activity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.os.Bundle;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.util.Base64;
-import android.util.Log;
-import android.widget.Toast;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.jar.Attributes;
 
 public class ListTrempActivity extends Activity {
 
@@ -118,19 +91,20 @@ public class ListTrempActivity extends Activity {
                 Tremp tremp =  trempsList.get(i);
 
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
-                intent.putExtra("id",  tremp.getId());
-                intent.putExtra("phone",  tremp.getPhoneNumber());
-                intent.putExtra("source",  tremp.getSourceAddress());
-                intent.putExtra("dest",  tremp.getDestAddress());
-                intent.putExtra("seets",  tremp.getSeets());
-                intent.putExtra("car",  tremp.getCarModel());
-                intent.putExtra("image",  tremp.getImageName());
-                intent.putExtra("driverId",  tremp.getDriverId());
-                if (tremp.getTrempDateTime() != null) {
-                    intent.putExtra("date", tremp.getTrempDateTime().toString());
+                intent.putExtra("id",  tremp.getTrempId());
+                intent.putExtra("phone",  tremp.getTrempPhoneNumber());
+                intent.putExtra("source",  tremp.getTrempSourceAddress());
+                intent.putExtra("dest",  tremp.getTrempDestAddress());
+                intent.putExtra("seets",  tremp.getTrempSeets());
+                intent.putExtra("car",  tremp.getTrempcarModel());
+                intent.putExtra("image",  tremp.getTrempImageName());
+                intent.putExtra("driverId",  tremp.getTrempDriverId());
+                if (tremp.getTrempDate() != null) {
+                    intent.putExtra("date", convertDateToString(tremp.getTrempDate()));
+
 
                 }
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -177,10 +151,10 @@ public class ListTrempActivity extends Activity {
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-              seats.setText(String.valueOf(st.getSeets()));
+              seats.setText(String.valueOf(st.getTrempSeets()));
 
 
-           final String driver_id = st.getDriverId();
+           final String driver_id = st.getTrempDriverId();
 
             try {
                 //until solve the problem with droiver id
@@ -207,4 +181,10 @@ public class ListTrempActivity extends Activity {
         }
     }
 
+    private static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dateText = df.format(date);
+
+        return dateText;
+    }
 }

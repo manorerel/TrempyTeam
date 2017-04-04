@@ -18,6 +18,22 @@
             android:icon="@mipmap/delete"
             />
 
+        <item android:id="@+id/daveTremp"
+            android:icon="@mipmap/save"
+            />
+
+        <item android:id="@+id/cancelTremp"
+            android:icon="@mipmap/back"
+            />
+
+        <item android:id="@+id/joinTremp"
+            android:icon="@mipmap/join"
+            />
+
+        <item android:id="@+id/removeTrempist"
+            android:icon="@mipmap/remove"
+            />
+
     </menu>
 
 </LinearLayout>
