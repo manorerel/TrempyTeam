@@ -16,6 +16,12 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.hadar.trempyteam.Model.Model;
+import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -43,6 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -56,11 +64,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+     String iddd = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -70,6 +81,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
          LatLng dest = (LatLng) getIntent().getExtras().get("DestLocation");
         LatLng source = (LatLng) getIntent().getExtras().get("SourceLocation");
+        iddd = (String) getIntent().getExtras().get("trempId");
+
+
 
         MarkerPoints.add(0, source);
         MarkerPoints.add(1, dest);
@@ -110,36 +124,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Creating MarkerOptions
         MarkerOptions options = new MarkerOptions();
+        MarkerOptions opt = new MarkerOptions();
+        options.title("source");
+        opt.title("destination");
 
         // Setting the position of the marker
         options.position(MarkerPoints.get(0));
 
+
         // Setting the position of the marker
-        options.position(MarkerPoints.get(1));
+        opt.position(MarkerPoints.get(1));
 
-        /**
-         * For the start location, the color of marker is GREEN and
-         * for the end location, the color of marker is RED.
-         */
-        if (MarkerPoints.size() == 1) {
+
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        } else if (MarkerPoints.size() == 2) {
-
-            //String urlImageSV = "https://maps.googleapis.com/maps/api/streetview?size=10x10&location=46.414382,10.013988&heading=151.78&pitch=-0.76&key=AIzaSyBfsOnOoNOdRr6K5QdLqs6SGflsLs1gsIE";
 
 
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        }
+        opt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+
 
 
         // Add new marker to the Google Map Android API V2
-        mMap.addMarker(options);
+        mMap.addMarker(options).setTitle("source");
+        mMap.addMarker(opt).setTitle("destination");
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
-                startActivity(intent);
+
+                if (marker.getTitle().equals("source") || marker.getTitle().equals("destination"))
+                {
+                    Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
+                    intent.putExtra("tremp_id", iddd);
+
+                    startActivity(intent);
+                }
                 return true;
             }
         });

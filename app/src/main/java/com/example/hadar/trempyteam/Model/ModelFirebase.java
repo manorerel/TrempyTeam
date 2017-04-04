@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam.Model;
 
+import com.google.android.gms.nearby.messages.Strategy;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,14 +24,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Locale;
-
-
 
 public class ModelFirebase {
 
@@ -39,6 +40,51 @@ public class ModelFirebase {
         DatabaseReference myRef = database.getReference("Tremp").child(tremp.getTrempId());
 
         myRef.setValue(tremp.toMap());
+    }
+
+
+
+
+    public void getPassengersByTrempId(final String tremp_id, final Model.GetPassengersListener listener) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp").child(tremp_id);
+        final String tt = tremp_id;
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<String> pass_ids=new LinkedList<String>();;
+                Map<String, String> td = ( HashMap<String, String>) dataSnapshot.child("Passengers").getValue();
+
+
+                if (td != null)
+                {
+                    for (Map.Entry<String,String> entry : td.entrySet())
+                    {
+                        String ss = entry.getValue();
+                        pass_ids.add(ss);
+                    }
+
+                    listener.onComplete(pass_ids);
+                }
+                else
+                {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                 listener.onComplete(null);
+
+            }
+        });
+
+
+
+
     }
 
 
@@ -107,7 +153,6 @@ public class ModelFirebase {
                     ModelSql.getInstance().addTremp(currTremp, false);
                     User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
                     listener.onComplete();
-
                 }
 
             @Override
