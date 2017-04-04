@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -31,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 
 public class ModelFirebase {
@@ -43,7 +45,7 @@ public class ModelFirebase {
     }
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-       database.getReference("Tremp").child(tremp.getId()).removeValue();
+        database.getReference("Tremp").child(tremp.getId()).removeValue();
     }
     public void deleteTremp(String id){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -64,6 +66,50 @@ public class ModelFirebase {
         }
 
     }
+
+
+    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, Model.UpdateSeatsTrempListener listener){
+
+        final String tremp_id = Trempid;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Tremp");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
+
+
+                    String t = "";
+
+                    try {
+                        t = trSnapshot.getValue(Tremp.class).getId();
+                    }
+                    catch (Exception e){
+                        Log.d("Exception", "Can't create tremp " + e.getMessage());
+                    }
+
+
+                    if (t.equals(tremp_id))
+                    {
+                        Long currSeats = trSnapshot.getValue(Tremp.class).getSeets();
+                        trSnapshot.getRef().child("seets").setValue(currSeats - 1);
+                        trSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // listener.onComplete(null);
+
+            }
+        });
+
+
+    }
+
+
     public void getAllTremps(final Model.GetAllTrempsListener listener)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -134,9 +180,10 @@ public class ModelFirebase {
                                         String dest = (String) trSnapshot.child("DestAddress").getValue();
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
-                                        String imageName = (String) trSnapshot.child("imageName").getValue();
-                                         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                        String imageName = (String) trSnapshot.child("imageName").getValue();                                       
+                                        List<String> TrempistsList = (List<String>) trSnapshot.child("Passengers").getValue();
 
+                                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
                                         Date date = new Date();
                                         //date = convertStringToDate(trempDate)
                                         try {
@@ -149,14 +196,26 @@ public class ModelFirebase {
                                             String m = e1.getMessage();
                                         }
 
-                                        t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName);
-
+                                        t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
+                                    }
+                                        
+                                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                                    Date dateCreation = new Date();
+                                    try {
+                                        dateCreation = format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
+                                    }
+                                    catch (Exception e)
+                                    {
                                     }
 
-
-                                    t.CreationDate = new Date();
-                                    tremps.add(t);
+                                    t.CreationDate = dateCreation;
                                  //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
+                                   
+                                    if ( t.getSeets() != 0)
+                                    {
+                                        tremps.add(t);
+                                    }
+
 
                                     break;
                                 }
@@ -211,7 +270,7 @@ public class ModelFirebase {
 
     public void getImage(String url, final Model.GetImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference httpsReference = storage.getReference().child("images/" + url);
+        StorageReference httpsReference = storage.getReferenceFromUrl(url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
         httpsReference.getBytes(3*ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -232,6 +291,7 @@ public class ModelFirebase {
 
     }
 
+
     private static Date convertStringToDate(String dateText){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
         Date convertedDate = new Date();
@@ -244,4 +304,6 @@ public class ModelFirebase {
 
         return convertedDate;
     }
+
 }
+

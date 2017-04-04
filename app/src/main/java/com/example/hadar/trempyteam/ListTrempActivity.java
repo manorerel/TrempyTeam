@@ -167,46 +167,22 @@ public class ListTrempActivity extends Activity {
             return i;
         }
 
-
-        public String getUserName(String userId)
-        {
-           GraphRequest d = new GraphRequest(AccessToken.getCurrentAccessToken(),
-                    "/" + userId,
-                    null,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                @Override
-                public void onCompleted(GraphResponse response) {
-
-                }
-            });
-
-
-            return name;
-
-        }
-
         @Override
         public View  getView(final int i, View view, ViewGroup viewGroup) {
 
             if (view == null) {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
-
             }
             final TextView name = (TextView) view.findViewById(R.id.DriverName);
             final TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-            seats.setText(String.valueOf(st.getSeets()));
+              seats.setText(String.valueOf(st.getSeets()));
 
-
-            // until solve the proble with driver id
 
            final String driver_id = st.getDriverId();
-            /*// until solve the proble with driver id
-           if (st.getPhoneNumber().contains("342743") || st.getPhoneNumber().contains("93022164"))
-            {*/
+
             try {
                 //until solve the problem with droiver id
                 new GraphRequest(AccessToken.getCurrentAccessToken(),

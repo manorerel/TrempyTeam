@@ -1,8 +1,10 @@
 package com.example.hadar.trempyteam;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -18,12 +20,14 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.app.AlertDialog;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.User;
+import com.facebook.AccessToken;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.ParseException;
@@ -73,6 +77,7 @@ public class TrempDetailsActivity extends Activity {
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
+        final String tremp_id = intent.getExtras().getString("id");
          de = intent.getExtras().getString("dest");
          so = intent.getExtras().getString("source");
 
@@ -81,20 +86,26 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
        String imageName = intent.getExtras().getString("image");
         if ((imageName != null)&&(!imageName.equals(""))) {
-            Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-                @Override
-                public void onSccess(Bitmap imageBmp) {
-                    if (imageBmp != null) {
-                        image.setImageBitmap(imageBmp);
+            try {
+                Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
+                    @Override
+                    public void onSccess(Bitmap imageBmp) {
+                        if (imageBmp != null) {
+                            image.setImageBitmap(imageBmp);
+                        }
                     }
-                }
 
-                @Override
-                public void onFail() {
+                    @Override
+                    public void onFail() {
 
-                }
-            });
+                    }
+                });
+            }
+            catch(Exception e){
+                Log.d("EX", e.getMessage());
+            }
         }
+
 
         Button cancel = (Button) findViewById(R.id.detailsBtnCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +149,44 @@ public class TrempDetailsActivity extends Activity {
 
             }
         });
+
+        // Click on the "+" button to add a new student
+        Button btnJoin = (Button) findViewById(R.id.btnJoin);
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+                dlgAlert.setMessage("You Are In !!");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
+
+
+                String user_id = AccessToken.getCurrentAccessToken().getUserId();
+
+                ModelFirebase fbModel = new ModelFirebase();
+
+
+
+                fbModel.UpdateSeatsTremp(tremp_id, user_id , new Model.UpdateSeatsTrempListener() {
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+
+            }
+        });
+
 
 
 
