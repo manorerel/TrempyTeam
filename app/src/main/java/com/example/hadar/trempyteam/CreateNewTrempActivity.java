@@ -10,8 +10,6 @@ import android.location.Geocoder;
 import android.os.Bundle;
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.provider.MediaStore;
 
 import android.support.v4.app.ActivityCompat;
@@ -29,7 +27,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -42,7 +39,6 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
-import com.google.android.gms.vision.barcode.Barcode;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -110,7 +106,7 @@ public class CreateNewTrempActivity extends Activity {
 
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                    imName = "image_" + newTremp.getTrempId() + "_" + timeStamp + ".jpg";
+                    imName = "image_" + newTremp.getId() + "_" + timeStamp + ".jpg";
                     Model.getInstance().saveImage(imageBitmap, imName, new Model.SaveImageListener() {
                         @Override
                         public void complete(String url) {
@@ -126,7 +122,7 @@ public class CreateNewTrempActivity extends Activity {
                     saveAndClose();
                 }
 
-                newTremp.setTrempImageName(imName);
+                newTremp.setImageName(imName);
                 fbModel.addTremp(newTremp);
 
                 ModelSql sqlLight = ModelSql.getInstance();
