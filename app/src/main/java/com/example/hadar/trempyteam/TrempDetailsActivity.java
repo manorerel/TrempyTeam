@@ -109,16 +109,6 @@ public class TrempDetailsActivity extends Activity {
         id = intent.getExtras().getString("id");
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
-        Button cancel = (Button) findViewById(R.id.detailsBtnCancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent resultIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, resultIntent);
-                finish();
-            }
-        });
-
 //        Button delete = (Button) findViewById(R.id.btnDelete);
 //        delete.setOnClickListener(new View.OnClickListener() {
 //            @Override

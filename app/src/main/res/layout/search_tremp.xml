@@ -86,25 +86,24 @@
 
     </RelativeLayout>
 
-        <Button
-            android:text="חפש"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/btnSearch"
-            android:layout_marginTop="27dp"
-            android:textSize="24sp"
-            android:background="@drawable/rounded_corners"
-            android:backgroundTint="#00BCD4"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:layout_below="@+id/textView2"
-            android:layout_alignRight="@+id/textView2"
-            android:layout_alignEnd="@+id/textView2" />
+    <Button
+        android:text="חפש"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btnSearch"
+        android:layout_marginTop="27dp"
+        android:textSize="24sp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#00BCD4"
+        android:textStyle="normal|bold"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"></LinearLayout>
-    </LinearLayout>
+        android:layout_height="281dp"></LinearLayout>
+</LinearLayout>
 
