@@ -19,10 +19,11 @@
         android:layout_width="261dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textStyle="bold" />
     <RelativeLayout   android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -126,26 +127,21 @@
 
     <!--</RelativeLayout>-->
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="100dp" >
-
-
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:text="חפש"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/btnSearch"
-            android:layout_weight="0.85"
+            android:layout_marginTop="27dp"
             android:textSize="24sp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#00BCD4"
             android:textStyle="normal|bold"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/textView2"
+            android:layout_alignRight="@+id/textView2"
+            android:layout_alignEnd="@+id/textView2" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -153,5 +149,3 @@
             android:layout_height="fill_parent"></LinearLayout>
     </LinearLayout>
 
-
-</LinearLayout>
