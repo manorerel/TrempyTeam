@@ -162,11 +162,11 @@ public class TrempDetailsActivity extends Activity {
 
         ModelFirebase fbModel = new ModelFirebase();
 
-        fbModel.UpdateSeatsTremp(tremp_id, user_id , new Model.UpdateSeatsTrempListener() {
+        fbModel.UpdateSeatsTremp(tremp_id, user_id , true, new Model.UpdateSeatsTrempListener() {
             @Override
             public void onComplete() {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("You Are In !!");
+                dlgAlert.setMessage("יש לך מקום שמור בטרמפ (:");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -181,6 +181,34 @@ public class TrempDetailsActivity extends Activity {
             }
         });
     }
+
+    private void exitTremp(){
+        final String tremp_id = getIntent().getExtras().getString("id");
+
+        String user_id = AccessToken.getCurrentAccessToken().getUserId();
+
+        ModelFirebase fbModel = new ModelFirebase();
+
+        fbModel.UpdateSeatsTremp(tremp_id, user_id, false , new Model.UpdateSeatsTrempListener() {
+            @Override
+            public void onComplete() {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+                dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
+            }
+        });
+    }
+
     public LatLng getLocationFromAddress(Context context, String strAddress)
     {
         Geocoder coder= new Geocoder(context);
@@ -265,8 +293,15 @@ public class TrempDetailsActivity extends Activity {
                 joinTremp();
                 return true;
             }
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.removeTrempist:{
+                exitTremp();
+                return true;
+            }
+            default:{
+                finish();
+                return true;
+            }
+
         }
     }
 

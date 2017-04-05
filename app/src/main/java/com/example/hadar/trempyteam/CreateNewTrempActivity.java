@@ -2,7 +2,9 @@ package com.example.hadar.trempyteam;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -58,6 +60,7 @@ public class CreateNewTrempActivity extends Activity {
     ImageView imageView;
     String imageFileName = null;
     Bitmap imageBitmap = null;
+    AlertDialog.Builder dlgAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class CreateNewTrempActivity extends Activity {
 
         final ModelFirebase fbModel = new ModelFirebase();
         imageView = (ImageView) findViewById(R.id.Image);
+        dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
 
         boolean hasPermission = (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
@@ -93,6 +97,21 @@ public class CreateNewTrempActivity extends Activity {
                 String dateString = dateText.getText() + " " + time.getText();
 
           //      AccessToken.getCurrentAccessToken().getUserId();
+
+                if(phone.getText().toString().isEmpty() || source.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
+                        || seetsText.getText().toString().isEmpty() || carModel.getText().toString().isEmpty()){
+
+                    dlgAlert.setMessage("לא מילאת את כל הפרטים!");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                    dlgAlert.show();
+                    return;
+                }
 
                 long seets = Long.parseLong(seetsText.getText().toString());
                 Date date = new Date(dateText.getYear()-YEAR, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
@@ -131,7 +150,19 @@ public class CreateNewTrempActivity extends Activity {
                 ModelSql sqlLight = ModelSql.getInstance();
                 sqlLight.addTremp(newTremp,true);
                 Log.d("TAG", "Create new tremp and save to db");
-                finish();
+
+
+                dlgAlert.setMessage("הטרמפ נוצר בהצלחה!");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                dlgAlert.show();
+
             }
         });
 
@@ -152,8 +183,6 @@ public class CreateNewTrempActivity extends Activity {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.

@@ -2,7 +2,9 @@ package com.example.hadar.trempyteam;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -36,8 +38,13 @@ import java.util.Date;
 public class EditTrempActivity extends Activity {
 
     boolean dateEdited=false;
+
+    AlertDialog.Builder dlgAlert;
+
+
     String dateString = "";
     String timeString = "";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -45,6 +52,7 @@ public class EditTrempActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        dlgAlert = new AlertDialog.Builder(EditTrempActivity.this);
         final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
         final TextView DestAddress = (TextView) findViewById(R.id.editDest);
@@ -121,6 +129,7 @@ public class EditTrempActivity extends Activity {
                 String fullDateString = dateString + " " + timeString;
 
 
+
                 try {
                     // Update the  tremp
                     ModelFirebase fb = new ModelFirebase();
@@ -129,14 +138,38 @@ public class EditTrempActivity extends Activity {
                     fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
                     ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
 
+                    dlgAlert.setMessage("השינויים נשמרו בהצלחה!");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                            Intent resultIntent = new Intent();
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
+                        }
+                    });
+                    dlgAlert.show();
+
+
+
                     // this.showSucessAlertDialog( "Success", "Student updated successfuly", true);
                 } catch (Exception e) {
-                    // this.showSucessAlertDialog( "Error", "Failed to update student", false);
+                    dlgAlert.setMessage("ארעה שגיאה בעת השמירה, שינוייך לא נשמרו");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                            Intent resultIntent = new Intent();
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
+                        }
+                    });
+                    dlgAlert.show();
                 }
 
-                Intent resultIntent = new Intent();
-                setResult(RESULT_OK, resultIntent);
-                finish();
+
                 return true;}
             case R.id.cancelTremp:{
                 Intent resultIntent = new Intent();
@@ -144,8 +177,13 @@ public class EditTrempActivity extends Activity {
                 finish();
                 return true;
             }
-            default:
-                return super.onOptionsItemSelected(item);
+            default:{
+                Intent resultIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, resultIntent);
+                finish();
+                return true;
+
+            }
         }
     }
 }

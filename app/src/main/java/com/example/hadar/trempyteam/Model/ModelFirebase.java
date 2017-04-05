@@ -121,10 +121,10 @@ public class ModelFirebase {
     }
 
 
-    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, final Model.UpdateSeatsTrempListener listener){
+    public void UpdateSeatsTremp(final String Trempid, final String passenger_id, final boolean isJoin, final Model.UpdateSeatsTrempListener listener){
 
         final String tremp_id = Trempid;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Tremp").child(tremp_id);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -141,14 +141,32 @@ public class ModelFirebase {
                         Log.d("Exception", "Can't create tremp " + e.getMessage());
                     }
 
-                    Long currSeats = currTremp.getSeets();
-                    dataSnapshot.getRef().child("seets").setValue(currSeats - 1);
-                    dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
-                    currTremp.setSeets(currSeats -1);
-                    currTremp.setNewPassengerToTremp(passenger_id);
-                    ModelSql.getInstance().addTremp(currTremp, false);
-                    User.GetAppUser().addTrempToJoinList(currTremp.getId());
-                    listener.onComplete();
+
+                    if(isJoin) {
+
+                        Long currSeats = currTremp.getTrempSeets();
+                        dataSnapshot.getRef().child("seets").setValue(currSeats - 1);
+                        dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                        currTremp.setTrempSeets(currSeats - 1);
+                        currTremp.setNewPassengerToTremp(passenger_id);
+                        ModelSql.getInstance().addTremp(currTremp, false);
+                        User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
+                        listener.onComplete();
+                    }
+                    else{
+                        Long currSeats = currTremp.getTrempSeets();
+                        dataSnapshot.getRef().child("seets").setValue(currSeats + 1);
+//                        dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                        dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
+                        currTremp.setTrempSeets(currSeats + 1);
+                        currTremp.removePassenger(passenger_id);
+                        dataSnapshot.getRef().child("Passengers").removeValue();
+                        dataSnapshot.getRef().child("Passengers").setValue(currTremp.getTrempTrempistsList());
+                        ModelSql.getInstance().deleteTremp(currTremp.id);
+                        User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
+                        listener.onComplete();
+                    }
+
                 }
 
             @Override

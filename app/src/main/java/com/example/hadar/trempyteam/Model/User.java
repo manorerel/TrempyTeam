@@ -42,6 +42,26 @@ public class User {
             JoinToTremps.add(trempId);
     }
 
+    public void removeTremp(String trempId){
+        int index = 0;
+        boolean found = false;
+        if(JoinToTremps != null) {
+            for (int i = 0; i < JoinToTremps.size(); i++) {
+                if (JoinToTremps.get(i).equals(trempId))
+                {
+                    index = i;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found)
+            {
+                JoinToTremps.remove(index);
+            }
+        }
+    }
+
     public boolean isTrempContains(String trempId)
     {
         return JoinToTremps.contains(trempId);

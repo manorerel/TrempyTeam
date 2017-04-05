@@ -71,7 +71,7 @@ public class Model {
 
     public void UpdateSeatsTremp(String id, String passenger_id, UpdateSeatsTrempListener listener)
     {
-        modelFirebase.UpdateSeatsTremp(id, passenger_id, listener);
+//        modelFirebase.UpdateSeatsTremp(id, passenger_id, listener);
     }
 
 
