@@ -9,7 +9,7 @@
     android:measureWithLargestChild="false"
     android:layoutDirection="ltr"
     android:weightSum="1"
-    android:background="#F48FB1">
+    android:background="@android:color/transparent">
 
 
 
@@ -135,8 +135,11 @@
             android:text="חפש"
             android:id="@+id/btnSearch"
             android:layout_weight="0.85"
+            android:textSize="24sp"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="#F3E5F5" />
+            android:backgroundTint="#00BCD4"
+            android:textStyle="normal|bold"
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="fill_parent"

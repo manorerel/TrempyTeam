@@ -1,14 +1,21 @@
 package com.example.hadar.trempyteam;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hadar.trempyteam.Model.User;
@@ -19,6 +26,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -27,8 +35,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Locale;
 
 public class LoginActivity extends Activity {
 
@@ -51,7 +62,6 @@ public class LoginActivity extends Activity {
         {
             String userID = AccessToken.getCurrentAccessToken().getUserId();
             startApp(userID);
-
         }
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();
@@ -64,23 +74,13 @@ public class LoginActivity extends Activity {
                    String userID = AccessToken.getCurrentAccessToken().getUserId();
                     startApp(userID);
 
-                    
-
-
-
                     Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
                     startActivityForResult(intent, main);
-
-                   
-
-
-
             }
 
             @Override
             public void onCancel() {
                 Log.d("OnCancle", "facebook:onCancel");
-
             }
 
             @Override
@@ -97,16 +97,13 @@ public class LoginActivity extends Activity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-                    // Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    // Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
         };
     }
+
+
 
     private void startApp(String userId){
         Intent intent = new Intent(LoginActivity.this, MainAactivity.class);

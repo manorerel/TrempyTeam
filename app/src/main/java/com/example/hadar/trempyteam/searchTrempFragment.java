@@ -39,7 +39,9 @@ import java.util.Locale;
 public class searchTrempFragment extends Fragment {
 
     FragmentManager fragmentManager;
+    final String destii = "";
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class searchTrempFragment extends Fragment {
             actionBar.setDisplayHomeAsUpEnabled(true);
             setHasOptionsMenu(true);
 
+       final EditText source = (EditText)rootView.findViewById(R.id.from);
 
 
         // Here, thisActivity is the current activity
@@ -76,14 +79,8 @@ public class searchTrempFragment extends Fragment {
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_ASK_PERMISSIONS);
 
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         } else {
-
-
 
             // create class object
             GPSTracker gps = new GPSTracker(getActivity());
@@ -92,10 +89,11 @@ public class searchTrempFragment extends Fragment {
             if (gps.canGetLocation()) {
 
                 final double latitude = gps.getLatitude();
-                final double longitude = gps.getLongitude();
+                final double  longitude = gps.getLongitude();
 
                 Geocoder geocoder = new Geocoder(getActivity().getApplicationContext(), Locale.getDefault());
-                EditText source = (EditText) rootView.findViewById(R.id.from);
+                TextView exitFromAddr = (TextView) rootView.getRootView().findViewById(R.id.from);
+
                 try {
                     List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
                     if (null != listAddresses && listAddresses.size() > 0) {
@@ -104,17 +102,15 @@ public class searchTrempFragment extends Fragment {
                         String contry = listAddresses.get(0).getLocality();
                         String g = listAddresses.get(0).getCountryName();
 
-                        source.setText(_Location);
-
-
-
-                        EditText dest = (EditText) rootView.findViewById(R.id.destination);
+                        exitFromAddr.setText(_Location);
 
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
+        }
 
             Button btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
             btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +128,38 @@ public class searchTrempFragment extends Fragment {
 
                 }
             });
-        }
+
         return rootView;
     }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress)
+    {
+        Geocoder coder= new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try
+        {
+            address = coder.getFromLocationName(strAddress, 5);
+            if(address==null)
+            {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return p1;
+
+    }
+
+
 
 
     @Override
