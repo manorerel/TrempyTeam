@@ -1,6 +1,5 @@
 package com.example.hadar.trempyteam.Model;
 
-import com.google.android.gms.nearby.messages.Strategy;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,9 +26,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 
@@ -37,7 +33,7 @@ public class ModelFirebase {
 
     public void addTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Tremp").child(tremp.getTrempId());
+        DatabaseReference myRef = database.getReference("Tremp").child(tremp.getId());
 
         myRef.setValue(tremp.toMap());
     }
@@ -94,15 +90,15 @@ public class ModelFirebase {
 
         if(trempToUpdate != null){
             trempToUpdate.child("phoneNumber").setValue(phone);
-            trempToUpdate.child("SourceAddress").setValue(source);
-            trempToUpdate.child("DestAddress").setValue(dest);
+            trempToUpdate.child("sourceAddress").setValue(source);
+            trempToUpdate.child("destAddress").setValue(dest);
             trempToUpdate.child("trempDateTime").setValue(date);
         }
     }
 
     public void deleteTremp(Tremp tremp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference("Tremp").child(tremp.getTrempId()).removeValue();
+        database.getReference("Tremp").child(tremp.getId()).removeValue();
     }
     public void deleteTremp(String id){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -145,13 +141,13 @@ public class ModelFirebase {
                         Log.d("Exception", "Can't create tremp " + e.getMessage());
                     }
 
-                    Long currSeats = currTremp.getTrempSeets();
+                    Long currSeats = currTremp.getSeets();
                     dataSnapshot.getRef().child("seets").setValue(currSeats - 1);
                     dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
-                    currTremp.setTrempSeets(currSeats -1);
+                    currTremp.setSeets(currSeats -1);
                     currTremp.setNewPassengerToTremp(passenger_id);
                     ModelSql.getInstance().addTremp(currTremp, false);
-                    User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
+                    User.GetAppUser().addTrempToJoinList(currTremp.getId());
                     listener.onComplete();
                 }
 
@@ -203,8 +199,8 @@ public class ModelFirebase {
 
 
                 for (DataSnapshot trSnapshot : dataSnapshot.getChildren()) {
-                    String d = trSnapshot.child("DestAddress").getValue().toString();
-                    String f = trSnapshot.child("SourceAddress").getValue().toString();
+                    String d = trSnapshot.child("destAddress").getValue().toString();
+                    String f = trSnapshot.child("sourceAddress").getValue().toString();
 
                     List<String> wordsDestUserSearch = Arrays.asList(dest.split(" "));
                     List<String> wordsDestInFireBase = Arrays.asList(d.split(" "));
@@ -229,9 +225,9 @@ public class ModelFirebase {
                                         String id = (String)trSnapshot.child("id").getValue();
                                         String driverId = (String) trSnapshot.child("driverId").getValue();
                                         trempDate = (String) trSnapshot.child("trempDateTime").getValue();
-                                        String carModel = (String) trSnapshot.child("CarModel").getValue();
-                                        String source = (String) trSnapshot.child("SourceAddress").getValue();
-                                        String dest = (String) trSnapshot.child("DestAddress").getValue();
+                                        String carModel = (String) trSnapshot.child("carModel").getValue();
+                                        String source = (String) trSnapshot.child("sourceAddress").getValue();
+                                        String dest = (String) trSnapshot.child("destAddress").getValue();
                                         long seets = (long) trSnapshot.child("seets").getValue();
                                         String phone = (String) trSnapshot.child("phoneNumber").getValue();
                                         String imageName = (String) trSnapshot.child("imageName").getValue();
@@ -257,17 +253,17 @@ public class ModelFirebase {
                                     }
 
                                     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
-                                    Date dateCreation = new Date();
+
                                     try {
-                                        dateCreation = format.parse( trSnapshot.getValue(Tremp.class).getTrempDate().toString());
+                                        Date dateCreation = format.parse(t.getTrempDate().toString());
+                                        t.settrempDateTime(dateCreation);
                                     }
                                     catch (Exception e)
                                     {
                                     }
-                                    t.settrempDate(dateCreation);
-                                 //   String dd = trSnapshot.getValue(Tremp.class).getTrempDateTime().toString();
 
-                                    if ( t.getTrempSeets() != 0)
+
+                                    if ( t.getSeets() != 0)
                                     {
                                         tremps.add(t);
                                     }

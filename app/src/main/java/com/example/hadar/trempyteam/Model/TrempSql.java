@@ -33,16 +33,16 @@ public class TrempSql {
         ContentValues values = new ContentValues();
 
         values.put(ST_ID, tremp.id);
-        values.put(DRIVER_ID, tremp.getTrempDriverId());
-        values.put(SOURCE, tremp.getTrempSourceAddress());
-        values.put(DEST, tremp.getTrempDestAddress());
-        values.put(SEETS, tremp.getTrempSeets());
-        values.put(CAR_MODEL, tremp.getTrempcarModel());
+        values.put(DRIVER_ID, tremp.getDriverId());
+        values.put(SOURCE, tremp.getSourceAddress());
+        values.put(DEST, tremp.getDestAddress());
+        values.put(SEETS, tremp.getSeets());
+        values.put(CAR_MODEL, tremp.getCarModel());
         if(tremp.getTrempDate() == null)
             values.put(DATE, "");
         else values.put(DATE, convertDateToString(tremp.getTrempDate()));
-        values.put(PHONE, tremp.getTrempPhoneNumber());
-        values.put(IMAGE_URL, tremp.getTrempImageName());
+        values.put(PHONE, tremp.getPhoneNumber());
+        values.put(IMAGE_URL, tremp.getImageName());
 
         if(isCreated)
         values.put(IS_CREATED, "true");
