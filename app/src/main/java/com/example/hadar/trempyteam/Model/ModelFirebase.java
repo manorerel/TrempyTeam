@@ -144,26 +144,26 @@ public class ModelFirebase {
 
                     if(isJoin) {
 
-                        Long currSeats = currTremp.getTrempSeets();
+                        Long currSeats = currTremp.getSeets();
                         dataSnapshot.getRef().child("seets").setValue(currSeats - 1);
                         dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
-                        currTremp.setTrempSeets(currSeats - 1);
+                        currTremp.setSeets(currSeats - 1);
                         currTremp.setNewPassengerToTremp(passenger_id);
                         ModelSql.getInstance().addTremp(currTremp, false);
-                        User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
+                        User.GetAppUser().addTrempToJoinList(currTremp.getId());
                         listener.onComplete();
                     }
                     else{
-                        Long currSeats = currTremp.getTrempSeets();
+                        Long currSeats = currTremp.getSeets();
                         dataSnapshot.getRef().child("seets").setValue(currSeats + 1);
 //                        dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
                         dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
-                        currTremp.setTrempSeets(currSeats + 1);
+                        currTremp.setSeets(currSeats + 1);
                         currTremp.removePassenger(passenger_id);
                         dataSnapshot.getRef().child("Passengers").removeValue();
-                        dataSnapshot.getRef().child("Passengers").setValue(currTremp.getTrempTrempistsList());
+                        dataSnapshot.getRef().child("Passengers").setValue(currTremp.getTrempistsList());
                         ModelSql.getInstance().deleteTremp(currTremp.id);
-                        User.GetAppUser().addTrempToJoinList(currTremp.getTrempId());
+                        User.GetAppUser().addTrempToJoinList(currTremp.getId());
                         listener.onComplete();
                     }
 
