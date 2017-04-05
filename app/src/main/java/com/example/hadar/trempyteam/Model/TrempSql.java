@@ -33,16 +33,14 @@ public class TrempSql {
         ContentValues values = new ContentValues();
 
         values.put(ST_ID, tremp.id);
-        values.put(DRIVER_ID, tremp.getTrempDriverId());
-        values.put(SOURCE, tremp.getTrempSourceAddress());
-        values.put(DEST, tremp.getTrempDestAddress());
-        values.put(SEETS, tremp.getTrempSeets());
-        values.put(CAR_MODEL, tremp.getTrempcarModel());
-        if(tremp.getTrempDate() == null)
-            values.put(DATE, "");
-        else values.put(DATE, convertDateToString(tremp.getTrempDate()));
-        values.put(PHONE, tremp.getTrempPhoneNumber());
-        values.put(IMAGE_URL, tremp.getTrempImageName());
+        values.put(DRIVER_ID, tremp.getDriverId());
+        values.put(SOURCE, tremp.getSourceAddress());
+        values.put(DEST, tremp.getDestAddress());
+        values.put(SEETS, tremp.getSeets());
+        values.put(CAR_MODEL, tremp.getCarModel());
+        values.put(DATE, tremp.getTrempDateTime());
+        values.put(PHONE, tremp.getPhoneNumber());
+        values.put(IMAGE_URL, tremp.getImageName());
 
         if(isCreated)
         values.put(IS_CREATED, "true");
@@ -69,10 +67,9 @@ public class TrempSql {
             String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
             String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-            Date trempDate = convertStringToDate(date);
             long trempSeets = Long.parseLong(seets);
 
-            tremp = new Tremp(stId, trempSeets,driverId,trempDate,source, dest,phoneNum,carModel, imageUrl, null);
+            tremp = new Tremp(stId, trempSeets,driverId,date,source, dest,phoneNum,carModel, imageUrl, null);
 
         }
 
@@ -103,9 +100,9 @@ public class TrempSql {
                 String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
                 String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-                Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);
-                tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl, null);
+                tremp = new Tremp(stId, trempSeets, driverId, date, source, dest, phoneNum, carModel, imageUrl, null);
+
                 tremps.add(tremp);
             }
             while (cursor.moveToNext());
@@ -113,25 +110,7 @@ public class TrempSql {
         return tremps;
     }
 
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-        return convertedDate;
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
-    }
 
     public static void create(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, "+ DRIVER_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + PHONE + " TEXT, " + IMAGE_URL +" TEXT, " + IS_CREATED+ " TEXT)");    }
@@ -149,13 +128,13 @@ public class TrempSql {
 
     }
 
-    public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, Date date){
+    public static void UpdateTremp(SQLiteDatabase database, String id, String dest, String source, String phone, String date){
         String[] selectionArgs = {id};
         ContentValues cv = new ContentValues();
         cv.put(DEST,dest);
         cv.put(SOURCE,source);
         cv.put(PHONE,phone);
-//        cv.put(DATE,convertDateToString(date));
+        cv.put(DATE,date);
         database.update(TREMP,cv, ST_ID+"=?",selectionArgs);
 
 
