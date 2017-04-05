@@ -25,13 +25,14 @@
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                 android:id="@+id/DriverName"
                 android:layout_marginLeft="5dp"
-                />
+                android:textStyle="bold"
+                android:textSize="24sp" />
 
 
             <TextView
                 android:layout_marginTop="5dp"
                 android:text="Time"
-                android:layout_width="match_parent"
+                android:layout_width="194dp"
                 android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
@@ -40,11 +41,53 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:text="Seats"
-                android:layout_width="match_parent"
+                android:layout_width="194dp"
                 android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:id="@+id/ava_seats" />
+                android:id="@+id/ava_seats"
+                android:textColor="@android:color/holo_green_light"
+                android:textDirection="ltr" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="         שם הנהג"
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:id="@+id/driver_name"
+                android:layout_marginLeft="5dp"
+                android:textDirection="rtl"
+                android:textColor="?android:attr/textColorTertiary" />
+
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="    יוצא ב -"
+                android:layout_width="168dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:id="@+id/timeExit"
+                android:textDirection="rtl"
+                android:textColor="?android:attr/textColorTertiary" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="    מקומות פנויים                  "
+                android:layout_width="168dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:id="@+id/seats_ava"
+                android:textDirection="rtl"
+                android:textColor="?android:attr/textColorTertiary" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

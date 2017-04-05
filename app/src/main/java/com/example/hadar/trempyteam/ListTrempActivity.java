@@ -31,7 +31,6 @@ public class ListTrempActivity extends Activity {
 
     String name = "";
 
-
     List<Tremp> trempsList ;
 
      Boolean check = false;
