@@ -69,10 +69,7 @@ public class Model {
         modelFirebase.getAllTremps(listener);
     }
 
-    public void UpdateSeatsTremp(String id, String passenger_id, UpdateSeatsTrempListener listener)
-    {
-//        modelFirebase.UpdateSeatsTremp(id, passenger_id, listener);
-    }
+
 
 
     public interface SaveImageListener{

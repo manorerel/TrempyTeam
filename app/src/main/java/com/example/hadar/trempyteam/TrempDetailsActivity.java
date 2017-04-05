@@ -119,20 +119,6 @@ public class TrempDetailsActivity extends Activity {
             }
         });
 
-//        Button delete = (Button) findViewById(R.id.btnDelete);
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final ModelFirebase fbModel = new ModelFirebase();
-//                Intent resultIntent = getIntent();
-//                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
-//
-//                setResult(Activity.RESULT_CANCELED, resultIntent);
-//                finish();
-//            }
-//        });
-
-
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,16 +127,12 @@ public class TrempDetailsActivity extends Activity {
 
                 LatLng c =  getLocationFromAddress(TrempDetailsActivity.this, de);
                 LatLng s =  getLocationFromAddress(TrempDetailsActivity.this, so);
-                //   LatLng s = new LatLng(latitude, longitude);
 
                 Intent intent = new Intent(TrempDetailsActivity.this, MapsActivity.class);
                 intent.putExtra("DestLocation", c);
                 intent.putExtra("SourceLocation", s);
                 intent.putExtra("trempId", tremp_id);
                 startActivity(intent);
-
-
-
             }
         });
             }
@@ -261,7 +243,6 @@ public class TrempDetailsActivity extends Activity {
             Tremp t = ModelSql.getInstance().getTrempById(trempId);
             if(t != null)
             {
-//            if(User.GetAppUser().isTrempContains(trempId)){
                 MenuItem remove = menu.findItem(R.id.removeTrempist);
                 remove.setVisible(true);
             }
@@ -380,22 +361,18 @@ public class TrempDetailsActivity extends Activity {
 
                 }
 
-
                 TrempDate.setText(newDate);
                 TrempTime.setText(newTime);
                 PhoneNumber.setText(currTremp.getPhoneNumber());
                 SourceAddress.setText(currTremp.getSourceAddress());
                 DestAddress.setText(currTremp.getDestAddress());
                 CarModel.setText(currTremp.getCarModel());
-
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-
-        Intent result = new Intent();
 
         // Check if the student details was edited
         if (cameFrom.equals("personalArea"))

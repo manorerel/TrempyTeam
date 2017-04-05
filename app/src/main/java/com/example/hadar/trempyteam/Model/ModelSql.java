@@ -17,14 +17,12 @@ import java.util.List;
 
 public class ModelSql {
     private SQLiteOpenHelper trempHelper;
-    private SQLiteOpenHelper userHelper;
     private int version = 2;
     private static ModelSql modelSql;
 
     public ModelSql(){
         try {
             trempHelper = new TrempHelper(TrempyApp.getAppContext());
-            userHelper = new UserHelper(TrempyApp.getAppContext());
         }
         catch(Exception e){
             Log.d("exception", "exception while trying to install the local db " + e.getMessage());
@@ -82,25 +80,6 @@ public class ModelSql {
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             TrempSql.dropTable(sqLiteDatabase);
-            onCreate(sqLiteDatabase);
-        }
-    }
-
-    class UserHelper extends SQLiteOpenHelper{
-
-
-        public UserHelper(Context context) {
-            super(context, "database.db", null, version);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            UserSql.create(sqLiteDatabase);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-            UserSql.dropTable(sqLiteDatabase);
             onCreate(sqLiteDatabase);
         }
     }

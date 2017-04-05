@@ -22,7 +22,6 @@ public class NewTrempFragment extends Fragment {
 
     final int createNewTremp = 1;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,10 +40,6 @@ public class NewTrempFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
-
-
 
 
         return rootView;

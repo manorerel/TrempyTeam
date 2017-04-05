@@ -156,10 +156,7 @@ public class searchTrempFragment extends Fragment {
             e.printStackTrace();
         }
         return p1;
-
     }
-
-
 
 
     @Override
@@ -177,7 +174,6 @@ public class searchTrempFragment extends Fragment {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.personalArea:{
-//                getActivity().getFragmentManager().beginTransaction().replace(R.id.main_container, new NewStudentFragment()).addToBackStack(null).commit();
                 Intent intent = new Intent(getActivity(), PersonalAreaActivity.class);
                 startActivity(intent);
                 return true;}
@@ -185,8 +181,6 @@ public class searchTrempFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 
     @Override

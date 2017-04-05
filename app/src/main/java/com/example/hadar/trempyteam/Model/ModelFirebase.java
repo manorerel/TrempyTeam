@@ -39,8 +39,6 @@ public class ModelFirebase {
     }
 
 
-
-
     public void getPassengersByTrempId(final String tremp_id, final Model.GetPassengersListener listener) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Tremp").child(tremp_id);
@@ -157,7 +155,6 @@ public class ModelFirebase {
                     else{
                         Long currSeats = currTremp.getSeets();
                         dataSnapshot.getRef().child("seets").setValue(currSeats + 1);
-//                        dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
                         dataSnapshot.getRef().child("Passengers").push().setValue(passenger_id);
                         currTremp.setSeets(currSeats + 1);
                         currTremp.removePassenger(passenger_id);
@@ -172,7 +169,6 @@ public class ModelFirebase {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // listener.onComplete(null);
 
             }
         });
@@ -252,33 +248,8 @@ public class ModelFirebase {
                                         String imageName = (String) trSnapshot.child("imageName").getValue();
                                         List<String> TrempistsList = (List<String>) trSnapshot.child("Passengers").getValue();
 
-
-
-                                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
-                                        Date date = new Date();
-                                        try {
-                                            if (!trempDate.equals("")) {
-                                                date = format.parse(trempDate);
-                                            }       //format.parse( trSnapshot.getValue(Tremp.class).getCreationDate().toString());
-                                        }
-                                        catch (Exception e1)
-                                        {
-                                            String m = e1.getMessage();
-                                        }
-
-                                        //t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
                                         t = new Tremp(id, seets, driverId, trempDate, source, dest, phone, carModel, imageName,TrempistsList);
 
-                                    }
-
-                                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
-
-                                    try {
-                                        //Date dateCreation = format.parse(t.getTrempDateTime().toString());
-                                        //t.settrempDateTime(dateCreation);
-                                    }
-                                    catch (Exception e)
-                                    {
                                     }
 
 
@@ -293,8 +264,6 @@ public class ModelFirebase {
                             break;
                         }
                     }
-
-
                 }
 
                 listener.onComplete(tremps);

@@ -32,13 +32,9 @@ import java.util.List;
 public class ListTrempActivity extends Activity {
 
     String detailsSet = "";
-
     List<Tremp> trempsList ;
-
-     Boolean check = false;
+    Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +52,9 @@ public class ListTrempActivity extends Activity {
             CreateList();
 
             detailsSet = "personalArea";
-        } else {
-
-            // Hadar Part
+        }
+        else
+        {
             final String dest = (String) getIntent().getExtras().get("dest");
             final String from = (String) getIntent().getExtras().get("from");
 
@@ -82,26 +78,22 @@ public class ListTrempActivity extends Activity {
                             }
                         });
                         dlgAlert.show();
-
                     }
                 }
             });
             detailsSet = "Search";
-        }
-
+       }
     }
 
     public void CreateList()
     {
         ListView list = (ListView) findViewById(R.id.Tremps_listView);
-
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                //send avia tremp object
                 Tremp tremp =  trempsList.get(i);
 
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
@@ -119,7 +111,6 @@ public class ListTrempActivity extends Activity {
                 startActivityForResult(intent, 1);
             }
         });
-
     }
 
     @Override
@@ -133,7 +124,6 @@ public class ListTrempActivity extends Activity {
 
         }
     }
-    //check its the master
     class TrempsAdapter extends BaseAdapter {
 
         @Override
