@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ListTrempActivity extends Activity {
 
-    String name = "";
+    String detailsSet = "";
 
     List<Tremp> trempsList ;
 
@@ -53,7 +53,7 @@ public class ListTrempActivity extends Activity {
 
             CreateList();
 
-
+            detailsSet = "personalArea";
         } else {
 
             // Hadar Part
@@ -69,6 +69,7 @@ public class ListTrempActivity extends Activity {
                     CreateList();
                 }
             });
+            detailsSet = "Search";
 
 
         }
@@ -98,6 +99,8 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("image",  tremp.getImageName());
                 intent.putExtra("driverId",  tremp.getDriverId());
                 intent.putExtra("date",  tremp.getTrempDateTime());
+                intent.putExtra("cameFrom", detailsSet);
+
                 startActivityForResult(intent, 1);
             }
         });

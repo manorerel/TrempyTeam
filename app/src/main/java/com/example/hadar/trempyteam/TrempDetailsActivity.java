@@ -40,6 +40,7 @@ import java.util.Locale;
 
 public class TrempDetailsActivity extends Activity {
     boolean wasEdited = false;
+    String cameFrom = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -243,7 +244,9 @@ public class TrempDetailsActivity extends Activity {
         inflater.inflate(R.menu.menu_buttons, menu);
         Intent intent = getIntent();
         String driverId = (String)intent.getExtras().getString("driverId");
-        if(driverId.equals(User.GetAppUser().Id)) {
+        cameFrom = (String) intent.getExtras().get("cameFrom");
+
+        if(driverId.equals(User.GetAppUser().Id) && cameFrom.equals("personalArea")) {
 
             MenuItem edit = menu.findItem(R.id.editTremp);
             edit.setVisible(true);
@@ -251,7 +254,8 @@ public class TrempDetailsActivity extends Activity {
             MenuItem delete = menu.findItem(R.id.deleteTremp);
             delete.setVisible(true);
         }
-        else{
+        else if(!driverId.equals(User.GetAppUser().Id))
+        {
 
             String trempId = intent.getExtras().getString("id");
             Tremp t = ModelSql.getInstance().getTrempById(trempId);
@@ -281,7 +285,6 @@ public class TrempDetailsActivity extends Activity {
                 fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
                 Intent returnIntent = new Intent();
-//                resultIntent.putExtra("backFromDelete", "true");
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
                 return true;}
@@ -298,6 +301,12 @@ public class TrempDetailsActivity extends Activity {
                 return true;
             }
             default:{
+                if(cameFrom.equals("personalArea"))
+                {
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_OK,returnIntent);
+                }
+
                 finish();
                 return true;
             }
@@ -383,11 +392,21 @@ public class TrempDetailsActivity extends Activity {
         }
     }
 
-    private void refreshValues()
-    {
+    @Override
+    public void onBackPressed() {
 
+        Intent result = new Intent();
+
+        // Check if the student details was edited
+        if (cameFrom.equals("personalArea"))
+        {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK,returnIntent);
+        }
+
+
+        finish();
     }
-
 
 }
 
