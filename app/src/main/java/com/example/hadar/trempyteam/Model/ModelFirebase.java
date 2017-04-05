@@ -237,7 +237,6 @@ public class ModelFirebase {
 
                                         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
                                         Date date = new Date();
-                                        //date = convertStringToDate(trempDate)
                                         try {
                                             if (!trempDate.equals("")) {
                                                 date = format.parse(trempDate);
@@ -338,20 +337,5 @@ public class ModelFirebase {
         });
 
     }
-
-
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return convertedDate;
-    }
-
 }
 

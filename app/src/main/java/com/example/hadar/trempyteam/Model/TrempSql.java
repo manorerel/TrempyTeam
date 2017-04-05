@@ -39,9 +39,6 @@ public class TrempSql {
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
         values.put(DATE, tremp.getTrempDateTime());
-//        if(tremp.getTrempDate() == null)
-//            values.put(DATE, "");
-//        else values.put(DATE, convertDateToString(tremp.getTrempDate()));
         values.put(PHONE, tremp.getPhoneNumber());
         values.put(IMAGE_URL, tremp.getImageName());
 
@@ -70,10 +67,8 @@ public class TrempSql {
             String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
             String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-            Date trempDate = convertStringToDate(date);
             long trempSeets = Long.parseLong(seets);
 
-            //tremp = new Tremp(stId, trempSeets,driverId,trempDate,source, dest,phoneNum,carModel, imageUrl, null);
             tremp = new Tremp(stId, trempSeets,driverId,date,source, dest,phoneNum,carModel, imageUrl, null);
 
         }
@@ -105,9 +100,7 @@ public class TrempSql {
                 String imageUrl = cursor.getString(cursor.getColumnIndex(IMAGE_URL));
                 String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE));
 
-                Date trempDate = convertStringToDate(date);
                 long trempSeets = Long.parseLong(seets);
-               // tremp = new Tremp(stId, trempSeets, driverId, trempDate, source, dest, phoneNum, carModel, imageUrl, null);
                 tremp = new Tremp(stId, trempSeets, driverId, date, source, dest, phoneNum, carModel, imageUrl, null);
 
                 tremps.add(tremp);
@@ -117,25 +110,7 @@ public class TrempSql {
         return tremps;
     }
 
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-        return convertedDate;
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
-    }
 
     public static void create(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + TREMP + " (" + ST_ID + " TEXT, "+ DRIVER_ID + " TEXT, " + SOURCE + " TEXT, " + DEST + " TEXT, "  + SEETS + " TEXT, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, " + PHONE + " TEXT, " + IMAGE_URL +" TEXT, " + IS_CREATED+ " TEXT)");    }

@@ -99,11 +99,6 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("image",  tremp.getImageName());
                 intent.putExtra("driverId",  tremp.getDriverId());
                 intent.putExtra("date",  tremp.getTrempDateTime());
-//                if (tremp.getTrempDate() != null) {
-//                    intent.putExtra("date", convertDateToString(tremp.getTrempDate()));
-//
-//
-//                }
                 startActivityForResult(intent, 1);
             }
         });
@@ -180,12 +175,5 @@ public class ListTrempActivity extends Activity {
             }
             return view;
         }
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
     }
 }

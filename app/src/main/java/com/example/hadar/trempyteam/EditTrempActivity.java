@@ -57,21 +57,17 @@ public class EditTrempActivity extends Activity {
 
         //Get the Tremp details
         Intent intent = getIntent();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
-        String MyDate = intent.getExtras().getString("date");
-        String[] splitDate = MyDate.split(" ");
-         dateString = splitDate[0];
-         timeString = splitDate[1];
 
-//        try {
-//            dateString = dateFormat.format(MyDate);
-//            timeString = TimeFormat.format(MyDate);
-//        }
-//        catch (Exception e)
-//        {
-//            e.getMessage();
-//        }
+        String MyDate = intent.getExtras().getString("date");
+        try {
+            String[] splitDate = MyDate.split(" ");
+            dateString = splitDate[0];
+            timeString = splitDate[1];
+        }
+        catch (Exception e)
+        {
+
+        }
 
 
         TrempDate.setText(dateString);
@@ -107,11 +103,9 @@ public class EditTrempActivity extends Activity {
                 final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
                 final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
                 final TextView DestAddress = (TextView) findViewById(R.id.editDest);
-//                final TextView Seets = (TextView) findViewById(R.id.editAvaliable_seats);
                 DateEditText newDate = (DateEditText) findViewById(R.id.editDate);
                 TimeEditText newtime = (TimeEditText) findViewById(R.id.editTime);
                 final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
-//                final ImageView image = (ImageView) findViewById(R.id.editImage);
 
                 // Check if the date or time was changed
 
@@ -153,18 +147,5 @@ public class EditTrempActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return convertedDate;
     }
 }

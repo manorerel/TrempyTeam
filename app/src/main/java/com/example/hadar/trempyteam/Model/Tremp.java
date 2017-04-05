@@ -107,9 +107,6 @@ public class Tremp {
         result.put("destAddress", destAddress);
         result.put("carModel", carModel);
         result.put("seets", seets);
-        //result.put("creationTime", ServerValue.TIMESTAMP);
-        //String trempDateTime = convertDateToString(trempDate);
-       // result.put("trempDateTime", trempDateTime);
         result.put("trempDateTime", trempDateTime);
         result.put("driverId", driverId);
         result.put("phoneNumber", phoneNumber);
@@ -117,12 +114,5 @@ public class Tremp {
         result.put("imageName", imageName);
         result.put("Passengers", trempistsList);
         return result;
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
     }
 }

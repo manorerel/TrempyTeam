@@ -57,26 +57,18 @@ public class TrempDetailsActivity extends Activity {
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
 
-
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
-
-        //String newDate = "";
-       // String newTime = "";
-//        try {
-//            Date date = convertStringToDate(intent.getExtras().getString("date"));
-//            newDate = dateFormat.format(date);
-//            newTime = TimeFormat.format(date);
-//            }
-//        catch (Exception e) {
-//
-//            }
         String date =intent.getExtras().getString("date");
+        String newDate = "";
+        String newTime = "";
+        try {
+            String[] splitDate = date.split(" ");
+            newDate = splitDate[0];
+            newTime = splitDate[1];
+        }
+        catch (Exception e)
+        {
 
-        String[] splitDate = date.split(" ");
-        String newDate = splitDate[0];
-        String newTime = splitDate[1];
-
+        }
         TrempDate.setText(newDate);
         TrempTime.setText(newTime);
 
@@ -289,8 +281,6 @@ public class TrempDetailsActivity extends Activity {
         intent.putExtra("source",  trempToEdit.getSourceAddress());
         intent.putExtra("dest",  trempToEdit.getDestAddress());
         intent.putExtra("date",  trempToEdit.getTrempDateTime());
-
-        // intent.putExtra("date", convertDateToString(trempToEdit.getTrempDate()));
         intent.putExtra("car", trempToEdit.getCarModel());
 
         try {
@@ -333,23 +323,18 @@ public class TrempDetailsActivity extends Activity {
 
                 Intent intent = getIntent();
 
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
                 String MyDate = currTremp.getTrempDateTime();
-                String[] splitDate = MyDate.split(" ");
-                String newDate = splitDate[0];
-                String newTime = splitDate[1];
-//                String newDate = "";
-//                String newTime = "";
-//                try {
-//                    //Date date = convertDateToString(currTremp.getTrempDate());
-//                    newDate = dateFormat.format(currTremp.getTrempDateTime());
-//                     = TimeFormat.format(currTremp.getTrempDateTime());
-//                }
-//                catch (Exception e)
-//                {
-//
-//                }
+                String newDate = "";
+                String newTime = "";
+                try {
+                    String[] splitDate = MyDate.split(" ");
+                    newDate = splitDate[0];
+                    newTime = splitDate[1];
+                }
+                catch (Exception e)
+                {
+
+                }
 
 
                 TrempDate.setText(newDate);
@@ -357,7 +342,6 @@ public class TrempDetailsActivity extends Activity {
                 PhoneNumber.setText(currTremp.getPhoneNumber());
                 SourceAddress.setText(currTremp.getSourceAddress());
                 DestAddress.setText(currTremp.getDestAddress());
-//                Seets.setText(currTremp.getSeets());
                 CarModel.setText(currTremp.getCarModel());
 
             }
@@ -369,23 +353,6 @@ public class TrempDetailsActivity extends Activity {
 
     }
 
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-        return convertedDate;
-    }
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
-    }
 }
 
