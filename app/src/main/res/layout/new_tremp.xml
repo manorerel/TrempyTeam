@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layoutDirection="rtl"
-    android:background="#F8BBD0">
+    android:background="@android:color/transparent">
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:textSize="24sp"
         android:id="@+id/btnCreate"
         android:background="@drawable/rounded_corners"
-        android:backgroundTint="#F3E5F5"
+        android:backgroundTint="#B0BEC5"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
