@@ -1,6 +1,8 @@
 package com.example.hadar.trempyteam;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,10 +69,27 @@ public class ListTrempActivity extends Activity {
 
                     trempsList = tremps;
                     CreateList();
+
+                    if(trempsList.size() == 0)
+                    {
+                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+                        dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
+                        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+//                        Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+//                        startActivity(intent);
+
+                                dialog.dismiss();
+                            }
+                        });
+                        dlgAlert.show();
+
+                    }
                 }
             });
             detailsSet = "Search";
-
 
         }
 

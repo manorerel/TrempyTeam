@@ -404,7 +404,6 @@ public class TrempDetailsActivity extends Activity {
             setResult(Activity.RESULT_OK,returnIntent);
         }
 
-
         finish();
     }
 
