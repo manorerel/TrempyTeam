@@ -95,6 +95,26 @@ public class Tremp {
             this.trempistsList.add(user_id);
     }
 
+    public void removePassenger(String passengerId){
+        int index = 0;
+        boolean found = false;
+        if(trempistsList != null) {
+            for (int i = 0; i < trempistsList.size(); i++) {
+                if (trempistsList.get(i).equals(passengerId))
+                {
+                    index = i;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found)
+            {
+                trempistsList.remove(index);
+            }
+        }
+    }
+
     private String CreateID(){
         String id =driverId + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
         return id;

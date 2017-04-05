@@ -2,7 +2,9 @@ package com.example.hadar.trempyteam;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -49,7 +51,7 @@ public class CreateNewTrempActivity extends Activity {
     int YEAR = 1900;
 
 
-    public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
+    public static final int REQUEST_CODE_ASK_PERMISSIONS = 1;
 
     //check
     private GoogleMap googleMap;
@@ -58,6 +60,7 @@ public class CreateNewTrempActivity extends Activity {
     ImageView imageView;
     String imageFileName = null;
     Bitmap imageBitmap = null;
+    AlertDialog.Builder dlgAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class CreateNewTrempActivity extends Activity {
 
         final ModelFirebase fbModel = new ModelFirebase();
         imageView = (ImageView) findViewById(R.id.Image);
+        dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
 
         boolean hasPermission = (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
@@ -90,6 +94,21 @@ public class CreateNewTrempActivity extends Activity {
                 DateEditText dateText = (DateEditText)findViewById(R.id.date);
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
                 EditText carModel = (EditText)findViewById(R.id.car_model);
+
+                if(phone.getText().toString().isEmpty() || source.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
+                        || seetsText.getText().toString().isEmpty() || carModel.getText().toString().isEmpty()){
+
+                    dlgAlert.setMessage("לא מילאת את כל הפרטים!");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                    dlgAlert.show();
+                    return;
+                }
 
           //      AccessToken.getCurrentAccessToken().getUserId();
 
@@ -127,8 +146,11 @@ public class CreateNewTrempActivity extends Activity {
 
                 ModelSql sqlLight = ModelSql.getInstance();
                 sqlLight.addTremp(newTremp,true);
+                saveAndClose();
+
                 Log.d("TAG", "Create new tremp and save to db");
-                finish();
+
+
             }
         });
 
@@ -324,9 +346,17 @@ public class CreateNewTrempActivity extends Activity {
 
     private void saveAndClose(){
 
-        Intent resultIntent = new Intent();
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
+        dlgAlert.setMessage("הטרמפ נוצר בהצלחה!");
+        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                finish();
+
+            }
+        });
+        dlgAlert.show();
     }
 
     private void takingPicture(){

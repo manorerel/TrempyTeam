@@ -38,8 +38,11 @@ import java.util.List;
  */
 
 public class TrempDetailsActivity extends Activity {
+    AlertDialog.Builder dlgAlert;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
 
         setContentView(R.layout.tremp_details);
         ActionBar actionBar = this.getActionBar();
@@ -124,20 +127,6 @@ public class TrempDetailsActivity extends Activity {
             }
         });
 
-//        Button delete = (Button) findViewById(R.id.btnDelete);
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final ModelFirebase fbModel = new ModelFirebase();
-//                Intent resultIntent = getIntent();
-//                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
-//
-//                setResult(Activity.RESULT_CANCELED, resultIntent);
-//                finish();
-//            }
-//        });
-
-
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,8 +143,6 @@ public class TrempDetailsActivity extends Activity {
                 intent.putExtra("trempId", tremp_id);
                 startActivity(intent);
 
-
-
             }
         });
             }
@@ -168,11 +155,10 @@ public class TrempDetailsActivity extends Activity {
 
         ModelFirebase fbModel = new ModelFirebase();
 
-        fbModel.UpdateSeatsTremp(tremp_id, user_id , new Model.UpdateSeatsTrempListener() {
+        fbModel.UpdateSeatsTremp(tremp_id, user_id,true , new Model.UpdateSeatsTrempListener() {
             @Override
             public void onComplete() {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("You Are In !!");
+                dlgAlert.setMessage("יש לך מקום בטרמפ, נסיעה טובה (:");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -187,6 +173,36 @@ public class TrempDetailsActivity extends Activity {
             }
         });
     }
+
+    private void exitTremp(){
+        final String tremp_id = getIntent().getExtras().getString("id");
+
+        String user_id = AccessToken.getCurrentAccessToken().getUserId();
+
+        ModelFirebase fbModel = new ModelFirebase();
+
+        fbModel.UpdateSeatsTremp(tremp_id, user_id ,false, new Model.UpdateSeatsTrempListener() {
+            @Override
+            public void onComplete() {
+                dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+                dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
+            }
+
+
+        });
+    }
+
     public LatLng getLocationFromAddress(Context context, String strAddress)
     {
         Geocoder coder= new Geocoder(context);
@@ -258,10 +274,20 @@ public class TrempDetailsActivity extends Activity {
                 ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
                 fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
-                Intent returnIntent = new Intent();
-//                resultIntent.putExtra("backFromDelete", "true");
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                dlgAlert.setMessage("הטרמפ נמחק בהצלחה!");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_OK,returnIntent);
+                        finish();
+
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
+
                 return true;}
             case R.id.editTremp:{
                 startEdit();
@@ -271,8 +297,14 @@ public class TrempDetailsActivity extends Activity {
                 joinTremp();
                 return true;
             }
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.removeTrempist:{
+                exitTremp();
+                return true;
+            }
+            default:{
+                finish();
+                return true;
+            }
         }
     }
 
