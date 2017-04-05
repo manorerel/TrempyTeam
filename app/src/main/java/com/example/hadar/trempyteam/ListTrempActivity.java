@@ -78,9 +78,6 @@ public class ListTrempActivity extends Activity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
-//                        Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
-//                        startActivity(intent);
-
                                 dialog.dismiss();
                             }
                         });
@@ -90,7 +87,6 @@ public class ListTrempActivity extends Activity {
                 }
             });
             detailsSet = "Search";
-
         }
 
     }
