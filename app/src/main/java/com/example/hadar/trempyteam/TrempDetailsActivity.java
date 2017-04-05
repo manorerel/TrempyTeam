@@ -153,9 +153,9 @@ public class TrempDetailsActivity extends Activity {
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
-                        startActivity(intent);
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                        finish();
 
                         dialog.dismiss();
                     }
@@ -180,9 +180,9 @@ public class TrempDetailsActivity extends Activity {
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
-                        startActivity(intent);
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                        finish();
 
                         dialog.dismiss();
                     }
@@ -374,7 +374,7 @@ public class TrempDetailsActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        // Check if the student details was edited
+        // Check if the tremp details was edited
         if (cameFrom.equals("personalArea"))
         {
             Intent returnIntent = new Intent();

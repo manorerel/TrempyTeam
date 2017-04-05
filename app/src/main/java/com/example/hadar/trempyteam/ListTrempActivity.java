@@ -123,6 +123,10 @@ public class ListTrempActivity extends Activity {
             CreateList();
 
         }
+
+        if(requestCode == Activity.RESULT_FIRST_USER){
+            finish();
+        }
     }
     class TrempsAdapter extends BaseAdapter {
 
@@ -183,4 +187,6 @@ public class ListTrempActivity extends Activity {
             return view;
         }
     }
+
+
 }
