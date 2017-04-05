@@ -7,7 +7,8 @@ android:layout_height="match_parent"
 tools:context="com.example.hadar.trempyteam.TrempDetailsActivity"
 android:measureWithLargestChild="false"
 android:layoutDirection="ltr"
-android:weightSum="1">
+android:weightSum="1"
+    android:background="@drawable/design">
 
 
 <ImageView
@@ -27,65 +28,76 @@ android:weightSum="1">
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    >
 
-    <TextView
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/detailsPhone"
-        android:layout_marginLeft="120dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Phone" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Phone:"
+        android:text="טלפון:"
         android:id="@+id/student_phone"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsPhone"
+        android:layout_marginRight="120dp"
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone"
+        />
 </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+       >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Exit from :"
+            android:text="מוצא:"
             android:id="@+id/exit_from_"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
             android:layout_marginBottom="20dp" />
 
         <TextView
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/detailsExitfrom"
+            android:layout_marginRight="120dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Exit from"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/exit_from_"
-            android:layout_toEndOf="@+id/exit_from_"
-            android:layout_marginLeft="18dp"
-            android:layout_marginStart="18dp" />
+
+           />
     </RelativeLayout>
 
     <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+        android:layoutDirection="rtl"
+        >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Destination:"
+        android:text="יעד:"
+        android:textStyle="bold"
         android:id="@+id/dest_"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp" />
 
     <TextView
@@ -94,231 +106,206 @@ android:weightSum="1">
         android:id="@+id/detailsDest"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dest"
+        android:layout_marginRight="120dp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/dest_"
-        android:layout_toEndOf="@+id/dest_"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp" />
+
+   />
 </RelativeLayout>
 
     <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+        android:layoutDirection="rtl"
+        >
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="מקומות פנויים:"
+            android:textStyle="bold"
+            android:id="@+id/avaliable_seats_"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
     <TextView
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:id="@+id/detailsAvaliable_seats"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="seets"
+        android:layout_marginRight="185dp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/avaliable_seats_"
-        android:layout_toEndOf="@+id/avaliable_seats_"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Avaliable Seats:"
-        android:id="@+id/avaliable_seats_"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp" />
+        />
+
 </RelativeLayout>
 
 
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="תאריך:"
+        android:textStyle="bold"
+        android:id="@+id/date_tremp"
+        android:layout_marginRight="20dp" />
 
     <com.example.hadar.trempyteam.DateEditText
         android:layout_width="195dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
+        android:layout_marginRight="130dp"
         android:enabled="false"
         android:id="@+id/detailsDate"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Date:"
-        android:id="@+id/date_tremp"
-        android:layout_marginLeft="20dp" />
 
 </RelativeLayout>
 
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="שעה:"
+        android:textStyle="bold"
+        android:id="@+id/time_tremp"
+        android:layout_marginRight="20dp"/>
 
     <com.example.hadar.trempyteam.TimeEditText
         android:layout_width="195dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
+        android:layout_marginRight="130dp"
         android:enabled="false"
         android:id="@+id/detailsTime"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Time:"
-        android:id="@+id/time_tremp"
-        android:layout_marginLeft="20dp"/>
 
 </RelativeLayout>
 
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="סוג רכב:"
+        android:textStyle="bold"
+        android:id="@+id/car_model_"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:id="@+id/detailsCar_model"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="seets"
+        android:text="car"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/car_model_"
-        android:layout_toEndOf="@+id/car_model_"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Car Model:"
-        android:id="@+id/car_model_"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginRight="120dp"
+         />
+
 
 </RelativeLayout>
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:layout_marginRight="20dp">
 
-    <ImageView
-        android:id="@+id/DetailsImage"
-        android:src="@mipmap/camera"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Car Image:"
+        android:text=""
+        android:textStyle="bold"
         android:id="@+id/car_image"
         android:layout_marginLeft="20dp"/>
 
+    <ImageView
+        android:id="@+id/DetailsImage"
+        android:src="@mipmap/camera"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="מפה"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btnMap"
+        android:textSize="24sp"
+        android:backgroundTint="#00BCD4"
+        android:textStyle="normal|bold"
+        android:textColor="#FFFFFF"
+        android:layout_weight="0.10"
+        android:background="@drawable/rounded_corners"
+        android:layout_below="@+id/DetailsImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="248dp"
+        android:layout_marginEnd="248dp" />
+
+    <Button
+        android:text="בטל"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/detailsBtnCancel"
+        android:textSize="24sp"
+        android:backgroundTint="#00BCD4"
+        android:textStyle="normal|bold"
+        android:textColor="#FFFFFF"
+        android:layout_weight="0.10"
+        android:background="@drawable/rounded_corners"
+        android:layout_below="@+id/DetailsImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp" />
+
+
 </RelativeLayout>
 
-
-<!--<LinearLayout-->
-<!--android:orientation="horizontal"-->
-<!--android:layout_width="300dp"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_marginTop="30dp"-->
-<!--android:layout_marginLeft="40dp" >-->
-
-<!--<LinearLayout-->
-<!--android:layout_width="fill_parent"-->
-<!--android:layout_weight="1"-->
-<!--android:layout_height="wrap_content">-->
-<!--<Button-->
-<!--android:layout_width="300dp"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:text="CANCEL"-->
-<!--android:id="@+id/btnCancel"-->
-<!--android:layout_weight="0.10"-->
-<!--android:layout_marginLeft="6dp"-->
-<!--android:background="@drawable/rounded_corners"/>-->
-<!--</LinearLayout>-->
-
-<!--<LinearLayout-->
-<!--android:layout_width="fill_parent"-->
-<!--android:layout_weight="1"-->
-<!--android:layout_height="fill_parent">-->
-<!--<Button-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_marginLeft="8dp"-->
-<!--android:text="SAVE"-->
-<!--android:id="@+id/btnSave"-->
-<!--android:layout_weight="0.10"-->
-<!--android:background="@drawable/rounded_corners"/>-->
-<!--</LinearLayout>-->
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
-    android:layout_marginLeft="40dp" >
-
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="CANCEL"
-            android:id="@+id/detailsBtnCancel"
-            android:layout_weight="0.10"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/rounded_corners"/>
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="fill_parent">
+
+        </LinearLayout>
+
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="fill_parent">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="map"
-            android:id="@+id/btnMap"
-            android:layout_weight="0.10"
-            android:background="@drawable/rounded_corners"/>
-    </LinearLayout>
-    <!--<LinearLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_height="fill_parent">-->
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:text="Join"-->
-            <!--android:id="@+id/btnJoin"-->
-            <!--android:layout_weight="0.10"-->
-            <!--android:background="@drawable/rounded_corners"/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_height="fill_parent">-->
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:text="DELETE"-->
-            <!--android:id="@+id/btnDelete"-->
-            <!--android:layout_weight="0.10"-->
-            <!--android:background="@drawable/rounded_corners"/>-->
-    <!--</LinearLayout>-->
-
-
-</LinearLayout>
 
 
 </LinearLayout>
