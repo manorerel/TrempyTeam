@@ -109,19 +109,6 @@ public class TrempDetailsActivity extends Activity {
         id = intent.getExtras().getString("id");
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
-//        Button delete = (Button) findViewById(R.id.btnDelete);
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final ModelFirebase fbModel = new ModelFirebase();
-//                Intent resultIntent = getIntent();
-//                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
-//
-//                setResult(Activity.RESULT_CANCELED, resultIntent);
-//                finish();
-//            }
-//        });
-
 
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
@@ -131,16 +118,12 @@ public class TrempDetailsActivity extends Activity {
 
                 LatLng c =  getLocationFromAddress(TrempDetailsActivity.this, de);
                 LatLng s =  getLocationFromAddress(TrempDetailsActivity.this, so);
-                //   LatLng s = new LatLng(latitude, longitude);
 
                 Intent intent = new Intent(TrempDetailsActivity.this, MapsActivity.class);
                 intent.putExtra("DestLocation", c);
                 intent.putExtra("SourceLocation", s);
                 intent.putExtra("trempId", tremp_id);
                 startActivity(intent);
-
-
-
             }
         });
             }
@@ -161,9 +144,9 @@ public class TrempDetailsActivity extends Activity {
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
-                        startActivity(intent);
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                        finish();
 
                         dialog.dismiss();
                     }
@@ -188,9 +171,9 @@ public class TrempDetailsActivity extends Activity {
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Intent intent = new Intent(TrempDetailsActivity.this, MainAactivity.class);
-                        startActivity(intent);
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                        finish();
 
                         dialog.dismiss();
                     }
@@ -251,7 +234,6 @@ public class TrempDetailsActivity extends Activity {
             Tremp t = ModelSql.getInstance().getTrempById(trempId);
             if(t != null)
             {
-//            if(User.GetAppUser().isTrempContains(trempId)){
                 MenuItem remove = menu.findItem(R.id.removeTrempist);
                 remove.setVisible(true);
             }
@@ -370,14 +352,12 @@ public class TrempDetailsActivity extends Activity {
 
                 }
 
-
                 TrempDate.setText(newDate);
                 TrempTime.setText(newTime);
                 PhoneNumber.setText(currTremp.getPhoneNumber());
                 SourceAddress.setText(currTremp.getSourceAddress());
                 DestAddress.setText(currTremp.getDestAddress());
                 CarModel.setText(currTremp.getCarModel());
-
             }
         }
     }
@@ -385,9 +365,7 @@ public class TrempDetailsActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        Intent result = new Intent();
-
-        // Check if the student details was edited
+        // Check if the tremp details was edited
         if (cameFrom.equals("personalArea"))
         {
             Intent returnIntent = new Intent();

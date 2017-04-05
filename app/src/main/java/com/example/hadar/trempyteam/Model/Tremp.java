@@ -22,7 +22,6 @@ public class Tremp {
     String driverId;
     long seets;
     String trempDateTime;
-    //Date creationTime;
     List<String> trempistsList;
     static int count = 0;
     String imageName;
@@ -69,7 +68,6 @@ public class Tremp {
     public String getDestAddress(){return destAddress;}
     public String getTrempDateTime(){
         return trempDateTime;}
-   // public Date getCreationTime(){return creationTime;}
     public String getImageName() {
         return imageName;
     }

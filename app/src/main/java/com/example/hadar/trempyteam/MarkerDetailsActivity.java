@@ -59,8 +59,6 @@ public class MarkerDetailsActivity extends Activity {
                                             try {
                                                 names += "\n\n" + response.getJSONObject().getString("name");
                                                 t.setText(names);
-                                                //passengers_Names.add(response.getJSONObject().getString("name"));
-
 
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -72,11 +70,6 @@ public class MarkerDetailsActivity extends Activity {
 
                     }
                 }
-
-
-
-
-            String fff = "";
 });
 
 

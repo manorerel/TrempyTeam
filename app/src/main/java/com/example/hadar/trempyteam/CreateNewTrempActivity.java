@@ -52,8 +52,6 @@ public class CreateNewTrempActivity extends Activity {
 
 
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
-
-    //check
     private GoogleMap googleMap;
     final int main = 1;
 
@@ -66,7 +64,6 @@ public class CreateNewTrempActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
-
 
         final ModelFirebase fbModel = new ModelFirebase();
         imageView = (ImageView) findViewById(R.id.Image);
@@ -96,8 +93,6 @@ public class CreateNewTrempActivity extends Activity {
                 EditText carModel = (EditText)findViewById(R.id.car_model);
                 String dateString = dateText.getText() + " " + time.getText();
 
-          //      AccessToken.getCurrentAccessToken().getUserId();
-
                 if(phone.getText().toString().isEmpty() || source.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
                         || seetsText.getText().toString().isEmpty() || carModel.getText().toString().isEmpty()){
 
@@ -114,13 +109,11 @@ public class CreateNewTrempActivity extends Activity {
                 }
 
                 long seets = Long.parseLong(seetsText.getText().toString());
-                Date date = new Date(dateText.getYear()-YEAR, dateText.getMonth(), dateText.getDay(), time.getHour(),time.getMinute(), time.getSecond());
 
                 String createdUserId = User.GetAppUser().Id;
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
 
-               // Tremp newTremp = new Tremp(trempId,seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
                 Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
 
                 String imName = "";
@@ -274,10 +267,6 @@ public class CreateNewTrempActivity extends Activity {
 
     }
 
-
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -346,7 +335,6 @@ public class CreateNewTrempActivity extends Activity {
                 }
                 return;
             }
-
 
             // other 'case' lines to check for other
             // permissions this app might request

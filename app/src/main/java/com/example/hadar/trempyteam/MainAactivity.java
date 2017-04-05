@@ -21,11 +21,7 @@ public class MainAactivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.main_activity);
-//        ActionBar actionBar = this.getActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-        //tran
         fragmentManager = getFragmentManager();
 
         searchTrempFragment frg = new searchTrempFragment();
@@ -35,12 +31,8 @@ public class MainAactivity extends Activity {
         transaction.add(R.id.My_Container_1_ID, frg, "Frag_Top_tag");
         transaction.add(R.id.My_Container_2_ID, frg2, "Frag_Middle_tag");
 
-
         transaction.commit();
-
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -51,8 +43,6 @@ public class MainAactivity extends Activity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
                     finish();
                 }
 

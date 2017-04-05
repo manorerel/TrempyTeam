@@ -56,11 +56,9 @@ public class EditTrempActivity extends Activity {
         final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
         final TextView DestAddress = (TextView) findViewById(R.id.editDest);
-//        final TextView Seets = (TextView) findViewById(R.id.editAvaliable_seats);
         final DateEditText TrempDate = (DateEditText) findViewById(R.id.editDate);
         final TimeEditText TrempTime = (TimeEditText) findViewById(R.id.editTime);
         final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
-//        final ImageView image = (ImageView) findViewById(R.id.editImage);
 
 
         //Get the Tremp details
@@ -84,8 +82,6 @@ public class EditTrempActivity extends Activity {
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
         CarModel.setText(intent.getExtras().getString("car"));
-
-
     }
 
     @Override
@@ -116,7 +112,6 @@ public class EditTrempActivity extends Activity {
                 final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
 
                 // Check if the date or time was changed
-
                 if(newDate.didTouchFocusSelect())
                 {
                     dateString = newDate.getText().toString();
@@ -152,9 +147,6 @@ public class EditTrempActivity extends Activity {
                     });
                     dlgAlert.show();
 
-
-
-                    // this.showSucessAlertDialog( "Success", "Student updated successfuly", true);
                 } catch (Exception e) {
                     dlgAlert.setMessage("ארעה שגיאה בעת השמירה, שינוייך לא נשמרו");
                     dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
