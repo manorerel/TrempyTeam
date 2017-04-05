@@ -84,7 +84,7 @@ public class ModelFirebase {
     }
 
 
-    public void updateTremp(String id, String dest, String source, String phone, String date){
+    public void updateTremp(String id, String dest, String source, String phone, String date, String car){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference trempToUpdate = database.getReference("Tremp").child(id);
 
@@ -93,6 +93,7 @@ public class ModelFirebase {
             trempToUpdate.child("sourceAddress").setValue(source);
             trempToUpdate.child("destAddress").setValue(dest);
             trempToUpdate.child("trempDateTime").setValue(date);
+            trempToUpdate.child("carModel").setValue(car);
         }
     }
 
