@@ -135,8 +135,9 @@ public class EditTrempActivity extends Activity {
                     ModelFirebase fb = new ModelFirebase();
                     Intent currIntent = getIntent();
                     String id = currIntent.getExtras().getString("id");
-                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
-                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString);
+
+                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
+                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
 
                     dlgAlert.setMessage("השינויים נשמרו בהצלחה!");
                     dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {

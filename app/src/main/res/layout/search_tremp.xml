@@ -39,86 +39,92 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
         android:orientation="vertical">
 
-        <EditText
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/from"
-            android:layout_marginLeft="120dp"
-         />
+
         <TextView
+            android:id="@+id/from_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="מוצא"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Exit from:"
-            android:id="@+id/from_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginRight="20dp"/>
+
+        <EditText
+            android:id="@+id/from"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+
+            />
     </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="יעד"
+            android:id="@+id/destination_"
+            android:layout_marginRight="20dp"
+             />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/destination"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="100dp"
           />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Destination:"
-            android:id="@+id/destination_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.example.hadar.trempyteam.DateEditText
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:id="@+id/date"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Date:"
-            android:id="@+id/date_tremp"
-            android:layout_marginLeft="20dp" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <com.example.hadar.trempyteam.TimeEditText
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:id="@+id/time"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Time:"
-            android:id="@+id/time_tremp"
-            android:layout_marginLeft="20dp"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
-    </RelativeLayout>
+        <!--<com.example.hadar.trempyteam.DateEditText-->
+            <!--android:layout_width="180dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="120dp"-->
+            <!--android:id="@+id/date"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+            <!--android:text="Date:"-->
+            <!--android:id="@+id/date_tremp"-->
+            <!--android:layout_marginLeft="20dp" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<com.example.hadar.trempyteam.TimeEditText-->
+            <!--android:layout_width="195dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="120dp"-->
+            <!--android:id="@+id/time"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+            <!--android:text="Time:"-->
+            <!--android:id="@+id/time_tremp"-->
+            <!--android:layout_marginLeft="20dp"/>-->
+
+    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:orientation="horizontal"
