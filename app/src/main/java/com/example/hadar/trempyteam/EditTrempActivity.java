@@ -57,21 +57,22 @@ public class EditTrempActivity extends Activity {
 
         //Get the Tremp details
         Intent intent = getIntent();
-
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+        String MyDate = intent.getExtras().getString("date");
+        String[] splitDate = MyDate.split(" ");
+         dateString = splitDate[0];
+         timeString = splitDate[1];
 
-        try {
-            Date date = convertStringToDate(intent.getExtras().getString("date"));
-            dateString = dateFormat.format(date);
-            timeString = TimeFormat.format(date);
+//        try {
+//            dateString = dateFormat.format(MyDate);
+//            timeString = TimeFormat.format(MyDate);
+//        }
+//        catch (Exception e)
+//        {
+//            e.getMessage();
+//        }
 
-
-        }
-        catch (Exception e)
-        {
-
-        }
 
         TrempDate.setText(dateString);
         TrempTime.setText(timeString);

@@ -15,28 +15,28 @@ import java.util.Map;
  */
 
 public class Tremp {
-    String CarModel;
-    String SourceAddress;
-    String DestAddress;
+    String carModel;
+    String sourceAddress;
+    String destAddress;
     String id;
     String driverId;
     long seets;
-    Date TrempDateTime;
-    Date CreationTime;
+    String trempDateTime;
+    //Date creationTime;
     List<String> trempistsList;
     static int count = 0;
     String imageName;
     String phoneNumber;
 
     public Tremp(){}
-    public Tremp(String trempId, long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers){
-        CarModel = carModel;
+    public Tremp(String trempId, long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers){
+        this.carModel = carModel;
         this.seets = seets;
         driverId = DriverId;
-        TrempDateTime = trempDate;
+        this.trempDateTime = trempDate;
         id = trempId;
-        SourceAddress = sourceAdd;
-        DestAddress = destAdd;
+        sourceAddress = sourceAdd;
+        destAddress = destAdd;
         imageName = ImageName;
         phoneNumber = PhoneNumber;
 
@@ -46,14 +46,14 @@ public class Tremp {
 
     }
 
-    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
-        CarModel = carModel;
+    public Tremp(long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
+        this.carModel = carModel;
         this.seets = seets;
         driverId = DriverId;
-        TrempDateTime  = trempDate;
+        this.trempDateTime = trempDate;
         id = CreateID();
-        SourceAddress = sourceAdd;
-        DestAddress = destAdd;
+        sourceAddress = sourceAdd;
+        destAddress = destAdd;
         imageName = ImageName;
         phoneNumber = PhoneNumber;
         if(passengers != null)
@@ -61,30 +61,35 @@ public class Tremp {
         else trempistsList = new ArrayList<String>();
     }
 
-    public String getTrempId(){return id;}
-    public String getTrempDriverId(){return driverId;}
-    public long getTrempSeets(){return seets;}
-    public String getTrempcarModel(){return CarModel;}
-    public String getTrempSourceAddress(){return SourceAddress;}
-    public String getTrempDestAddress(){return DestAddress;}
-    public Date getTrempDate(){return TrempDateTime;}
-    public Date getTrempCreationTime(){return CreationTime;}
-    public String getTrempImageName() {
+    public String getId(){return id;}
+    public String getDriverId(){return driverId;}
+    public long getSeets(){return seets;}
+    public String getCarModel(){return carModel;}
+    public String getSourceAddress(){return sourceAddress;}
+    public String getDestAddress(){return destAddress;}
+    public String getTrempDateTime(){
+        return trempDateTime;}
+   // public Date getCreationTime(){return creationTime;}
+    public String getImageName() {
         return imageName;
     }
-    public String getTrempPhoneNumber(){return phoneNumber;}
-    public List<String> getTrempTrempistsList(){return trempistsList;}
+    public String getPhoneNumber(){return phoneNumber;}
+    public List<String> getTrempistsList(){return trempistsList;}
 
-    public void setTrempCar(String carModel){CarModel = carModel;}
-    public void setTrempSourceAddress(String sourceAdd){SourceAddress = sourceAdd;}
-    public void setTrempDestAddress(String destAdd){DestAddress = destAdd;}
-    public void setTrempSeets(long seets){
+    public void setCarModel(String carModel){
+        this.carModel = carModel;}
+    public void setSourceAddress(String sourceAdd){
+        sourceAddress = sourceAdd;}
+    public void setDestAddress(String destAdd){
+        destAddress = destAdd;}
+    public void setSeets(long seets){
         this.seets = seets;}
-    public void settrempDate(Date TrempDateTime){TrempDateTime = TrempDateTime;}
-    public void setTrempImageName(String imageName) {
+    public void settrempDateTime(String TrempDateTimee){
+        trempDateTime = TrempDateTimee;}
+    public void setImageName(String imageName) {
         this.imageName = imageName;
     }
-    public void setTrempPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
+    public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
     public void setNewPassengerToTremp(String user_id) {
         if(trempistsList != null && !trempistsList.contains(user_id))
             this.trempistsList.add(user_id);
@@ -98,13 +103,14 @@ public class Tremp {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
-        result.put("SourceAddress", SourceAddress);
-        result.put("DestAddress", DestAddress);
-        result.put("CarModel", CarModel);
+        result.put("sourceAddress", sourceAddress);
+        result.put("destAddress", destAddress);
+        result.put("carModel", carModel);
         result.put("seets", seets);
-        result.put("creationTime", ServerValue.TIMESTAMP);
-        String NewDate = convertDateToString(TrempDateTime);
-        result.put("trempDateTime", NewDate);
+        //result.put("creationTime", ServerValue.TIMESTAMP);
+        //String trempDateTime = convertDateToString(trempDate);
+       // result.put("trempDateTime", trempDateTime);
+        result.put("trempDateTime", trempDateTime);
         result.put("driverId", driverId);
         result.put("phoneNumber", phoneNumber);
         result.put("driverId",driverId);
