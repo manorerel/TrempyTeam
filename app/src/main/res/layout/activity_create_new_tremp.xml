@@ -176,7 +176,7 @@
 
         <ImageView
             android:id="@+id/Image"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/camera"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerVertical="true"
