@@ -7,7 +7,8 @@
     tools:context="com.example.hadar.trempyteam.CreateNewTrempActivity"
     android:measureWithLargestChild="false"
     android:layoutDirection="ltr"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/design">
 
 
     <ImageView
@@ -27,146 +28,171 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="טלפון"
+            android:id="@+id/student_phone"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/editTextPhone"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Phone:"
-            android:id="@+id/student_phone"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="מוצא"
+            android:textStyle="bold"
+            android:id="@+id/exit_from_"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/exitfrom"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Exit from :"
-            android:id="@+id/exit_from_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="יעד"
+            android:textStyle="bold"
+            android:id="@+id/dest_"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/dest"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Destination:"
-            android:id="@+id/dest_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="מקומות פנויים"
+            android:textStyle="bold"
+            android:id="@+id/avaliable_seats_"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:id="@+id/avaliable_seats"
-            android:layout_marginLeft="185dp"
+            android:layout_marginRight="185dp"
             android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Avaliable Seats:"
-            android:id="@+id/avaliable_seats_"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="תאריך"
+            android:textStyle="bold"
+            android:id="@+id/date_tremp"
+            android:layout_marginRight="20dp" />
 
         <com.example.hadar.trempyteam.DateEditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:id="@+id/date"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Date:"
-            android:id="@+id/date_tremp"
-            android:layout_marginLeft="20dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="שעה"
+            android:textStyle="bold"
+            android:id="@+id/time_tremp"
+            android:layout_marginRight="20dp"/>
         <com.example.hadar.trempyteam.TimeEditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:id="@+id/time"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Time:"
-            android:id="@+id/time_tremp"
-            android:layout_marginLeft="20dp"/>
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="סוג רכב"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/car_model"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Model:"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -181,13 +207,6 @@
             android:layout_height="100dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Image:"
-            android:id="@+id/car_image"
-            android:layout_marginLeft="20dp"/>
 
     </RelativeLayout>
 
@@ -240,11 +259,15 @@
             <Button
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="CANCEL"
+                android:text="ביטול"
                 android:id="@+id/btnCancel"
                 android:layout_weight="0.10"
                 android:layout_marginLeft="6dp"
-                android:background="@drawable/rounded_corners"/>
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="#00BCD4"
+                android:textStyle="normal|bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -255,10 +278,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="SAVE"
+                android:text="שמור"
                 android:id="@+id/btnSave"
                 android:layout_weight="0.10"
-                android:background="@drawable/rounded_corners"/>
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="#00BCD4"
+                android:textStyle="normal|bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
 
     </LinearLayout>
