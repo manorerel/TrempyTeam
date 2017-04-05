@@ -21,19 +21,19 @@ public class Tremp {
     String id;
     String driverId;
     long seets;
-    Date trempDate;
-    Date creationTime;
+    String trempDateTime;
+    //Date creationTime;
     List<String> trempistsList;
     static int count = 0;
     String imageName;
     String phoneNumber;
 
     public Tremp(){}
-    public Tremp(String trempId, long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers){
+    public Tremp(String trempId, long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers){
         this.carModel = carModel;
         this.seets = seets;
         driverId = DriverId;
-        this.trempDate = trempDate;
+        this.trempDateTime = trempDate;
         id = trempId;
         sourceAddress = sourceAdd;
         destAddress = destAdd;
@@ -46,11 +46,11 @@ public class Tremp {
 
     }
 
-    public Tremp(long seets, String DriverId, Date trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
+    public Tremp(long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
         this.carModel = carModel;
         this.seets = seets;
         driverId = DriverId;
-        this.trempDate = trempDate;
+        this.trempDateTime = trempDate;
         id = CreateID();
         sourceAddress = sourceAdd;
         destAddress = destAdd;
@@ -67,9 +67,9 @@ public class Tremp {
     public String getCarModel(){return carModel;}
     public String getSourceAddress(){return sourceAddress;}
     public String getDestAddress(){return destAddress;}
-    public Date getTrempDate(){
-        return trempDate;}
-    public Date getCreationTime(){return creationTime;}
+    public String getTrempDateTime(){
+        return trempDateTime;}
+   // public Date getCreationTime(){return creationTime;}
     public String getImageName() {
         return imageName;
     }
@@ -84,8 +84,8 @@ public class Tremp {
         destAddress = destAdd;}
     public void setSeets(long seets){
         this.seets = seets;}
-    public void settrempDateTime(Date TrempDateTimee){
-        trempDate = TrempDateTimee;}
+    public void settrempDateTime(String TrempDateTimee){
+        trempDateTime = TrempDateTimee;}
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
@@ -107,8 +107,6 @@ public class Tremp {
         result.put("destAddress", destAddress);
         result.put("carModel", carModel);
         result.put("seets", seets);
-        result.put("creationTime", ServerValue.TIMESTAMP);
-        String trempDateTime = convertDateToString(trempDate);
         result.put("trempDateTime", trempDateTime);
         result.put("driverId", driverId);
         result.put("phoneNumber", phoneNumber);
@@ -116,12 +114,5 @@ public class Tremp {
         result.put("imageName", imageName);
         result.put("Passengers", trempistsList);
         return result;
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
     }
 }

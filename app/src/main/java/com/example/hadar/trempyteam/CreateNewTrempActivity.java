@@ -90,6 +90,7 @@ public class CreateNewTrempActivity extends Activity {
                 DateEditText dateText = (DateEditText)findViewById(R.id.date);
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
                 EditText carModel = (EditText)findViewById(R.id.car_model);
+                String dateString = dateText.getText() + " " + time.getText();
 
           //      AccessToken.getCurrentAccessToken().getUserId();
 
@@ -100,7 +101,9 @@ public class CreateNewTrempActivity extends Activity {
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
 
-                Tremp newTremp = new Tremp(trempId,seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+               // Tremp newTremp = new Tremp(trempId,seets, createdUserId, date, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+
                 String imName = "";
 
 

@@ -84,7 +84,7 @@ public class ModelFirebase {
     }
 
 
-    public void updateTremp(String id, String dest, String source, String phone, Date date){
+    public void updateTremp(String id, String dest, String source, String phone, String date){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference trempToUpdate = database.getReference("Tremp").child(id);
 
@@ -237,7 +237,6 @@ public class ModelFirebase {
 
                                         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
                                         Date date = new Date();
-                                        //date = convertStringToDate(trempDate)
                                         try {
                                             if (!trempDate.equals("")) {
                                                 date = format.parse(trempDate);
@@ -248,15 +247,16 @@ public class ModelFirebase {
                                             String m = e1.getMessage();
                                         }
 
-                                        t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
+                                        //t = new Tremp(id, seets, driverId, date, source, dest, phone, carModel, imageName,TrempistsList);
+                                        t = new Tremp(id, seets, driverId, trempDate, source, dest, phone, carModel, imageName,TrempistsList);
 
                                     }
 
                                     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
 
                                     try {
-                                        Date dateCreation = format.parse(t.getTrempDate().toString());
-                                        t.settrempDateTime(dateCreation);
+                                        //Date dateCreation = format.parse(t.getTrempDateTime().toString());
+                                        //t.settrempDateTime(dateCreation);
                                     }
                                     catch (Exception e)
                                     {
@@ -275,8 +275,10 @@ public class ModelFirebase {
                         }
                     }
 
-                    listener.onComplete(tremps);
+
                 }
+
+                listener.onComplete(tremps);
             }
 
             @Override
@@ -335,20 +337,5 @@ public class ModelFirebase {
         });
 
     }
-
-
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return convertedDate;
-    }
-
 }
 

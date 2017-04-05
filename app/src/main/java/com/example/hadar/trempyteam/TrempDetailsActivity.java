@@ -32,19 +32,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by aviac on 3/31/2017.
  */
 
 public class TrempDetailsActivity extends Activity {
+    boolean wasEdited = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tremp_details);
         ActionBar actionBar = this.getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        Intent intent = getIntent();
 
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
         final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
@@ -54,45 +56,29 @@ public class TrempDetailsActivity extends Activity {
         TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
-        final String de;
-       final  String so;
-        final String seet;
-        final String id;
-        Intent intent = getIntent();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
-
+        String date =intent.getExtras().getString("date");
         String newDate = "";
         String newTime = "";
         try {
-            Date date = convertStringToDate(intent.getExtras().getString("date"));
-            newDate = dateFormat.format(date);
-            newTime = TimeFormat.format(date);
+            String[] splitDate = date.split(" ");
+            newDate = splitDate[0];
+            newTime = splitDate[1];
         }
         catch (Exception e)
         {
 
         }
-
-
         TrempDate.setText(newDate);
         TrempTime.setText(newTime);
 
         PhoneNumber.setText(intent.getExtras().getString("phone"));
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
-
-         de = intent.getExtras().getString("dest");
-         so = intent.getExtras().getString("source");
-         id =  intent.getExtras().getString("id");
-        seet = (Long.toString(intent.getExtras().getLong("seets")));
-
-
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
-       String imageName = intent.getExtras().getString("image");
-        if ((imageName != null)&&(!imageName.equals(""))) {
+        String imageName = intent.getExtras().getString("image");
+        if ((imageName != null) && (!imageName.equals(""))) {
             try {
                 Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
                     @Override
@@ -107,12 +93,20 @@ public class TrempDetailsActivity extends Activity {
 
                     }
                 });
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 Log.d("EX", e.getMessage());
             }
         }
 
+        final String de;
+        final String so;
+        final String seet;
+        final String id;
+
+        de = intent.getExtras().getString("dest");
+        so = intent.getExtras().getString("source");
+        id = intent.getExtras().getString("id");
+        seet = (Long.toString(intent.getExtras().getLong("seets")));
 
         Button cancel = (Button) findViewById(R.id.detailsBtnCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -286,7 +280,9 @@ public class TrempDetailsActivity extends Activity {
         intent.putExtra("phone",  trempToEdit.getPhoneNumber());
         intent.putExtra("source",  trempToEdit.getSourceAddress());
         intent.putExtra("dest",  trempToEdit.getDestAddress());
-        intent.putExtra("date", trempToEdit.getTrempDate());
+        intent.putExtra("date",  trempToEdit.getTrempDateTime());
+        intent.putExtra("car", trempToEdit.getCarModel());
+
         try {
             startActivityForResult(intent,1);
         }
@@ -310,6 +306,7 @@ public class TrempDetailsActivity extends Activity {
         String trempId = currIntent.getExtras().getString("id");
 
         if(!trempId.isEmpty()){
+            wasEdited = true;
             Tremp currTremp = ModelSql.getInstance().getTrempById(trempId);
             if(currTremp != null){
                 final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
@@ -323,10 +320,28 @@ public class TrempDetailsActivity extends Activity {
                 final String de;
                 final  String so;
                 final String seet;
+
+                Intent intent = getIntent();
+
+                String MyDate = currTremp.getTrempDateTime();
+                String newDate = "";
+                String newTime = "";
+                try {
+                    String[] splitDate = MyDate.split(" ");
+                    newDate = splitDate[0];
+                    newTime = splitDate[1];
+                }
+                catch (Exception e)
+                {
+
+                }
+
+
+                TrempDate.setText(newDate);
+                TrempTime.setText(newTime);
                 PhoneNumber.setText(currTremp.getPhoneNumber());
                 SourceAddress.setText(currTremp.getSourceAddress());
                 DestAddress.setText(currTremp.getDestAddress());
-//                Seets.setText(currTremp.getSeets());
                 CarModel.setText(currTremp.getCarModel());
 
             }
@@ -338,17 +353,6 @@ public class TrempDetailsActivity extends Activity {
 
     }
 
-    private static Date convertStringToDate(String dateText){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateText);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-        return convertedDate;
-    }
 }
 

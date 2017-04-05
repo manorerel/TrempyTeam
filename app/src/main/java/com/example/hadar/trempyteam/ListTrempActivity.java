@@ -98,11 +98,7 @@ public class ListTrempActivity extends Activity {
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
                 intent.putExtra("driverId",  tremp.getDriverId());
-                if (tremp.getTrempDate() != null) {
-                    intent.putExtra("date", convertDateToString(tremp.getTrempDate()));
-
-
-                }
+                intent.putExtra("date",  tremp.getTrempDateTime());
                 startActivityForResult(intent, 1);
             }
         });
@@ -117,6 +113,7 @@ public class ListTrempActivity extends Activity {
             trempsList = modelSql.getAllTremps(true);
 
             CreateList();
+
         }
     }
     //check its the master
@@ -151,11 +148,7 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
 
               seats.setText(String.valueOf(st.getSeets()));
-
-
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                 String dddd = df.format(st.getTrempDate());
-               time.setText(dddd);
+               time.setText(st.getTrempDateTime());
 
            final String driver_id = st.getDriverId();
 
@@ -182,12 +175,5 @@ public class ListTrempActivity extends Activity {
             }
             return view;
         }
-    }
-
-    private static String convertDateToString(Date date){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateText = df.format(date);
-
-        return dateText;
     }
 }
