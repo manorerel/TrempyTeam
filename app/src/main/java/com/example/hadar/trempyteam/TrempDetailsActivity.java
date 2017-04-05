@@ -173,7 +173,7 @@ public class TrempDetailsActivity extends Activity {
             @Override
             public void onComplete() {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("You Are In !!");
+                dlgAlert.setMessage("יש לך מקום שמור בטרמפ (:");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -200,7 +200,7 @@ public class TrempDetailsActivity extends Activity {
             @Override
             public void onComplete() {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("You Are Out !!");
+                dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -304,8 +304,11 @@ public class TrempDetailsActivity extends Activity {
                 exitTremp();
                 return true;
             }
-            default:
-                return super.onOptionsItemSelected(item);
+            default:{
+                finish();
+                return true;
+            }
+
         }
     }
 
