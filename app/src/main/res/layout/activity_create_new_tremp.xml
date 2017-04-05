@@ -7,7 +7,8 @@
     tools:context="com.example.hadar.trempyteam.CreateNewTrempActivity"
     android:measureWithLargestChild="false"
     android:layoutDirection="ltr"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/design">
 
 
     <ImageView
@@ -174,21 +175,24 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="סוג רכב"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:id="@+id/car_model"
-            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Model:"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -203,13 +207,6 @@
             android:layout_height="100dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Image:"
-            android:id="@+id/car_image"
-            android:layout_marginLeft="20dp"/>
 
     </RelativeLayout>
 
@@ -262,11 +259,15 @@
             <Button
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="CANCEL"
+                android:text="ביטול"
                 android:id="@+id/btnCancel"
                 android:layout_weight="0.10"
                 android:layout_marginLeft="6dp"
-                android:background="@drawable/rounded_corners"/>
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="#00BCD4"
+                android:textStyle="normal|bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -277,10 +278,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="SAVE"
+                android:text="שמור"
                 android:id="@+id/btnSave"
                 android:layout_weight="0.10"
-                android:background="@drawable/rounded_corners"/>
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="#00BCD4"
+                android:textStyle="normal|bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
 
     </LinearLayout>
