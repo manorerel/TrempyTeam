@@ -27,7 +27,18 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="טלפון"
+            android:id="@+id/student_phone"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="195dp"
@@ -35,14 +46,6 @@
             android:id="@+id/editTextPhone"
             android:layout_marginLeft="120dp"
             android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Phone:"
-            android:id="@+id/student_phone"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
     <RelativeLayout
