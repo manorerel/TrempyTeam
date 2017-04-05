@@ -41,6 +41,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="59dp"
         android:text="Hello"
-        android:textColor="?android:attr/textColorSecondaryActivated"
         android:textSize="36sp" />
 </RelativeLayout>
