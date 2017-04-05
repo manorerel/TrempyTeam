@@ -11,22 +11,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
+        android:layout_marginTop="63dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp">
+
+    />
+   </LinearLayout>
 
     <Button
-        android:text="צור טרמפ חדש"
+        android:text="צור טרמפ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="24sp"
         android:id="@+id/btnCreate"
+        android:layout_marginTop="27dp"
+        android:layout_weight="0.85"
+        android:textSize="24sp"
         android:background="@drawable/rounded_corners"
-        android:backgroundTint="#B0BEC5"
-        android:layout_marginTop="28dp"
+        android:backgroundTint="#00BCD4"
+        android:textStyle="normal|bold"
+        android:textColor="#FFFFFF"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
