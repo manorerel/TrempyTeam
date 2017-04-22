@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layoutDirection="ltr">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="25dp"
+                android:text="Passenger Name"
+                android:layout_width="199dp"
+                android:layout_height="match_parent"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:id="@+id/PassengerName"
+                android:layout_marginLeft="5dp"
+
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.88">
+
+            <com.facebook.login.widget.ProfilePictureView
+                android:id="@+id/PassengerProfilePicture"
+                android:layout_height="match_parent"
+                android:clickable="false"
+
+                android:layout_marginLeft="5dp"
+                android:layout_width="90dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -6,12 +6,28 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+
+import com.example.hadar.trempyteam.Model.ModelSql;
+import com.example.hadar.trempyteam.Model.Tremp;
+import com.example.hadar.trempyteam.Model.User;
+import com.facebook.AccessToken;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
 
 public class MainAactivity extends Activity {
     FragmentManager fragmentManager;
@@ -21,6 +37,9 @@ public class MainAactivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.main_activity);
+
+        ActionBar actionBar = this.getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         fragmentManager = getFragmentManager();
 
@@ -45,19 +64,8 @@ public class MainAactivity extends Activity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     finish();
                 }
-
                 }
                 return;
             }
         }
-
-
-    public void onCreateOptionsMenu(
-            Menu menu, MenuInflater inflater) {
-        Log.d("TAG", "handle action bar");
-        inflater.inflate(R.menu.menu_buttons, menu);
-
-        MenuItem add =  menu.findItem(R.id.personalArea);
-        add.setVisible(true);
-    }
 }
