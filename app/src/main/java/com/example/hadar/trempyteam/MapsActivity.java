@@ -14,6 +14,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.hadar.trempyteam.Model.Model;
@@ -22,6 +27,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -58,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     GoogleApiClient mGoogleApiClient;
@@ -167,6 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
 
 
     private String getUrl(LatLng origin, LatLng dest) {
@@ -434,6 +442,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return true;
         }
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return true;
+    }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
