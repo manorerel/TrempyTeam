@@ -44,7 +44,7 @@ public class ModelFirebase {
         DatabaseReference myRef = database.getReference("Tremp").child(tremp_id);
         final String tt = tremp_id;
 
-
+         Boolean empty = true;
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -62,6 +62,7 @@ public class ModelFirebase {
                     }
 
                     listener.onComplete(pass_ids);
+
                 }
                 else
                 {
@@ -75,9 +76,6 @@ public class ModelFirebase {
 
             }
         });
-
-
-
 
     }
 

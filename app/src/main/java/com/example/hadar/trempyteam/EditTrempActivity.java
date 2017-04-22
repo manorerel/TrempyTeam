@@ -25,6 +25,8 @@ import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.User;
+import com.facebook.AccessToken;
+import com.facebook.login.widget.ProfilePictureView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -44,6 +46,7 @@ public class EditTrempActivity extends Activity {
 
     String dateString = "";
     String timeString = "";
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,22 @@ public class EditTrempActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditTrempActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         MenuItem save = menu.findItem(R.id.saveTremp);

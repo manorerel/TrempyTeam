@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/personalArea"
-        android:icon="@mipmap/login"
-        android:title="איזור אישי"
-        android:showAsAction ="always"
-        android:visible="false"
-        />
+
 
     <item android:id="@+id/editTremp"
         android:icon="@mipmap/editsvg"
@@ -45,5 +39,14 @@
         android:title="leaf"
         android:visible="false"/>
 
+    <item
+        android:id="@+id/personalArea"
+        android:title="איזור אישי"
+        android:showAsAction ="always"
+        android:actionLayout="@layout/check"
+        android:visible="false"
+        android:textDirection="ltr"
+
+        />
     <!--android:showAsAction="always"-->
 </menu>

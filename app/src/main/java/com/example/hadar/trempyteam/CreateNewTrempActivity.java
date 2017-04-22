@@ -17,6 +17,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,6 +29,8 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.User;
 
+import com.facebook.AccessToken;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -51,6 +57,7 @@ public class CreateNewTrempActivity extends Activity {
     int YEAR = 1900;
 
 
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
     private GoogleMap googleMap;
     final int main = 1;
@@ -346,9 +353,33 @@ public class CreateNewTrempActivity extends Activity {
 
         Intent resultIntent = new Intent();
         setResult(Activity.RESULT_OK, resultIntent);
-        finish();
+       // finish();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateNewTrempActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return true;
+    }
     private void takingPicture(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {

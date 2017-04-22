@@ -30,6 +30,8 @@ import android.widget.TextView;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.facebook.AccessToken;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
@@ -40,6 +42,8 @@ public class searchTrempFragment extends Fragment {
 
     FragmentManager fragmentManager;
     final String destii = "";
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
+
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
 
     @Override
@@ -165,8 +169,22 @@ public class searchTrempFragment extends Fragment {
         Log.d("TAG", "handle action bar");
         inflater.inflate(R.menu.menu_buttons, menu);
 
+        View view = (View) LayoutInflater.from(getActivity().getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
         MenuItem personalArea =  menu.findItem(R.id.personalArea);
         personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
@@ -46,6 +48,8 @@ import java.util.Locale;
 public class TrempDetailsActivity extends Activity {
     boolean wasEdited = false;
     String cameFrom = "";
+
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +146,7 @@ public class TrempDetailsActivity extends Activity {
 
                 Intent intent = new Intent(TrempDetailsActivity.this, ListPassengersActivity.class);
                 intent.putExtra("tremp_id", id);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
 
             }
         });
@@ -240,6 +244,7 @@ public class TrempDetailsActivity extends Activity {
         String driverId = (String)intent.getExtras().getString("driverId");
         cameFrom = (String) intent.getExtras().get("cameFrom");
 
+
         if(driverId.equals(User.GetAppUser().Id) && cameFrom.equals("personalArea")) {
 
             MenuItem edit = menu.findItem(R.id.editTremp);
@@ -263,6 +268,26 @@ public class TrempDetailsActivity extends Activity {
                 join.setVisible(true);
             }
         }
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TrempDetailsActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
         return true;
     }

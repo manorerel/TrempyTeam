@@ -1,10 +1,16 @@
 package com.example.hadar.trempyteam;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,12 +29,14 @@ import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListPassengersActivity extends Activity {
 
     List<String> passengersList;
     final PassengersAdapter adapter = new PassengersAdapter();
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +47,27 @@ public class ListPassengersActivity extends Activity {
 
         Intent intent = getIntent();
         String trempId = intent.getExtras().getString("tremp_id");
-        fbModel.getPassengersByTrempId(trempId, new Model.GetPassengersListener() {
+       fbModel.getPassengersByTrempId(trempId, new Model.GetPassengersListener() {
 
             @Override
             public void onComplete (List < String > listPassengers) {
-
-
                 passengersList = listPassengers;
                 CreateList();
+
+                if(passengersList.size() == 0)
+                {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListPassengersActivity.this);
+                    dlgAlert.setMessage("אף אחד לא הצטרף עדיין לטרמפ זה");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            dialog.dismiss();
+                        }
+                    });
+                    dlgAlert.show();
+                }
+
 
                 }
         });
@@ -60,8 +81,8 @@ public class ListPassengersActivity extends Activity {
 
     public void CreateList() {
         ListView list = (ListView) findViewById(R.id.Passengers_listView);
-        list.setAdapter(adapter);
 
+        list.setAdapter(adapter);
     }
 
 
@@ -122,5 +143,30 @@ public class ListPassengersActivity extends Activity {
                 return view;
             }
         }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListPassengersActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return true;
+    }
+
     }
 

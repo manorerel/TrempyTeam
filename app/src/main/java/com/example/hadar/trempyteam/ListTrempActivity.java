@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,6 +40,7 @@ public class ListTrempActivity extends Activity {
     List<Tremp> trempsList ;
     Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +119,29 @@ public class ListTrempActivity extends Activity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListTrempActivity.this, PersonalAreaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return true;
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
