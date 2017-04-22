@@ -21,6 +21,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONException;
 
@@ -154,14 +155,17 @@ public class ListTrempActivity extends Activity {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
             }
             final TextView name = (TextView) view.findViewById(R.id.DriverName);
+            final ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
             final TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
 
-              seats.setText(String.valueOf(st.getSeets()));
+            final String driver_id = st.getDriverId();
+              seats.setText(String.valueOf(st.getSeets()) + " available seats");
                time.setText(st.getTrempDateTime());
+               profilePictureView.setProfileId(driver_id);
 
-           final String driver_id = st.getDriverId();
+
 
             try {
 

@@ -14,6 +14,10 @@ import com.example.hadar.trempyteam.Model.Tremp;
 import java.util.List;
 
 public class PersonalAreaActivity extends Activity {
+
+    List<String> passengers_id ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

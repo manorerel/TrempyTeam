@@ -25,7 +25,12 @@ import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -41,6 +46,7 @@ import java.util.Locale;
 public class TrempDetailsActivity extends Activity {
     boolean wasEdited = false;
     String cameFrom = "";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -58,16 +64,14 @@ public class TrempDetailsActivity extends Activity {
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
         final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
 
-        String date =intent.getExtras().getString("date");
+        String date = intent.getExtras().getString("date");
         String newDate = "";
         String newTime = "";
         try {
             String[] splitDate = date.split(" ");
             newDate = splitDate[0];
             newTime = splitDate[1];
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
         TrempDate.setText(newDate);
@@ -116,8 +120,8 @@ public class TrempDetailsActivity extends Activity {
             public void onClick(View v) {
                 final String tremp_id = getIntent().getExtras().getString("id");
 
-                LatLng c =  getLocationFromAddress(TrempDetailsActivity.this, de);
-                LatLng s =  getLocationFromAddress(TrempDetailsActivity.this, so);
+                LatLng c = getLocationFromAddress(TrempDetailsActivity.this, de);
+                LatLng s = getLocationFromAddress(TrempDetailsActivity.this, so);
 
                 Intent intent = new Intent(TrempDetailsActivity.this, MapsActivity.class);
                 intent.putExtra("DestLocation", c);
@@ -126,8 +130,25 @@ public class TrempDetailsActivity extends Activity {
                 startActivity(intent);
             }
         });
-            }
 
+
+        final ImageView friends_passengers = (ImageView) findViewById(R.id.show_friends);
+
+
+        friends_passengers.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(TrempDetailsActivity.this, ListPassengersActivity.class);
+                intent.putExtra("tremp_id", id);
+                startActivityForResult(intent, 1);
+
+            }
+        });
+
+
+    }
     private void joinTremp(){
         final String tremp_id = getIntent().getExtras().getString("id");
 

@@ -52,56 +52,20 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layoutDirection="rtl"
             android:layout_marginRight="20dp">
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:text="נהג"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:id="@+id/driver_name_"
-                android:layout_marginLeft="5dp"
-                android:textSize="18sp"
+            <com.facebook.login.widget.ProfilePictureView
+                android:id="@+id/friendProfilePicture"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
                 android:textDirection="rtl"
-                android:textColor="?android:attr/textColorTertiaryInverse" />
-
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:text="יוצא ב -"
-                android:layout_width="225dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:id="@+id/time_"
-                android:textSize="18sp"
-                android:textDirection="rtl"
-                android:textColor="?android:attr/textColorTertiaryInverse" />
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:text="מקומות פנויים"
-                android:layout_width="194dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:id="@+id/seats_ava_"
-                android:textSize="18sp"
-                 android:textDirection="rtl"
-                android:textColor="?android:attr/textColorTertiaryInverse" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+                android:layout_width="108dp"
+              />
 
         </LinearLayout>
     </LinearLayout>

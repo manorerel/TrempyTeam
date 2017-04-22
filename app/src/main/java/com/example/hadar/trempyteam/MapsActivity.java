@@ -148,21 +148,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(options).setTitle("source");
         mMap.addMarker(opt).setTitle("destination");
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                if (marker.getTitle().equals("source") || marker.getTitle().equals("destination"))
-                {
-                    Intent intent = new Intent(MapsActivity.this, MarkerDetailsActivity.class);
-                    intent.putExtra("tremp_id", iddd);
-
-                    startActivity(intent);
-                }
-                return true;
-            }
-        });
-
         // Checks, whether start and end locations are captured
         if (MarkerPoints.size() >= 2) {
             LatLng origin = MarkerPoints.get(0);
