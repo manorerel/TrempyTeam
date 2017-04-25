@@ -59,9 +59,9 @@ public class Model {
         void onComplete();
     }
 
-    public void getAllTrempsByFilter(String dest, String from, GetAllTrempsByFilerListener listener)
+    public void getAllTrempsByFilter(String time, String date, String dest, String from, GetAllTrempsByFilerListener listener)
     {
-        modelFirebase.getAllTrempsByFilter(dest,from, listener);
+        modelFirebase.getAllTrempsByFilter(time, date,dest,from, listener);
     }
 
     public void getAllTremps(GetAllTrempsListener listener)

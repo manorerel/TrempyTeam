@@ -60,6 +60,7 @@ public class searchTrempFragment extends Fragment {
        final EditText source = (EditText)rootView.findViewById(R.id.from);
 
 
+
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -121,13 +122,22 @@ public class searchTrempFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    DateEditText dateText = (DateEditText)rootView.findViewById(R.id.date_);
+                    TimeEditText time = (TimeEditText)rootView.findViewById(R.id.time_);
                     EditText dest = (EditText) rootView.findViewById(R.id.destination);
                     EditText from = (EditText) rootView.findViewById(R.id.from);
+
                     Intent intent = new Intent(getActivity(), ListTrempActivity.class);
+
                     String d = dest.getText().toString();
                     String f = from.getText().toString();
+                    String text = dateText.getText().toString();
+                    String time_ = time.getText().toString();
+
                     intent.putExtra("dest", d);
                     intent.putExtra("from", f);
+                    intent.putExtra("date", text);
+                    intent.putExtra("time", time_);
                     startActivity(intent);
 
                 }

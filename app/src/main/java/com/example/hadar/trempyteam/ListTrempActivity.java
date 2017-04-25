@@ -63,9 +63,11 @@ public class ListTrempActivity extends Activity {
         {
             final String dest = (String) getIntent().getExtras().get("dest");
             final String from = (String) getIntent().getExtras().get("from");
+            final String date = (String) getIntent().getExtras().get("date");
+            final String time = (String) getIntent().getExtras().get("time");
 
             ModelFirebase fbModel = new ModelFirebase();
-            fbModel.getAllTrempsByFilter(dest, from, new Model.GetAllTrempsByFilerListener() {
+            fbModel.getAllTrempsByFilter(time,date,dest, from, new Model.GetAllTrempsByFilerListener() {
                 @Override
                 public void onComplete(List<Tremp> tremps) {
 

@@ -150,8 +150,6 @@ public class TrempDetailsActivity extends Activity {
 
             }
         });
-
-
     }
     private void joinTremp(){
         final String tremp_id = getIntent().getExtras().getString("id");
