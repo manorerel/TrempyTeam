@@ -86,6 +86,53 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="תאריך"
+            android:textStyle="bold"
+            android:id="@+id/date"
+            android:layout_marginRight="20dp" />
+
+        <com.example.hadar.trempyteam.DateEditText
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="120dp"
+            android:id="@+id/date_"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="שעה"
+            android:textStyle="bold"
+            android:id="@+id/time"
+            android:layout_marginRight="20dp"/>
+        <com.example.hadar.trempyteam.TimeEditText
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="120dp"
+            android:id="@+id/time_"/>
+
+    </RelativeLayout>
+
     <Button
         android:text="חפש"
         android:layout_width="100dp"
