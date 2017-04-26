@@ -5,15 +5,12 @@
     android:layoutDirection="ltr"
     android:supportsRtl="false" >
 
-    <com.facebook.login.widget.ProfilePictureView
+    <com.example.hadar.trempyteam.ProfilePictureView
         android:id="@+id/friendProfilePicture"
         android:layout_height="match_parent"
-
-        android:layout_width="47dp"
-        android:clickable="true"
-        android:layout_alignParentTop="true"
+        android:textDirection="ltr"
+        android:layout_width="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="7dp"
-        android:layout_marginStart="7dp" />
+      />
 </RelativeLayout>

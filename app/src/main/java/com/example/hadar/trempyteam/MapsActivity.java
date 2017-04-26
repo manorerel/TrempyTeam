@@ -450,7 +450,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         inflater.inflate(R.menu.menu_buttons, menu);
 
         View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
-        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
         editText.setProfileId(user_connected_id);
 
         MenuItem personalArea =  menu.findItem(R.id.personalArea);
