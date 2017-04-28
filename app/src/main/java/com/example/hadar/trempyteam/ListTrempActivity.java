@@ -198,7 +198,28 @@ public class ListTrempActivity extends Activity {
             final Tremp st = trempsList.get(i);
             final String driver_id = st.getDriverId();
               seats.setText(String.valueOf(st.getSeets()) + " Available Seats");
-               time.setText(st.getTrempDateTime());
+
+            String dateTime = st.getTrempDateTime();
+            String newTime = "";
+            String newDate = "";
+                String[] splitDate = dateTime.split(" ");
+                newDate = splitDate[0];
+                newTime = splitDate[1];
+
+                String[] splitTime = newTime.split(":");
+
+
+                if (splitTime[1].length() < 2)
+                {
+                    newTime = splitTime[0] + ":0" + splitTime[1];
+                }
+            else
+                {
+                    newTime = splitTime[0] + ":" + splitTime[1];
+                }
+
+
+               time.setText(newDate + "  " + newTime);
                profilePictureView.setProfileId(driver_id);
 
             try {

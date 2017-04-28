@@ -3,10 +3,13 @@ package com.example.hadar.trempyteam;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -16,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,7 +71,6 @@ public class TrempDetailsActivity extends Activity {
         DateEditText TrempDate = (DateEditText) findViewById(R.id.detailsDate);
         TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
-        final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
 
         String date = intent.getExtras().getString("date");
         String newDate = "";
@@ -75,6 +79,18 @@ public class TrempDetailsActivity extends Activity {
             String[] splitDate = date.split(" ");
             newDate = splitDate[0];
             newTime = splitDate[1];
+
+            String[] splitTime = newTime.split(":");
+            if (splitTime[1].length() < 2)
+            {
+                newTime = splitTime[0] + ":0" + splitTime[1];
+            }
+            else
+            {
+                newTime = splitTime[0] + ":" + splitTime[1];
+            }
+
+
         } catch (Exception e) {
 
         }
@@ -87,25 +103,16 @@ public class TrempDetailsActivity extends Activity {
         Seets.setText(Long.toString(intent.getExtras().getLong("seets")));
         CarModel.setText(intent.getExtras().getString("car"));
         String imageName = intent.getExtras().getString("image");
-        if ((imageName != null) && (!imageName.equals(""))) {
-            try {
-                Model.getInstance().loadImage(imageName, new Model.GetImageListener() {
-                    @Override
-                    public void onSccess(Bitmap imageBmp) {
-                        if (imageBmp != null) {
-                            image.setImageBitmap(imageBmp);
-                        }
-                    }
 
-                    @Override
-                    public void onFail() {
+        final TextView showImage = (TextView) findViewById(R.id.showImage);
 
-                    }
-                });
-            } catch (Exception e) {
-                Log.d("EX", e.getMessage());
+        showImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               showDialog();
             }
-        }
+        });
+
 
         final String de;
         final String so;
@@ -118,7 +125,7 @@ public class TrempDetailsActivity extends Activity {
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
 
-        Button btnMap = (Button) findViewById(R.id.btnMap);
+        ImageButton btnMap = (ImageButton) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +143,7 @@ public class TrempDetailsActivity extends Activity {
         });
 
 
-        final ImageView friends_passengers = (ImageView) findViewById(R.id.show_friends);
+        final TextView friends_passengers = (TextView) findViewById(R.id.show_friends);
 
 
         friends_passengers.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +158,72 @@ public class TrempDetailsActivity extends Activity {
             }
         });
     }
+
+
+
+
+
+    private void showDialog() {
+
+
+
+        final Dialog dialog;
+
+        dialog = new Dialog(this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.picture_dualog);
+
+
+        // set the custom dialog components - text, image and button
+       final ImageView  pic = (ImageView) dialog.findViewById(R.id.pic);
+        ImageButton close = (ImageButton) dialog.findViewById(R.id.btnClose);
+
+
+        String imageNamee = getIntent().getExtras().getString("image");
+        try {
+            Model.getInstance().loadImage(imageNamee, new Model.GetImageListener() {
+                @Override
+                public void onSccess(Bitmap imageBmp) {
+                    if (imageBmp != null) {
+                        pic.setImageBitmap(imageBmp);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+
+                    }
+
+                    }
+
+
+                @Override
+                public void onFail() {
+
+                }
+            });
+        } catch (Exception e) {
+
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+            dlgAlert.setMessage("הנהג לא צירף תמונה");
+            dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dlgAlert.show();
+            Log.d("EX", e.getMessage());
+        }
+
+        // Close Button
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+    }
+
     private void joinTremp(){
         final String tremp_id = getIntent().getExtras().getString("id");
 
@@ -376,7 +449,7 @@ public class TrempDetailsActivity extends Activity {
                 DateEditText TrempDate = (DateEditText) findViewById(R.id.detailsDate);
                 TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
                 final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
-                final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
+               // final ImageView image = (ImageView) findViewById(R.id.DetailsImage);
                 final String de;
                 final  String so;
                 final String seet;
