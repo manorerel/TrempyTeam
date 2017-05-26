@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.graphics.Bitmap;
@@ -16,14 +17,18 @@ import android.provider.MediaStore;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 
@@ -34,7 +39,15 @@ import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +61,8 @@ import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 public class CreateNewTrempActivity extends Activity {
@@ -55,7 +70,9 @@ public class CreateNewTrempActivity extends Activity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static int count = 0;
     int YEAR = 1900;
-
+    PlacesTask placesTask;
+    ParserTask parserTask;
+    AutoCompleteTextView atvPlaces;
 
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -72,7 +89,29 @@ public class CreateNewTrempActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
 
-        final ModelFirebase fbModel = new ModelFirebase();
+        atvPlaces = (AutoCompleteTextView)findViewById(R.id.exitfrom);
+        atvPlaces.setThreshold(1);
+
+        atvPlaces.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                placesTask = new PlacesTask();
+                placesTask.execute(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+        });
+    final ModelFirebase fbModel = new ModelFirebase();
         imageView = (ImageView) findViewById(R.id.Image);
         dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
 
@@ -92,7 +131,7 @@ public class CreateNewTrempActivity extends Activity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditText phone = (EditText)findViewById(R.id.editTextPhone);
-                EditText source = (EditText)findViewById(R.id.exitfrom);
+
                 EditText dest = (EditText)findViewById(R.id.dest);
                 EditText seetsText = (EditText)findViewById(R.id.avaliable_seats);
                 DateEditText dateText = (DateEditText)findViewById(R.id.date);
@@ -100,7 +139,7 @@ public class CreateNewTrempActivity extends Activity {
                 EditText carModel = (EditText)findViewById(R.id.car_model);
                 String dateString = dateText.getText() + " " + time.getText();
 
-                if(phone.getText().toString().isEmpty() || source.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
+                if(phone.getText().toString().isEmpty() || atvPlaces.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
                         || seetsText.getText().toString().isEmpty() || carModel.getText().toString().isEmpty()){
 
                     dlgAlert.setMessage("לא מילאת את כל הפרטים!");
@@ -121,7 +160,7 @@ public class CreateNewTrempActivity extends Activity {
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
 
-                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, source.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
 
                 String imName = "";
 
@@ -282,64 +321,7 @@ public class CreateNewTrempActivity extends Activity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // create class object
-                    GPSTracker gps = new GPSTracker(CreateNewTrempActivity.this);
-
-
-                    // check if GPS enabled
-                    if (gps.canGetLocation()) {
-
-                        double latitude = gps.getLatitude();
-                        double longitude = gps.getLongitude();
-
-                        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                        try {
-                            TextView exitFromAddr = (TextView) findViewById(R.id.exitfrom);
-                            List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            String _Location = listAddresses.get(0).getAddressLine(0) + " " + listAddresses.get(0).getLocality();;
-                            String contry = listAddresses.get(0).getLocality();
-                            String g = listAddresses.get(0).getCountryName();
-
-                            exitFromAddr.setText(_Location);
-
-
-                            Button btmMap = (Button) findViewById(R.id.btnMap);
-                            btmMap.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    TextView toDest = (TextView) findViewById(R.id.dest);
-                                    toDest.getText().toString();
-                                    TextView source = (TextView) findViewById(R.id.exitfrom);
-                                    source.getText().toString();
-
-                                    LatLng c =  getLocationFromAddress(CreateNewTrempActivity.this, toDest.getText().toString());
-                                    LatLng s =  getLocationFromAddress(CreateNewTrempActivity.this, source.getText().toString());
-                                    //   LatLng s = new LatLng(latitude, longitude);
-
-                                    Intent intent = new Intent(CreateNewTrempActivity.this, MapsActivity.class);
-                                    intent.putExtra("DestLocation", c);
-                                    intent.putExtra("SourceLocation", s);
-                                    startActivityForResult(intent, main);
-
-
-
-                                }
-                            });
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
                     }
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
                 return;
             }
 
@@ -355,6 +337,139 @@ public class CreateNewTrempActivity extends Activity {
         setResult(Activity.RESULT_OK, resultIntent);
        // finish();
     }
+
+    /** A method to download json data from url */
+    private String downloadUrl(String strUrl) throws IOException{
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try{
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while( ( line = br.readLine()) != null){
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        }catch(Exception e){
+            Log.d("E", e.toString());
+        }finally{
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    // Fetches all places from GooglePlaces AutoComplete Web Service
+    private class PlacesTask extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... place) {
+            // For storing data from web service
+            String data = "";
+
+            // Obtain browser key from https://code.google.com/apis/console
+            String key = "key=AIzaSyBKOu5K4zgwFgUHunEMaWbDecdOVkTR7r8";
+
+            String input="";
+
+            try {
+                input = "input=" + URLEncoder.encode(place[0], "utf-8");
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
+
+            // place type to be searched
+            String types = "types=geocode";
+
+            // Sensor enabled
+            String sensor = "sensor=false";
+
+            // Building the parameters to the web service
+            String parameters = input+"&"+types+"&"+sensor+"&"+key;
+
+            // Output format
+            String output = "json";
+
+            // Building the url to the web service
+            String url = "https://maps.googleapis.com/maps/api/place/autocomplete/"+output+"?"+parameters;
+
+            try{
+                // Fetching the data from we service
+                data = downloadUrl(url);
+            }catch(Exception e){
+                Log.d("Background Task",e.toString());
+            }
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // Creating ParserTask
+            parserTask = new ParserTask();
+
+            // Starting Parsing the JSON string returned by Web Service
+            parserTask.execute(result);
+        }
+    }
+    /** A class to parse the Google Places in JSON format */
+    private class ParserTask extends AsyncTask<String, Integer, List<HashMap<String,String>>>{
+
+        JSONObject jObject;
+
+        @Override
+        protected List<HashMap<String, String>> doInBackground(String... jsonData) {
+
+            List<HashMap<String, String>> places = null;
+
+            PlaceJSONParser placeJsonParser = new PlaceJSONParser();
+
+            try{
+                jObject = new JSONObject(jsonData[0]);
+
+                // Getting the parsed data as a List construct
+                places = placeJsonParser.parse(jObject);
+
+            }catch(Exception e){
+                Log.d("Exception",e.toString());
+            }
+            return places;
+        }
+
+        @Override
+        protected void onPostExecute(List<HashMap<String, String>> result) {
+
+            String[] from = new String[] { "description"};
+            int[] to = new int[] { android.R.id.text1 };
+
+            // Creating a SimpleAdapter for the AutoCompleteTextView
+            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), result, android.R.layout.simple_list_item_1, from, to);
+
+            // Setting the adapter
+            atvPlaces.setAdapter(adapter);
+        }
+    }
+
+
 
 
     @Override
