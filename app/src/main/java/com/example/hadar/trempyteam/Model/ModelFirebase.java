@@ -61,13 +61,15 @@ public class ModelFirebase {
                         pass_ids.add(ss);
                     }
 
-                    listener.onComplete(pass_ids);
+
 
                 }
                 else
                 {
 
                 }
+
+                listener.onComplete(pass_ids);
             }
 
             @Override

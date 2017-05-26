@@ -2,6 +2,7 @@ package com.example.hadar.trempyteam;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +54,6 @@ public class ListPassengersActivity extends Activity {
             public void onComplete (List < String > listPassengers) {
                 passengersList = listPassengers;
                 CreateList();
-
                 if(passengersList.size() == 0)
                 {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListPassengersActivity.this);
@@ -71,13 +71,7 @@ public class ListPassengersActivity extends Activity {
 
                 }
         });
-
     }
-
-
-
-
-
 
     public void CreateList() {
         ListView list = (ListView) findViewById(R.id.Passengers_listView);
@@ -112,7 +106,7 @@ public class ListPassengersActivity extends Activity {
                     view = getLayoutInflater().inflate(R.layout.passenger_list_raw, null);
                 }
                 final TextView name = (TextView) view.findViewById(R.id.PassengerName);
-                final ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.PassengerProfilePicture);
+                final com.example.hadar.trempyteam.ProfilePictureView profilePictureView = (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.PassengerProfilePicture);
 
                 final String user_id = passengersList.get(i);
 
@@ -150,7 +144,7 @@ public class ListPassengersActivity extends Activity {
         inflater.inflate(R.menu.menu_buttons, menu);
 
         View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
-        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
         editText.setProfileId(user_connected_id);
 
         MenuItem personalArea =  menu.findItem(R.id.personalArea);

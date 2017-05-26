@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +52,7 @@ public class ListTrempActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tremps);
+        
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
         if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");
@@ -127,7 +134,7 @@ public class ListTrempActivity extends Activity {
         inflater.inflate(R.menu.menu_buttons, menu);
 
         View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
-        ProfilePictureView editText =  (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
         editText.setProfileId(user_connected_id);
 
         MenuItem personalArea =  menu.findItem(R.id.personalArea);
@@ -185,17 +192,36 @@ public class ListTrempActivity extends Activity {
                 view = getLayoutInflater().inflate(R.layout.tremp_list_raw, null);
             }
             final TextView name = (TextView) view.findViewById(R.id.DriverName);
-            final ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+            //final ImageView image = (ImageView) view.findViewById(R.id.android);
+            final com.example.hadar.trempyteam.ProfilePictureView profilePictureView = (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
             final TextView time = (TextView) view.findViewById(R.id.TrempExitTime);
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
-
             final String driver_id = st.getDriverId();
-              seats.setText(String.valueOf(st.getSeets()) + " available seats");
-               time.setText(st.getTrempDateTime());
+              seats.setText(String.valueOf(st.getSeets()) + " Available Seats");
+
+            String dateTime = st.getTrempDateTime();
+            String newTime = "";
+            String newDate = "";
+                String[] splitDate = dateTime.split(" ");
+                newDate = splitDate[0];
+                newTime = splitDate[1];
+
+                String[] splitTime = newTime.split(":");
+
+
+                if (splitTime[1].length() < 2)
+                {
+                    newTime = splitTime[0] + ":0" + splitTime[1];
+                }
+            else
+                {
+                    newTime = splitTime[0] + ":" + splitTime[1];
+                }
+
+
+               time.setText(newDate + "  " + newTime);
                profilePictureView.setProfileId(driver_id);
-
-
 
             try {
 
