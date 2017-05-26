@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
@@ -15,13 +17,13 @@ import java.util.List;
 
 public class PersonalAreaActivity extends Activity {
 
-    List<String> passengers_id ;
-
+    List<String> passengers_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_area);
+       // setContentView(R.layout.activity_personal_area);
         this.setTitle("האיזור האישי");
 
         Button cretedTremps = (Button)findViewById(R.id.createdTremps);

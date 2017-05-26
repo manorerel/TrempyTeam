@@ -248,36 +248,39 @@ android:weightSum="1"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
-        android:layout_height="370dp" />
+        android:layout_height="370dp"
+        android:scaleType="fitXY" />
 
 
         <TextView
             android:layout_height="wrap_content"
             android:id="@+id/showImage"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="הצג תמונה"
+            android:text="הצג תמונה>>"
             android:textColor="@android:color/holo_blue_dark"
             android:textStyle="normal|bold"
-            android:layout_width="250dp"
-            android:layout_marginRight="240dp"
+            android:layout_marginRight="230dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="55dp"></TextView>
+            android:layout_marginTop="55dp"
+            android:layout_width="230dp"
+            android:textSize="18sp"></TextView>
 
         <TextView
             android:layout_height="wrap_content"
             android:id="@+id/show_friends"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="הצג נוסעים"
+            android:text="הצג נוסעים>>"
             android:textColor="@android:color/holo_blue_dark"
             android:textStyle="normal|bold"
-            android:layout_width="250dp"
-            android:layout_marginRight="240dp"
+            android:layout_width="230dp"
+            android:layout_marginRight="230dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="27dp"></TextView>
+            android:layout_marginBottom="27dp"
+            android:textSize="18sp"></TextView>
     </RelativeLayout>
 
 </LinearLayout>

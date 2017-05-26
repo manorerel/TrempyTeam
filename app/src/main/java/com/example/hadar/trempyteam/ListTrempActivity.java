@@ -52,6 +52,7 @@ public class ListTrempActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tremps);
+        
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
         if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");

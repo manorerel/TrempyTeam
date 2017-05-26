@@ -24,6 +24,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
@@ -61,17 +62,18 @@ public class LoginActivity extends Activity {
         // check if is not the first time to use the app - already login to facebook
         if (AccessToken.getCurrentAccessToken() != null)
         {
+
             String userID = AccessToken.getCurrentAccessToken().getUserId();
             startApp(userID);
         }
             // Initialize Facebook Login button
             callbackManager = CallbackManager.Factory.create();
             final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+
             loginButton.setReadPermissions("email", "public_profile", "user_friends");
             loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
-                  
                    String userID = AccessToken.getCurrentAccessToken().getUserId();
                     startApp(userID);
 
