@@ -79,11 +79,9 @@ public class MainAactivity extends Activity {
         fragmentManager = getFragmentManager();
 
         searchTrempFragment frg = new searchTrempFragment();
-        NewTrempFragment frg2 = new NewTrempFragment();
         FragmentTransaction  transaction=fragmentManager.beginTransaction();//create an instance of Fragment-transaction
 
         transaction.add(R.id.My_Container_1_ID, frg, "Frag_Top_tag");
-        transaction.add(R.id.My_Container_2_ID, frg2, "Frag_Middle_tag");
 
         transaction.commit();
 
