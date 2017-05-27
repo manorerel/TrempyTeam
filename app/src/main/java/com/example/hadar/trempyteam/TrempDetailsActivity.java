@@ -349,13 +349,7 @@ public class TrempDetailsActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TrempDetailsActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 

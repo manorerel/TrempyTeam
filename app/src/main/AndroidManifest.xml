@@ -62,13 +62,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MarkerDetailsActivity" />
         <activity android:name=".TrempDetailsActivity" />
         <activity android:name=".ListTrempActivity" />
         <activity android:name=".EditTrempActivity" />
-        <activity
-            android:name=".PersonalAreaActivity"
-            android:label="@string/title_activity_personal_area" />
         <activity
             android:name=".ListPassengersActivity"
             android:label="@string/title_activity_list_passengers" />

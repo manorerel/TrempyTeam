@@ -457,13 +457,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return true;
     }

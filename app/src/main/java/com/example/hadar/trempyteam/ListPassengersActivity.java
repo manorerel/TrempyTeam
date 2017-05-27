@@ -151,14 +151,6 @@ public class ListPassengersActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListPassengersActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return true;
     }
 
