@@ -100,14 +100,6 @@ public class EditTrempActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditTrempActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         MenuItem save = menu.findItem(R.id.saveTremp);
         save.setVisible(true);

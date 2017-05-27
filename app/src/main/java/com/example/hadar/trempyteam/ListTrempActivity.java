@@ -141,14 +141,6 @@ public class ListTrempActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListTrempActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return true;
     }
     @Override

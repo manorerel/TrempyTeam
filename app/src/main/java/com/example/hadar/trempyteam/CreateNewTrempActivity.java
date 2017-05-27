@@ -73,6 +73,7 @@ public class CreateNewTrempActivity extends Activity {
     PlacesTask placesTask;
     ParserTask parserTask;
     AutoCompleteTextView atvPlaces;
+    AutoCompleteTextView atvPlaces_;
 
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -89,8 +90,10 @@ public class CreateNewTrempActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
 
-        atvPlaces = (AutoCompleteTextView)findViewById(R.id.exitfrom);
-        atvPlaces.setThreshold(1);
+        atvPlaces = (AutoCompleteTextView)findViewById(R.id.dest);
+        atvPlaces_ = (AutoCompleteTextView)findViewById(R.id.exitfrom);
+       /* atvPlaces.setThreshold(1);
+        atvPlaces_.setThreshold(1);*/
 
         atvPlaces.addTextChangedListener(new TextWatcher() {
 
@@ -111,6 +114,28 @@ public class CreateNewTrempActivity extends Activity {
                 // TODO Auto-generated method stub
             }
         });
+
+
+        atvPlaces_.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                placesTask = new PlacesTask();
+                placesTask.execute(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+        });
+
     final ModelFirebase fbModel = new ModelFirebase();
         imageView = (ImageView) findViewById(R.id.Image);
         dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
@@ -131,15 +156,13 @@ public class CreateNewTrempActivity extends Activity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditText phone = (EditText)findViewById(R.id.editTextPhone);
-
-                EditText dest = (EditText)findViewById(R.id.dest);
                 EditText seetsText = (EditText)findViewById(R.id.avaliable_seats);
                 DateEditText dateText = (DateEditText)findViewById(R.id.date);
                 TimeEditText time = (TimeEditText)findViewById(R.id.time);
                 EditText carModel = (EditText)findViewById(R.id.car_model);
                 String dateString = dateText.getText() + " " + time.getText();
 
-                if(phone.getText().toString().isEmpty() || atvPlaces.getText().toString().isEmpty() || dest.getText().toString().isEmpty()
+                if(phone.getText().toString().isEmpty() || atvPlaces.getText().toString().isEmpty() || atvPlaces.getText().toString().isEmpty()
                         || seetsText.getText().toString().isEmpty() || carModel.getText().toString().isEmpty()){
 
                     dlgAlert.setMessage("לא מילאת את כל הפרטים!");
@@ -160,7 +183,7 @@ public class CreateNewTrempActivity extends Activity {
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
 
-                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces.getText().toString(), dest.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces_.getText().toString(), atvPlaces.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
 
                 String imName = "";
 
@@ -466,11 +489,9 @@ public class CreateNewTrempActivity extends Activity {
 
             // Setting the adapter
             atvPlaces.setAdapter(adapter);
+            atvPlaces_.setAdapter(adapter);
         }
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -485,13 +506,6 @@ public class CreateNewTrempActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreateNewTrempActivity.this, PersonalAreaActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return true;
     }
