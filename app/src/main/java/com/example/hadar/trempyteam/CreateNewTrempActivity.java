@@ -115,7 +115,6 @@ public class CreateNewTrempActivity extends Activity {
             }
         });
 
-
         atvPlaces_.addTextChangedListener(new TextWatcher() {
 
             @Override
