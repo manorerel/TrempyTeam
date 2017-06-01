@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam.Model;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.ServerValue;
 
 import java.text.DateFormat;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class Tremp {
     String carModel;
     String sourceAddress;
+    LatLng source;
+    LatLng dest;
     String destAddress;
     String id;
     String driverId;
