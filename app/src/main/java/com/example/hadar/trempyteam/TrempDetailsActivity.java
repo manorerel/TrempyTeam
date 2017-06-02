@@ -105,7 +105,7 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
         String imageName = intent.getExtras().getString("image");
 
-        final TextView showImage = (TextView) findViewById(R.id.showImage);
+         ImageButton showImage = (ImageButton) findViewById(R.id.showImage);
 
         showImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +144,7 @@ public class TrempDetailsActivity extends Activity {
         });
 
 
-        final TextView friends_passengers = (TextView) findViewById(R.id.show_friends);
+         ImageButton friends_passengers = (ImageButton) findViewById(R.id.show_friends);
 
 
         friends_passengers.setOnClickListener(new View.OnClickListener() {
@@ -363,14 +363,30 @@ public class TrempDetailsActivity extends Activity {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.deleteTremp:{
-                final ModelFirebase fbModel = new ModelFirebase();
-                Intent resultIntent = getIntent();
-                ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
-                fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+                dlgAlert.setMessage("האם אתה בטוח שברצונך למחוק את הטרמפ?");
+                dlgAlert.setNegativeButton("מחק", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ModelFirebase fbModel = new ModelFirebase();
+                        Intent resultIntent = getIntent();
+                        ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
+                        fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_OK,returnIntent);
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.setPositiveButton("בטל", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
                 return true;}
             case R.id.editTremp:{
                 startEdit();

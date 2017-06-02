@@ -42,6 +42,7 @@ public class EditTrempActivity extends Activity {
     boolean dateEdited=false;
 
     AlertDialog.Builder dlgAlert;
+    View view;
 
 
     String dateString = "";
@@ -85,36 +86,14 @@ public class EditTrempActivity extends Activity {
         SourceAddress.setText(intent.getExtras().getString("source"));
         DestAddress.setText(intent.getExtras().getString("dest"));
         CarModel.setText(intent.getExtras().getString("car"));
-    }
+        Button save = (Button) findViewById(R.id.EditBtnSave);
+        Button cancel = (Button) findViewById(R.id.EditBtnCancle);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
+        // Edit and save the tremp details
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
-        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
-        editText.setProfileId(user_connected_id);
-
-        MenuItem personalArea =  menu.findItem(R.id.personalArea);
-        personalArea.setVisible(true);
-        personalArea.setActionView(view);
-
-
-        MenuItem save = menu.findItem(R.id.saveTremp);
-        save.setVisible(true);
-
-        MenuItem cancel = menu.findItem(R.id.cancelTremp);
-        cancel.setVisible(true);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle item selection
-        switch (item.getItemId()) {
-            case R.id.saveTremp:{
                 final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
                 final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
                 final TextView DestAddress = (TextView) findViewById(R.id.editDest);
@@ -172,22 +151,122 @@ public class EditTrempActivity extends Activity {
                     });
                     dlgAlert.show();
                 }
+            }
+        });
 
-
-                return true;}
-            case R.id.cancelTremp:{
+        // Cancle the editing
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, resultIntent);
                 finish();
-                return true;
             }
-            default:{
-                Intent resultIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, resultIntent);
-                finish();
-                return true;
+        });
 
-            }
-        }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+
+        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
+        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
+        editText.setProfileId(user_connected_id);
+
+        MenuItem personalArea =  menu.findItem(R.id.personalArea);
+
+        personalArea.setVisible(true);
+        personalArea.setActionView(view);
+
+//        MenuItem save = menu.findItem(R.id.saveTremp);
+//        save.setVisible(true);
+//
+//        MenuItem cancel = menu.findItem(R.id.cancelTremp);
+//        cancel.setVisible(true);
+
+        return true;
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.saveTremp:{
+//                final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
+//                final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
+//                final TextView DestAddress = (TextView) findViewById(R.id.editDest);
+//                DateEditText newDate = (DateEditText) findViewById(R.id.editDate);
+//                TimeEditText newtime = (TimeEditText) findViewById(R.id.editTime);
+//                final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
+//
+//                // Check if the date or time was changed
+//                if(newDate.didTouchFocusSelect())
+//                {
+//                    dateString = newDate.getText().toString();
+//                }
+//                if (newtime.didTouchFocusSelect())
+//                {
+//                    timeString = newtime.getText().toString();
+//                }
+//
+//                String fullDateString = dateString + " " + timeString;
+//
+//
+//
+//                try {
+//                    // Update the  tremp
+//                    ModelFirebase fb = new ModelFirebase();
+//                    Intent currIntent = getIntent();
+//                    String id = currIntent.getExtras().getString("id");
+//
+//                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
+//                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
+//
+//                    dlgAlert.setMessage("השינויים נשמרו בהצלחה!");
+//                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            dialog.dismiss();
+//                            Intent resultIntent = new Intent();
+//                            setResult(RESULT_OK, resultIntent);
+//                            finish();
+//                        }
+//                    });
+//                    dlgAlert.show();
+//
+//                } catch (Exception e) {
+//                    dlgAlert.setMessage("ארעה שגיאה בעת השמירה, שינוייך לא נשמרו");
+//                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            dialog.dismiss();
+//                            Intent resultIntent = new Intent();
+//                            setResult(RESULT_OK, resultIntent);
+//                            finish();
+//                        }
+//                    });
+//                    dlgAlert.show();
+//                }
+//
+//
+//                return true;}
+//            case R.id.cancelTremp:{
+//                Intent resultIntent = new Intent();
+//                setResult(Activity.RESULT_CANCELED, resultIntent);
+//                finish();
+//                return true;
+//            }
+//            default:{
+//                Intent resultIntent = new Intent();
+//                setResult(Activity.RESULT_CANCELED, resultIntent);
+//                finish();
+//                return true;
+//
+//            }
+//        }
+//    }
 }
