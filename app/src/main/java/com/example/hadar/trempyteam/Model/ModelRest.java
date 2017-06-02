@@ -141,12 +141,16 @@ public class ModelRest {
             }
         });
 
-        
 
+        try {
+            future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
-
-
-
+        return tremps;
     }
 
     private String convertLocationToString(LatLng location){
