@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
@@ -232,6 +233,8 @@ public class TrempDetailsActivity extends Activity {
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
         ModelFirebase fbModel = new ModelFirebase();
+        ModelRest modelRest = ModelRest.getInstance();
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id, true);
 
         fbModel.UpdateSeatsTremp(tremp_id, user_id , true, new Model.UpdateSeatsTrempListener() {
             @Override
@@ -259,6 +262,8 @@ public class TrempDetailsActivity extends Activity {
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
         ModelFirebase fbModel = new ModelFirebase();
+        ModelRest modelRest = ModelRest.getInstance();
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id, false);
 
         fbModel.UpdateSeatsTremp(tremp_id, user_id, false , new Model.UpdateSeatsTrempListener() {
             @Override
@@ -364,8 +369,10 @@ public class TrempDetailsActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.deleteTremp:{
                 final ModelFirebase fbModel = new ModelFirebase();
+                ModelRest modelRest = ModelRest.getInstance();
                 Intent resultIntent = getIntent();
                 ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
+                modelRest.deleteTremp(resultIntent.getExtras().getString("id"));
                 fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
 
                 Intent returnIntent = new Intent();

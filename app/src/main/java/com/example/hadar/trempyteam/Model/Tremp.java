@@ -3,6 +3,8 @@ package com.example.hadar.trempyteam.Model;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.ServerValue;
 
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +48,23 @@ public class Tremp {
             trempistsList = passengers;
         else trempistsList = new ArrayList<String>();
 
+    }
+
+    public Tremp(String trempId, long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers, LatLng source, LatLng dest) {
+        this.carModel = carModel;
+        this.seets = seets;
+        driverId = DriverId;
+        this.trempDateTime = trempDate;
+        id = trempId;
+        sourceAddress = sourceAdd;
+        destAddress = destAdd;
+        imageName = ImageName;
+        phoneNumber = PhoneNumber;
+        if(passengers != null)
+            trempistsList = passengers;
+        else trempistsList = new ArrayList<String>();
+        this.source = source;
+        this.dest = dest;
     }
 
     public Tremp(long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
@@ -127,17 +146,26 @@ public class Tremp {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        result.put("sourceAddress", sourceAddress);
-        result.put("destAddress", destAddress);
-        result.put("carModel", carModel);
-        result.put("seets", seets);
-        result.put("trempDateTime", trempDateTime);
+//        result.put("id", id);
         result.put("driverId", driverId);
         result.put("phoneNumber", phoneNumber);
-        result.put("driverId",driverId);
+        result.put("seets", seets);
+        result.put("sourceAddress",convertLocationToString(this.source));
+        result.put("destAddress", convertLocationToString(this.dest));
+        result.put("carModel", carModel);
+        result.put("trempDateTime", trempDateTime);
         result.put("imageName", imageName);
-        result.put("Passengers", trempistsList);
+//        result.put("Passengers", trempistsList);
         return result;
+    }
+
+    private String convertLocationToString(LatLng location){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("long", "34");
+        result.put("lat", "31");
+        JSONObject json = new JSONObject(result);
+        String res = json.toString();
+
+        return res;
     }
 }
