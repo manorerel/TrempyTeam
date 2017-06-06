@@ -21,35 +21,38 @@
             <TextView
                 android:layout_marginTop="15dp"
                 android:text="Driver Name"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                 android:id="@+id/DriverName"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="30dp"
                 android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textAlignment="center"/>
 
             <TextView
                 android:layout_marginTop="12dp"
                 android:text="Time"
-                android:layout_width="225dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="30dp"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                 android:id="@+id/TrempExitTime"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textAlignment="center"/>
 
             <TextView
                 android:layout_marginTop="12dp"
                 android:text="Seats"
-                android:layout_marginLeft="15dp"
-                android:layout_width="194dp"
+                android:layout_marginLeft="30dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                 android:id="@+id/ava_seats"
                 android:textColor="@android:color/holo_green_light"
-                android:textDirection="ltr"
-                android:textSize="16sp" />
+                android:textDirection="rtl"
+                android:textSize="16sp"
+                android:textAlignment="center"/>
         </LinearLayout>
 
         <LinearLayout

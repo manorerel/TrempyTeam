@@ -358,14 +358,29 @@ public class TrempDetailsActivity extends Activity {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.deleteTremp:{
-                ModelRest modelRest = ModelRest.getInstance();
-                Intent resultIntent = getIntent();
-                modelRest.deleteTremp(Utils.currentChosenTremp.getId());
 
 
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+                dlgAlert.setMessage("האם אתה בטוח שברצונך למחוק את הטרמפ?");
+                dlgAlert.setNegativeButton("מחק", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ModelRest modelRest = ModelRest.getInstance();
+                        Intent resultIntent = getIntent();
+                        modelRest.deleteTremp(Utils.currentChosenTremp.getId());
+                        setResult(Activity.RESULT_OK,returnIntent);
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.setPositiveButton("בטל", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                dlgAlert.show();
                 return true;}
             case R.id.editTremp:{
                 startEdit();
@@ -467,8 +482,6 @@ public class TrempDetailsActivity extends Activity {
                 DestAddress.setText(Utils.getAddressFromLocation(TrempDetailsActivity.this, currTremp.getDest()));
                 CarModel.setText(currTremp.getCarModel());
             }
-
-            Utils.currentChosenTremp = null;
         }
     }
 
