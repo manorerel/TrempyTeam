@@ -25,8 +25,10 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -57,6 +59,8 @@ public class ListTrempActivity extends Activity {
         if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");
             ModelSql modelSql = ModelSql.getInstance();
+            ModelRest modelRest = ModelRest.getInstance();
+            trempsList = modelRest.getTremps(User.GetAppUser().Id);
 
             if(isCreated.equals("true"))
                 trempsList = modelSql.getAllTremps(true);

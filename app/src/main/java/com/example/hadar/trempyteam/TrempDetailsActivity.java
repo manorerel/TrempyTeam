@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
@@ -232,6 +233,8 @@ public class TrempDetailsActivity extends Activity {
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
         ModelFirebase fbModel = new ModelFirebase();
+        ModelRest modelRest = ModelRest.getInstance();
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id, true);
 
         fbModel.UpdateSeatsTremp(tremp_id, user_id , true, new Model.UpdateSeatsTrempListener() {
             @Override
@@ -259,6 +262,8 @@ public class TrempDetailsActivity extends Activity {
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
         ModelFirebase fbModel = new ModelFirebase();
+        ModelRest modelRest = ModelRest.getInstance();
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id, false);
 
         fbModel.UpdateSeatsTremp(tremp_id, user_id, false , new Model.UpdateSeatsTrempListener() {
             @Override
@@ -367,11 +372,9 @@ public class TrempDetailsActivity extends Activity {
                 dlgAlert.setMessage("האם אתה בטוח שברצונך למחוק את הטרמפ?");
                 dlgAlert.setNegativeButton("מחק", new DialogInterface.OnClickListener()  {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final ModelFirebase fbModel = new ModelFirebase();
-                        Intent resultIntent = getIntent();
-                        ModelSql.getInstance().deleteTremp(resultIntent.getExtras().getString("id"));
-                        fbModel.deleteTremp(resultIntent.getExtras().getString("id"), resultIntent.getExtras().getString("image"));
+                    public void onClick(DialogInterface dialog, int which) {                     
+                       ModelRest modelRest = ModelRest.getInstance();
+                       modelRest.deleteTremp(resultIntent.getExtras().getString("id"));
 
                         Intent returnIntent = new Intent();
                         setResult(Activity.RESULT_OK,returnIntent);

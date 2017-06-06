@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.User;
@@ -118,10 +119,18 @@ public class EditTrempActivity extends Activity {
                 try {
                     // Update the  tremp
                     ModelFirebase fb = new ModelFirebase();
+                    ModelRest modelRest = ModelRest.getInstance();
                     Intent currIntent = getIntent();
                     String id = currIntent.getExtras().getString("id");
+                    Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
+                    trempToEdit.setDestAddress(DestAddress.getText().toString());
+                    trempToEdit.setSourceAddress(SourceAddress.getText().toString());
+                    trempToEdit.setPhoneNumber(PhoneNumber.getText().toString());
+                    trempToEdit.setCarModel(CarModel.getText().toString());
+                    trempToEdit.settrempDateTime(fullDateString);
 
                     fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
+                    modelRest.updateTremp(trempToEdit);
                     ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
 
                     dlgAlert.setMessage("השינויים נשמרו בהצלחה!");

@@ -32,6 +32,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.User;
 
 import com.facebook.AccessToken;
@@ -60,6 +61,7 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
 
@@ -135,7 +137,8 @@ public class CreateNewTrempActivity extends Activity {
             }
         });
 
-    final ModelFirebase fbModel = new ModelFirebase();
+//    final ModelFirebase fbModel = new ModelFirebase();
+        final ModelRest modelRest = ModelRest.getInstance();
         imageView = (ImageView) findViewById(R.id.Image);
         dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
 
@@ -181,8 +184,10 @@ public class CreateNewTrempActivity extends Activity {
                 String createdUserId = User.GetAppUser().Id;
                 String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
+                LatLng destCoord = getLocationFromAddress(CreateNewTrempActivity.this, atvPlaces.getText().toString());
+                LatLng sourceCoord = getLocationFromAddress(CreateNewTrempActivity.this, atvPlaces_.getText().toString());
 
-                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces_.getText().toString(), atvPlaces.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces_.getText().toString(), atvPlaces.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList, sourceCoord, destCoord);
 
                 String imName = "";
 
@@ -206,7 +211,8 @@ public class CreateNewTrempActivity extends Activity {
                 }
 
                 newTremp.setImageName(imName);
-                fbModel.addTremp(newTremp);
+//                fbModel.addTremp(newTremp);
+                modelRest.createTremp(newTremp);
 
                 ModelSql sqlLight = ModelSql.getInstance();
                 sqlLight.addTremp(newTremp,true);
@@ -523,6 +529,34 @@ public class CreateNewTrempActivity extends Activity {
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
+    private LatLng getLocationFromAddresss(Context context, String strAddress){
+        Geocoder coder= new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try
+        {
+            address = coder.getFromLocationName(strAddress, 5);
+            if(address==null)
+            {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return p1;
+
+    }
+
 }
 
 
