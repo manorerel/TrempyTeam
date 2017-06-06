@@ -34,8 +34,8 @@ public class TrempSql {
 
         values.put(ST_ID, tremp.id);
         values.put(DRIVER_ID, tremp.getDriverId());
-        values.put(SOURCE, tremp.getSourceAddress());
-        values.put(DEST, tremp.getDestAddress());
+//        values.put(SOURCE, tremp.getSourceAddress());
+//        values.put(DEST, tremp.getDestAddress());
         values.put(SEETS, tremp.getSeets());
         values.put(CAR_MODEL, tremp.getCarModel());
         values.put(DATE, tremp.getTrempDateTime());
@@ -69,7 +69,7 @@ public class TrempSql {
 
             long trempSeets = Long.parseLong(seets);
 
-            tremp = new Tremp(stId, trempSeets,driverId,date,source, dest,phoneNum,carModel, imageUrl, null);
+//            tremp = new Tremp(stId, trempSeets,driverId,date,, null,phoneNum,carModel, imageUrl, null);
 
         }
 

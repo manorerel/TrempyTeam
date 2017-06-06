@@ -26,8 +26,10 @@ import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.User;
+import com.example.hadar.trempyteam.Model.Utils;
 import com.facebook.AccessToken;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -63,7 +65,6 @@ public class EditTrempActivity extends Activity {
         final DateEditText TrempDate = (DateEditText) findViewById(R.id.editDate);
         final TimeEditText TrempTime = (TimeEditText) findViewById(R.id.editTime);
         final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
-
 
         //Get the Tremp details
         Intent intent = getIntent();
@@ -139,20 +140,19 @@ public class EditTrempActivity extends Activity {
 
                 try {
                     // Update the  tremp
-                    ModelFirebase fb = new ModelFirebase();
                     ModelRest modelRest = ModelRest.getInstance();
                     Intent currIntent = getIntent();
                     String id = currIntent.getExtras().getString("id");
-                    Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
-                    trempToEdit.setDestAddress(DestAddress.getText().toString());
-                    trempToEdit.setSourceAddress(SourceAddress.getText().toString());
+//                    Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
+                    Tremp trempToEdit = Utils.currentChosenTremp;
                     trempToEdit.setPhoneNumber(PhoneNumber.getText().toString());
                     trempToEdit.setCarModel(CarModel.getText().toString());
                     trempToEdit.settrempDateTime(fullDateString);
-
-                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
+                    LatLng source = Utils.getLocationFromAddress(EditTrempActivity.this, SourceAddress.getText().toString());
+                    LatLng dest = Utils.getLocationFromAddress(EditTrempActivity.this, DestAddress.getText().toString());
+                    trempToEdit.setSource(source);
+                    trempToEdit.setDest(dest);
                     modelRest.updateTremp(trempToEdit);
-                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
 
                     dlgAlert.setMessage("השינויים נשמרו בהצלחה!");
                     dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
@@ -166,6 +166,8 @@ public class EditTrempActivity extends Activity {
                         }
                     });
                     dlgAlert.show();
+
+
 
                 } catch (Exception e) {
                     dlgAlert.setMessage("ארעה שגיאה בעת השמירה, שינוייך לא נשמרו");
