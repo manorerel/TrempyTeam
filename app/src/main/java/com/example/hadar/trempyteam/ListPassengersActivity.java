@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.example.hadar.trempyteam.Model.Utils;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -48,13 +49,10 @@ public class ListPassengersActivity extends Activity {
 
         Intent intent = getIntent();
         String trempId = intent.getExtras().getString("tremp_id");
-       fbModel.getPassengersByTrempId(trempId, new Model.GetPassengersListener() {
+        passengersList = Utils.currentChosenTremp.getTrempistsList();
+        CreateList();
 
-            @Override
-            public void onComplete (List < String > listPassengers) {
-                passengersList = listPassengers;
-                CreateList();
-                if(passengersList.size() == 0)
+        if(passengersList.size() == 0)
                 {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListPassengersActivity.this);
                     dlgAlert.setMessage("אף אחד לא הצטרף עדיין לטרמפ זה");
@@ -66,11 +64,8 @@ public class ListPassengersActivity extends Activity {
                         }
                     });
                     dlgAlert.show();
-                }
 
-
-                }
-        });
+    }
     }
 
     public void CreateList() {

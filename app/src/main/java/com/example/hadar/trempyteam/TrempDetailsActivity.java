@@ -32,6 +32,7 @@ import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.User;
+import com.example.hadar.trempyteam.Model.Utils;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -106,7 +107,7 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
         String imageName = intent.getExtras().getString("image");
 
-         ImageButton showImage = (ImageButton) findViewById(R.id.showImage);
+        final TextView showImage = (TextView) findViewById(R.id.showImage);
 
         showImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +146,7 @@ public class TrempDetailsActivity extends Activity {
         });
 
 
-         ImageButton friends_passengers = (ImageButton) findViewById(R.id.show_friends);
+        final TextView friends_passengers = (TextView) findViewById(R.id.show_friends);
 
 
         friends_passengers.setOnClickListener(new View.OnClickListener() {
@@ -232,28 +233,22 @@ public class TrempDetailsActivity extends Activity {
 
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
-        ModelFirebase fbModel = new ModelFirebase();
         ModelRest modelRest = ModelRest.getInstance();
         modelRest.joinOrUnjoinTremp(tremp_id, user_id, true);
 
-        fbModel.UpdateSeatsTremp(tremp_id, user_id , true, new Model.UpdateSeatsTrempListener() {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+        dlgAlert.setMessage("יש לך מקום שמור בטרמפ (:");
+        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
             @Override
-            public void onComplete() {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("יש לך מקום שמור בטרמפ (:");
-                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent returnIntent = new Intent();
-                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
-                        finish();
+            public void onClick(DialogInterface dialog, int which) {
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                finish();
 
-                        dialog.dismiss();
-                    }
-                });
-                dlgAlert.show();
+                dialog.dismiss();
             }
         });
+        dlgAlert.show();
     }
 
     private void exitTremp(){
@@ -261,28 +256,23 @@ public class TrempDetailsActivity extends Activity {
 
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
-        ModelFirebase fbModel = new ModelFirebase();
         ModelRest modelRest = ModelRest.getInstance();
         modelRest.joinOrUnjoinTremp(tremp_id, user_id, false);
 
-        fbModel.UpdateSeatsTremp(tremp_id, user_id, false , new Model.UpdateSeatsTrempListener() {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
+        dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
+        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
             @Override
-            public void onComplete() {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
-                dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
-                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent returnIntent = new Intent();
-                        setResult(Activity.RESULT_FIRST_USER,returnIntent);
-                        finish();
+            public void onClick(DialogInterface dialog, int which) {
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                finish();
 
-                        dialog.dismiss();
-                    }
-                });
-                dlgAlert.show();
+                dialog.dismiss();
             }
         });
+        dlgAlert.show();
+
     }
 
     public LatLng getLocationFromAddress(Context context, String strAddress)
@@ -334,8 +324,8 @@ public class TrempDetailsActivity extends Activity {
         {
 
             String trempId = intent.getExtras().getString("id");
-            Tremp t = ModelSql.getInstance().getTrempById(trempId);
-            if(t != null)
+            Tremp t = Utils.currentChosenTremp;
+            if(t != null && t.getTrempistsList().contains(User.GetAppUser().Id))
             {
                 MenuItem remove = menu.findItem(R.id.removeTrempist);
                 remove.setVisible(true);
@@ -368,15 +358,16 @@ public class TrempDetailsActivity extends Activity {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.deleteTremp:{
+
+
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
                 dlgAlert.setMessage("האם אתה בטוח שברצונך למחוק את הטרמפ?");
                 dlgAlert.setNegativeButton("מחק", new DialogInterface.OnClickListener()  {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {                     
-                       ModelRest modelRest = ModelRest.getInstance();
-                       modelRest.deleteTremp(resultIntent.getExtras().getString("id"));
-
-                        Intent returnIntent = new Intent();
+                    public void onClick(DialogInterface dialog, int which) {
+                        ModelRest modelRest = ModelRest.getInstance();
+                        Intent resultIntent = getIntent();
+                        modelRest.deleteTremp(Utils.currentChosenTremp.getId());
                         setResult(Activity.RESULT_OK,returnIntent);
                         finish();
                         dialog.dismiss();
@@ -424,11 +415,11 @@ public class TrempDetailsActivity extends Activity {
         String id = currentIntent.getExtras().getString("id");
         Tremp trempToEdit = ModelSql.getInstance().getTrempById(id);
         intent.putExtra("id",  id);
-        intent.putExtra("phone",  trempToEdit.getPhoneNumber());
-        intent.putExtra("source",  trempToEdit.getSourceAddress());
-        intent.putExtra("dest",  trempToEdit.getDestAddress());
-        intent.putExtra("date",  trempToEdit.getTrempDateTime());
-        intent.putExtra("car", trempToEdit.getCarModel());
+        intent.putExtra("phone",  currentIntent.getExtras().getString("phone"));
+        intent.putExtra("source",  currentIntent.getExtras().getString("source"));
+        intent.putExtra("dest",  currentIntent.getExtras().getString("dest"));
+        intent.putExtra("date",  currentIntent.getExtras().getString("date"));
+        intent.putExtra("car", currentIntent.getExtras().getString("car"));
 
         try {
             startActivityForResult(intent,1);
@@ -454,7 +445,8 @@ public class TrempDetailsActivity extends Activity {
 
         if(!trempId.isEmpty()){
             wasEdited = true;
-            Tremp currTremp = ModelSql.getInstance().getTrempById(trempId);
+            Tremp currTremp = Utils.currentChosenTremp;
+
             if(currTremp != null){
                 final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
                 final TextView SourceAddress = (TextView) findViewById(R.id.detailsExitfrom);
@@ -486,8 +478,8 @@ public class TrempDetailsActivity extends Activity {
                 TrempDate.setText(newDate);
                 TrempTime.setText(newTime);
                 PhoneNumber.setText(currTremp.getPhoneNumber());
-                SourceAddress.setText(currTremp.getSourceAddress());
-                DestAddress.setText(currTremp.getDestAddress());
+                SourceAddress.setText(Utils.getAddressFromLocation(TrempDetailsActivity.this, currTremp.getSource()));
+                DestAddress.setText(Utils.getAddressFromLocation(TrempDetailsActivity.this, currTremp.getDest()));
                 CarModel.setText(currTremp.getCarModel());
             }
         }

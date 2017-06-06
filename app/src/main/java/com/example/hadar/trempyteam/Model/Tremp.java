@@ -19,10 +19,8 @@ import java.util.Map;
 
 public class Tremp {
     String carModel;
-    String sourceAddress;
     LatLng source;
     LatLng dest;
-    String destAddress;
     String id;
     String driverId;
     long seets;
@@ -39,8 +37,8 @@ public class Tremp {
         driverId = DriverId;
         this.trempDateTime = trempDate;
         id = trempId;
-        sourceAddress = sourceAdd;
-        destAddress = destAdd;
+//        sourceAddress = sourceAdd;
+//        destAddress = destAdd;
         imageName = ImageName;
         phoneNumber = PhoneNumber;
 
@@ -50,33 +48,31 @@ public class Tremp {
 
     }
 
-    public Tremp(String trempId, long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers, LatLng source, LatLng dest) {
-        this.carModel = carModel;
-        this.seets = seets;
-        driverId = DriverId;
-        this.trempDateTime = trempDate;
-        id = trempId;
-        sourceAddress = sourceAdd;
-        destAddress = destAdd;
-        imageName = ImageName;
-        phoneNumber = PhoneNumber;
-        if(passengers != null)
-            trempistsList = passengers;
-        else trempistsList = new ArrayList<String>();
-        this.source = source;
-        this.dest = dest;
-    }
-
-    public Tremp(long seets, String DriverId, String trempDate, String sourceAdd, String destAdd,String PhoneNumber, String carModel, String ImageName, List<String> passengers) {
-        this.carModel = carModel;
+    public Tremp(long seets, String DriverId, String trempDate, LatLng source, LatLng dest, String phoneNumber, String CarModel, String ImageName, List<String> passengers ){
+        this.carModel = CarModel;
         this.seets = seets;
         driverId = DriverId;
         this.trempDateTime = trempDate;
         id = CreateID();
-        sourceAddress = sourceAdd;
-        destAddress = destAdd;
+        this.source = source;
+        this.dest = dest;
         imageName = ImageName;
-        phoneNumber = PhoneNumber;
+        this.phoneNumber = phoneNumber;
+        if(passengers != null)
+            trempistsList = passengers;
+        else trempistsList = new ArrayList<String>();
+    }
+
+    public Tremp(String trempId, long seets, String DriverId, String trempDate, LatLng source, LatLng dest, String phoneNumber, String CarModel, String ImageName, List<String> passengers ){
+        this.id = trempId;
+        this.carModel = CarModel;
+        this.seets = seets;
+        driverId = DriverId;
+        this.trempDateTime = trempDate;
+        this.source = source;
+        this.dest = dest;
+        imageName = ImageName;
+        this.phoneNumber = phoneNumber;
         if(passengers != null)
             trempistsList = passengers;
         else trempistsList = new ArrayList<String>();
@@ -86,8 +82,6 @@ public class Tremp {
     public String getDriverId(){return driverId;}
     public long getSeets(){return seets;}
     public String getCarModel(){return carModel;}
-    public String getSourceAddress(){return sourceAddress;}
-    public String getDestAddress(){return destAddress;}
     public String getTrempDateTime(){
         return trempDateTime;}
     public String getImageName() {
@@ -95,13 +89,11 @@ public class Tremp {
     }
     public String getPhoneNumber(){return phoneNumber;}
     public List<String> getTrempistsList(){return trempistsList;}
+    public LatLng getSource(){return source;}
+    public LatLng getDest(){return dest;}
 
     public void setCarModel(String carModel){
         this.carModel = carModel;}
-    public void setSourceAddress(String sourceAdd){
-        sourceAddress = sourceAdd;}
-    public void setDestAddress(String destAdd){
-        destAddress = destAdd;}
     public void setSeets(long seets){
         this.seets = seets;}
     public void settrempDateTime(String TrempDateTimee){
@@ -118,6 +110,8 @@ public class Tremp {
             trempistsList.add(user_id);
         }
     }
+    public void setSource(LatLng _source){ source = _source;}
+    public void setDest(LatLng _dest){ dest = _dest;}
 
     public void removePassenger(String passengerId){
         int index = 0;
