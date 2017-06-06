@@ -194,7 +194,8 @@ public class ListTrempActivity extends Activity {
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
             final String driver_id = st.getDriverId();
-              seats.setText(String.valueOf(st.getSeets()) + " Available Seats");
+            final String avilableSeats = String.valueOf(st.getSeets());
+              seats.setText(avilableSeats + " מקומות פנויים ");
 
             String dateTime = st.getTrempDateTime();
             String newTime = "";

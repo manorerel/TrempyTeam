@@ -11,7 +11,13 @@
     android:weightSum="1"
     android:background="@android:color/transparent">
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
 
+        android:src="@mipmap/road" />
 
 
     <TextView
@@ -84,7 +90,7 @@
             android:layout_marginRight="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:hint="@string/str_atv_places_source" />
+            android:hint="@string/str_atv_places_dest" />
 
 
     </RelativeLayout>
@@ -152,8 +158,5 @@
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />
 
-    <LinearLayout
-            android:layout_width="fill_parent"
-        android:layout_height="281dp"></LinearLayout>
 </LinearLayout>
 
