@@ -52,7 +52,7 @@
 
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Phone"
-            />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -81,7 +81,7 @@
             android:text="Exit from"
             android:layout_alignParentTop="true"
 
-            />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -110,7 +110,7 @@
             android:layout_marginRight="120dp"
             android:layout_alignParentTop="true"
 
-            />
+            android:textSize="18sp" />
     </RelativeLayout>
 
 
@@ -191,7 +191,7 @@
             android:text="car"
             android:layout_alignParentTop="true"
             android:layout_marginRight="120dp"
-            />
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
@@ -222,7 +222,7 @@
             android:text="seets"
             android:layout_marginRight="185dp"
             android:layout_alignParentTop="true"
-            />
+            android:textSize="18sp" />
 
     </RelativeLayout>
     <RelativeLayout

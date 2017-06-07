@@ -13,29 +13,17 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
-        >
+        android:layout_height="250dp">
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:alpha="0.3"
             android:scaleType="fitXY"
-            android:src="@mipmap/road" />
-
-        <TextView
-            android:text="לאן נוסעים?"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textSize="30sp"
-            android:layout_alignParentBottom="true"
-            android:textColor="#FFFFFF"
-            android:layout_alignParentRight="true"
-
-
-            android:textStyle="bold" />
+            android:src="@mipmap/road"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
 

@@ -175,18 +175,12 @@ public class ListTrempActivity extends Activity {
             final String time = (String) getIntent().getExtras().get("time");
 
             ModelFirebase fbModel = new ModelFirebase();
-//
+
             ModelRest modelRest = ModelRest.getInstance();
-         /*   progressdialog = new ProgressDialog(ListTrempActivity.this);
-            progressdialog.setMessage("Please Wait....");*/
-/*
-            ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
-            progressdialog.setMessage("טוען...");
-            progressdialog.show();*/
+
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
                     CreateList();
 
-           // progressdialog.dismiss();
             detailsSet = "Search";
        }
 
