@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -96,6 +97,9 @@ public class CreateNewTrempActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
 
+        ProgressDialog progressdialog = new ProgressDialog(CreateNewTrempActivity.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
         ActionBar actionBar = this.getActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
         getActionBar().setDisplayShowTitleEnabled(false);
@@ -311,6 +315,8 @@ public class CreateNewTrempActivity extends Activity {
                 finish();
             }
         });
+
+        progressdialog.dismiss();
     }
 
     @Override

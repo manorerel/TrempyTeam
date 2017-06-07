@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -138,11 +139,19 @@ public class ListTrempActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
+       // ProgressDialog progressdialog;
+
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
         if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");
             ModelSql modelSql = ModelSql.getInstance();
             ModelRest modelRest = ModelRest.getInstance();
+
+
+           ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
+                    progressdialog.setMessage("טוען...");
+                    progressdialog.show();
+
             trempsList = modelRest.getTremps(User.GetAppUser().Id);
 
 //            if(isCreated.equals("true"))
@@ -150,7 +159,7 @@ public class ListTrempActivity extends Activity {
 //            else trempsList = modelSql.getAllTremps(false);
 
             CreateList();
-
+            progressdialog.dismiss();
             detailsSet = "personalArea";
         }
         else
@@ -161,32 +170,18 @@ public class ListTrempActivity extends Activity {
             final String time = (String) getIntent().getExtras().get("time");
 
             ModelFirebase fbModel = new ModelFirebase();
-//            fbModel.getAllTrempsByFilter(time,date,dest, from, new Model.GetAllTrempsByFilerListener() {
-//                @Override
-//                public void onComplete(List<Tremp> tremps) {
 //
-//                    trempsList = tremps;
-//                    CreateList();
-//
-//                    if(trempsList.size() == 0)
-//                    {
-//                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
-//                        dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
-//                        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                finish();
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        dlgAlert.show();
-//                    }
-//                }
-//            });
             ModelRest modelRest = ModelRest.getInstance();
+         /*   progressdialog = new ProgressDialog(ListTrempActivity.this);
+            progressdialog.setMessage("Please Wait....");*/
+
+            ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
+            progressdialog.setMessage("טוען...");
+            progressdialog.show();
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
                     CreateList();
 
+            progressdialog.dismiss();
             detailsSet = "Search";
        }
 
@@ -216,6 +211,7 @@ public class ListTrempActivity extends Activity {
         }
 
 
+        //progressdialog.dismiss();
     }
 
     public void CreateList()
