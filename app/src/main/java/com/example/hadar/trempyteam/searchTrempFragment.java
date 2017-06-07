@@ -202,9 +202,10 @@ public class searchTrempFragment extends Fragment {
                     intent.putExtra("date", text);
                     intent.putExtra("time", time_);
 
-                  /*  ProgressDialog  dialog = ProgressDialog.show(getActivity(), "",
-                            "טוען ...", false);*/
+
+
                     startActivity(intent);
+
 
                 }
             });

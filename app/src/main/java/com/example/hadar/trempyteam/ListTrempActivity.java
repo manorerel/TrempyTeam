@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -138,17 +139,32 @@ public class ListTrempActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
+       // ProgressDialog progressdialog;
+
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
         if (cameFrom != null && cameFrom.equals("personalArea")) {
+            String isCreated = (String) getIntent().getExtras().get("isCreated");
+            ModelSql modelSql = ModelSql.getInstance();
             ModelRest modelRest = ModelRest.getInstance();
-            trempsList = modelRest.getTremps(User.GetAppUser().Id);
+
+
+            Intent intent = getIntent();
+
+            if (intent.getExtras().getString("isCreated").equals("true")) {
+
+                trempsList = modelRest.getTremps(User.GetAppUser().Id);
+            }
+            else
+            {
+                trempsList = modelRest.getTrempsJoined(User.GetAppUser().Id);
+            }
 
 //            if(isCreated.equals("true"))
 //                trempsList = modelSql.getAllTremps(true);
 //            else trempsList = modelSql.getAllTremps(false);
 
             CreateList();
-
+           // progressdialog.dismiss();
             detailsSet = "personalArea";
         }
         else
@@ -157,30 +173,22 @@ public class ListTrempActivity extends Activity {
             final String from = (String) getIntent().getExtras().get("from");
             final String date = (String) getIntent().getExtras().get("date");
             final String time = (String) getIntent().getExtras().get("time");
+
+            ModelFirebase fbModel = new ModelFirebase();
+//
             ModelRest modelRest = ModelRest.getInstance();
+         /*   progressdialog = new ProgressDialog(ListTrempActivity.this);
+            progressdialog.setMessage("Please Wait....");*/
+/*
+            ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
+            progressdialog.setMessage("טוען...");
+            progressdialog.show();*/
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
-            CreateList();
+                    CreateList();
 
-
+           // progressdialog.dismiss();
             detailsSet = "Search";
        }
-
-
-        if(trempsList.size() == 0) {
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
-            dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
-            dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                    dialog.dismiss();
-                }
-            });
-            dlgAlert.show();
-        }
-
-
-
 
         try {
 
@@ -206,7 +214,7 @@ public class ListTrempActivity extends Activity {
         }
 
 
-
+        //progressdialog.dismiss();
     }
 
     public void CreateList()
@@ -287,21 +295,17 @@ public class ListTrempActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        ModelRest modelRest = ModelRest.getInstance();
+        if (resultCode == Activity.RESULT_OK) {
+            ModelSql modelSql = ModelSql.getInstance();
+            trempsList = modelSql.getAllTremps(true);
 
-        if (detailsSet.equals("personalArea")) {
+            CreateList();
 
-            trempsList = modelRest.getTremps(User.GetAppUser().Id);
-        }
-        else{
-            final String dest = (String) getIntent().getExtras().get("dest");
-            final String from = (String) getIntent().getExtras().get("from");
-            final String date = (String) getIntent().getExtras().get("date");
-            final String time = (String) getIntent().getExtras().get("time");
-            trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
         }
 
-        CreateList();
+        if(requestCode == Activity.RESULT_FIRST_USER){
+            finish();
+        }
     }
     class TrempsAdapter extends BaseAdapter {
 

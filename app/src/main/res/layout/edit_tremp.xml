@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="טלפון:"
-            android:textStyle="bold"
+
             android:id="@+id/student_phone"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="מוצא:"
-            android:textStyle="bold"
+
             android:id="@+id/exit_from_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="יעד:"
-            android:textStyle="bold"
+
             android:id="@+id/dest_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="תאריך:"
-            android:textStyle="bold"
+
             android:id="@+id/date_tremp"
             android:layout_marginRight="20dp" />
 
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="שעה:"
-            android:textStyle="bold"
+
             android:id="@+id/time_tremp"
             android:layout_marginRight="20dp"/>
 
@@ -178,7 +178,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="סוג רכב:"
-            android:textStyle="bold"
+
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
 
