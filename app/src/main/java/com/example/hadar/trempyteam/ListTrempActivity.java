@@ -148,13 +148,16 @@ public class ListTrempActivity extends Activity {
             ModelRest modelRest = ModelRest.getInstance();
 
 
-/*
-           ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
-                    progressdialog.setMessage("טוען...");
-                    progressdialog.show();
-*/
+            Intent intent = getIntent();
 
-            trempsList = modelRest.getTremps(User.GetAppUser().Id);
+            if (intent.getExtras().getString("isCreated").equals("true")) {
+
+                trempsList = modelRest.getTremps(User.GetAppUser().Id);
+            }
+            else
+            {
+                trempsList = modelRest.getTrempsJoined(User.GetAppUser().Id);
+            }
 
 //            if(isCreated.equals("true"))
 //                trempsList = modelSql.getAllTremps(true);

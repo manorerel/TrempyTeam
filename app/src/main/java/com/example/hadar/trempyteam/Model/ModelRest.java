@@ -147,6 +147,62 @@ public class ModelRest {
 
     }
 
+
+    public List<Tremp> getTrempsJoined(final String userId){
+        final List<com.example.hadar.trempyteam.Model.Tremp> tremps = new LinkedList<com.example.hadar.trempyteam.Model.Tremp>();
+        final Future<List<com.example.hadar.trempyteam.Model.Tremp>> futureTremps;
+
+        futureTremps = readThreadPool.submit(new Callable<List<com.example.hadar.trempyteam.Model.Tremp>>() {
+            @Override
+            public List<com.example.hadar.trempyteam.Model.Tremp> call() throws Exception {
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpContext localContext = new BasicHttpContext();
+                String url = RIDE_URL + "/joined/" + userId;
+                HttpGet httpGet = new HttpGet(url);
+
+                try{
+                    HttpResponse response = httpClient.execute(httpGet, localContext);
+
+                    if(response.getStatusLine().getStatusCode()==200){
+                        String server_response = EntityUtils.toString(response.getEntity());
+                        JSONArray trempsJson = new JSONArray(server_response);
+                        for(int i=0; i< trempsJson.length(); i++){
+                            com.example.hadar.trempyteam.Model.Tremp t = convertJsonToTremp(trempsJson.getJSONObject(i));
+                            tremps.add(t);
+                        }
+                        Log.i("Server response", server_response );
+                    } else {
+                        Log.i("Server response", "Failed to get server response" );
+                    }
+
+                    return tremps;
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+
+                }
+                return tremps;
+            }
+        });
+
+        List<com.example.hadar.trempyteam.Model.Tremp> trempsToReturn;
+
+        try {
+            trempsToReturn = futureTremps.get();
+            return (trempsToReturn);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        } catch (Exception e){
+            Log.d("exception: ", e.getMessage());
+            return null;
+        }
+
+    }
+
     public List<Tremp> getTremps(final String driverID){
         final List<Tremp> tremps = new LinkedList<Tremp>();
         final Future<List<Tremp>> futureTremps;
@@ -201,6 +257,9 @@ public class ModelRest {
         }
 
     }
+
+
+
 
     public void createTremp(final Tremp newTremp) {
 
