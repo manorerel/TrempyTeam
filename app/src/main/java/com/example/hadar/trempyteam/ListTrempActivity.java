@@ -148,9 +148,11 @@ public class ListTrempActivity extends Activity {
             ModelRest modelRest = ModelRest.getInstance();
 
 
+/*
            ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
                     progressdialog.setMessage("טוען...");
                     progressdialog.show();
+*/
 
             trempsList = modelRest.getTremps(User.GetAppUser().Id);
 
@@ -159,7 +161,7 @@ public class ListTrempActivity extends Activity {
 //            else trempsList = modelSql.getAllTremps(false);
 
             CreateList();
-            progressdialog.dismiss();
+           // progressdialog.dismiss();
             detailsSet = "personalArea";
         }
         else
@@ -174,18 +176,16 @@ public class ListTrempActivity extends Activity {
             ModelRest modelRest = ModelRest.getInstance();
          /*   progressdialog = new ProgressDialog(ListTrempActivity.this);
             progressdialog.setMessage("Please Wait....");*/
-
+/*
             ProgressDialog progressdialog = new ProgressDialog(ListTrempActivity.this);
             progressdialog.setMessage("טוען...");
-            progressdialog.show();
+            progressdialog.show();*/
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
                     CreateList();
 
-            progressdialog.dismiss();
+           // progressdialog.dismiss();
             detailsSet = "Search";
        }
-
-
 
         try {
 
