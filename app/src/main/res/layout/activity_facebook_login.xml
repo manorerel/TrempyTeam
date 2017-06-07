@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="24sp"
-        android:background="@drawable/rounded_corners"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -29,7 +28,6 @@
         android:typeface="sans"
         android:textSize="60sp"
         android:fontFamily="cursive"
-
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

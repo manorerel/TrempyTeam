@@ -225,63 +225,12 @@ android:weightSum="1"
         />
 
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="192dp"
+        android:layout_height="50dp"
         android:orientation="vertical"
-       >
-
-
-<!--    <ImageButton
-        android:text="מפה"
-        android:background="@android:color/transparent"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/btnMap"
-        android:textSize="24sp"
-        android:textStyle="normal|bold"
-        android:textColor="#FFFFFF"
-        android:src="@mipmap/map_icon"
-        android:layout_width="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:layout_height="370dp"
-        android:scaleType="fitXY" />
-
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/showImage"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="הצג תמונה>>"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="normal|bold"
-            android:layout_marginRight="230dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="55dp"
-            android:layout_width="230dp"
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/show_friends"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="הצג נוסעים>>"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="normal|bold"
-            android:layout_width="230dp"
-            android:layout_marginRight="230dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="27dp"
-            android:textSize="18sp"></TextView>-->
-
+        android:layoutDirection="rtl">
+  
         <ImageView
 
             android:layout_width="116dp"
@@ -313,4 +262,5 @@ android:weightSum="1"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
 </LinearLayout>

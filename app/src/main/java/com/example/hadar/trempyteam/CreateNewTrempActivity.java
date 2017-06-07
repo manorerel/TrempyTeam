@@ -35,8 +35,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.User;
 
+import com.example.hadar.trempyteam.Model.Utils;
 import com.facebook.AccessToken;
 import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.maps.GoogleMap;
@@ -63,6 +65,7 @@ import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
 
@@ -144,7 +147,8 @@ public class CreateNewTrempActivity extends Activity {
             }
         });
 
-    final ModelFirebase fbModel = new ModelFirebase();
+//    final ModelFirebase fbModel = new ModelFirebase();
+        final ModelRest modelRest = ModelRest.getInstance();
         imageView = (ImageView) findViewById(R.id.Image);
         dlgAlert = new AlertDialog.Builder(CreateNewTrempActivity.this);
 
@@ -188,13 +192,13 @@ public class CreateNewTrempActivity extends Activity {
                 long seets = Long.parseLong(seetsText.getText().toString());
 
                 String createdUserId = User.GetAppUser().Id;
-                String trempId = CreateID();
                 List<String> TrempistsList = new LinkedList<String>();
+                LatLng destCoord = Utils.getLocationFromAddress(CreateNewTrempActivity.this, atvPlaces.getText().toString());
+                LatLng sourceCoord = Utils.getLocationFromAddress(CreateNewTrempActivity.this, atvPlaces_.getText().toString());
 
-                Tremp newTremp = new Tremp(trempId,seets, createdUserId, dateString, atvPlaces_.getText().toString(), atvPlaces.getText().toString(),phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
+                Tremp newTremp = new Tremp(seets, createdUserId, dateString, sourceCoord, destCoord, phone.getText().toString(), carModel.getText().toString(),"imageUrl",TrempistsList);
 
                 String imName = "";
-
 
                 if(imageBitmap != null){
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -215,12 +219,11 @@ public class CreateNewTrempActivity extends Activity {
                 }
 
                 newTremp.setImageName(imName);
-                fbModel.addTremp(newTremp);
+                modelRest.createTremp(newTremp);
 
-                ModelSql sqlLight = ModelSql.getInstance();
-                sqlLight.addTremp(newTremp,true);
+//                ModelSql sqlLight = ModelSql.getInstance();
+//                sqlLight.addTremp(newTremp,true);
                 Log.d("TAG", "Create new tremp and save to db");
-
 
                 dlgAlert.setMessage("הטרמפ נוצר בהצלחה!");
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
@@ -308,40 +311,6 @@ public class CreateNewTrempActivity extends Activity {
                 finish();
             }
         });
-    }
-
-
-    private String CreateID(){
-        String id =User.GetAppUser().Id + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + count++;
-        return id;
-    }
-
-
-    public LatLng getLocationFromAddress(Context context, String strAddress)
-    {
-        Geocoder coder= new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try
-        {
-            address = coder.getFromLocationName(strAddress, 5);
-            if(address==null)
-            {
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return p1;
-
     }
 
     @Override
@@ -532,6 +501,34 @@ public class CreateNewTrempActivity extends Activity {
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
+    private LatLng getLocationFromAddresss(Context context, String strAddress){
+        Geocoder coder= new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try
+        {
+            address = coder.getFromLocationName(strAddress, 5);
+            if(address==null)
+            {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return p1;
+
+    }
+
 }
 
 
