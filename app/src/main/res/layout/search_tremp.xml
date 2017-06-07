@@ -13,8 +13,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="170dp"
         >
 
         <ImageView
@@ -24,18 +23,22 @@
             android:alpha="0.3"
             android:scaleType="fitXY"
             android:src="@mipmap/road" />
+
+        <TextView
+            android:text="לאן נוסעים?"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textSize="30sp"
+            android:layout_alignParentBottom="true"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentRight="true"
+
+
+            android:textStyle="bold" />
     </RelativeLayout>
 
-    <TextView
-        android:text=" חפש טרמפ"
-        android:layout_width="261dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold" />
+
     <RelativeLayout   android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
