@@ -121,7 +121,7 @@ public class LoginActivity extends Activity {
         User.CreateAppUser(userId);
 
         ModelRest modelRest = ModelRest.getInstance();
-//        modelRest.connectToServer(userId);
+        modelRest.connectToServer(userId);
     }
 
 

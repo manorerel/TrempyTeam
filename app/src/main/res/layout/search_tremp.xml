@@ -11,14 +11,20 @@
     android:weightSum="1"
     android:background="@android:color/transparent">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="350dp"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
+        >
 
-        android:src="@mipmap/road" />
-
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:alpha="0.3"
+            android:scaleType="fitXY"
+            android:src="@mipmap/road" />
+    </RelativeLayout>
 
     <TextView
         android:text=" חפש טרמפ"
