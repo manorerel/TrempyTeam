@@ -58,7 +58,7 @@ public class EditTrempActivity extends Activity {
 
         setContentView(R.layout.edit_tremp);
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
         getActionBar().setDisplayShowTitleEnabled(false);
         actionBar.setBackgroundDrawable(colorDrawable);
@@ -199,93 +199,6 @@ public class EditTrempActivity extends Activity {
         personalArea.setVisible(true);
         personalArea.setActionView(view);
 
-//        MenuItem save = menu.findItem(R.id.saveTremp);
-//        save.setVisible(true);
-//
-//        MenuItem cancel = menu.findItem(R.id.cancelTremp);
-//        cancel.setVisible(true);
-
         return true;
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // handle item selection
-//        switch (item.getItemId()) {
-//            case R.id.saveTremp:{
-//                final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);
-//                final TextView SourceAddress = (TextView) findViewById(R.id.editExitfrom);
-//                final TextView DestAddress = (TextView) findViewById(R.id.editDest);
-//                DateEditText newDate = (DateEditText) findViewById(R.id.editDate);
-//                TimeEditText newtime = (TimeEditText) findViewById(R.id.editTime);
-//                final TextView CarModel = (TextView) findViewById(R.id.editCar_model);
-//
-//                // Check if the date or time was changed
-//                if(newDate.didTouchFocusSelect())
-//                {
-//                    dateString = newDate.getText().toString();
-//                }
-//                if (newtime.didTouchFocusSelect())
-//                {
-//                    timeString = newtime.getText().toString();
-//                }
-//
-//                String fullDateString = dateString + " " + timeString;
-//
-//
-//
-//                try {
-//                    // Update the  tremp
-//                    ModelFirebase fb = new ModelFirebase();
-//                    Intent currIntent = getIntent();
-//                    String id = currIntent.getExtras().getString("id");
-//
-//                    fb.updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
-//                    ModelSql.getInstance().updateTremp(id, DestAddress.getText().toString(), SourceAddress.getText().toString(), PhoneNumber.getText().toString(), fullDateString, CarModel.getText().toString());
-//
-//                    dlgAlert.setMessage("השינויים נשמרו בהצלחה!");
-//                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            dialog.dismiss();
-//                            Intent resultIntent = new Intent();
-//                            setResult(RESULT_OK, resultIntent);
-//                            finish();
-//                        }
-//                    });
-//                    dlgAlert.show();
-//
-//                } catch (Exception e) {
-//                    dlgAlert.setMessage("ארעה שגיאה בעת השמירה, שינוייך לא נשמרו");
-//                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            dialog.dismiss();
-//                            Intent resultIntent = new Intent();
-//                            setResult(RESULT_OK, resultIntent);
-//                            finish();
-//                        }
-//                    });
-//                    dlgAlert.show();
-//                }
-//
-//
-//                return true;}
-//            case R.id.cancelTremp:{
-//                Intent resultIntent = new Intent();
-//                setResult(Activity.RESULT_CANCELED, resultIntent);
-//                finish();
-//                return true;
-//            }
-//            default:{
-//                Intent resultIntent = new Intent();
-//                setResult(Activity.RESULT_CANCELED, resultIntent);
-//                finish();
-//                return true;
-//
-//            }
-//        }
-//    }
 }

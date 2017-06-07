@@ -27,7 +27,7 @@
         android:id="@+id/textView"
         android:typeface="sans"
         android:textSize="60sp"
-        android:fontFamily="cursive"
+        android:fontFamily="sans-serif-smallcaps"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
