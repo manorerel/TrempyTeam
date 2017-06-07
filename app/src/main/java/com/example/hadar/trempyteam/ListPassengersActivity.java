@@ -1,10 +1,13 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +48,14 @@ public class ListPassengersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_passengers);
 
+
+        ActionBar actionBar = this.getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+
+        actionBar.setBackgroundDrawable(colorDrawable);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         ModelFirebase fbModel = new ModelFirebase();
 
         Intent intent = getIntent();

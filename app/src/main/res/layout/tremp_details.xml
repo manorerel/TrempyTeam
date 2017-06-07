@@ -42,7 +42,7 @@ android:weightSum="1"
         android:id="@+id/student_phone"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:textStyle="bold" />
+       />
 
     <TextView
         android:layout_width="195dp"
@@ -69,7 +69,7 @@ android:weightSum="1"
             android:text="מוצא:"
             android:id="@+id/exit_from_"
             android:layout_marginRight="20dp"
-            android:textStyle="bold"
+
             android:layout_marginBottom="20dp" />
 
         <TextView
@@ -96,7 +96,7 @@ android:weightSum="1"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="יעד:"
-        android:textStyle="bold"
+
         android:id="@+id/dest_"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp" />
@@ -127,7 +127,7 @@ android:weightSum="1"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="תאריך:"
-        android:textStyle="bold"
+
         android:id="@+id/date_tremp"
         android:layout_marginRight="20dp" />
 
@@ -154,7 +154,7 @@ android:weightSum="1"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="שעה:"
-        android:textStyle="bold"
+
         android:id="@+id/time_tremp"
         android:layout_marginRight="20dp"/>
 
@@ -178,7 +178,7 @@ android:weightSum="1"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="סוג רכב:"
-        android:textStyle="bold"
+
         android:id="@+id/car_model_"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp" />
@@ -210,7 +210,7 @@ android:weightSum="1"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="מקומות פנויים:"
-            android:textStyle="bold"
+
             android:id="@+id/avaliable_seats_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -230,55 +230,37 @@ android:weightSum="1"
         android:layout_height="50dp"
         android:orientation="vertical"
         android:layoutDirection="rtl">
-        </RelativeLayout>
+  
+        <ImageView
 
-    <TableRow
-        android:layout_width="350dp"
-        android:layout_height="130dp"
-        android:orientation="vertical"
-        android:layoutDirection="rtl"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        >
-
-    <ImageButton
-        android:text="מפה"
-        android:background="@android:color/transparent"
-        android:id="@+id/btnMap"
-        android:textSize="24sp"
-        android:textStyle="normal|bold"
-        android:textColor="#FFFFFF"
-        android:src="@mipmap/google_maps"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="fitXY"
-        />
-
-        <ImageButton
-            android:text="תמונת רכב"
-            android:background="@android:color/transparent"
-            android:id="@+id/showImage"
-            android:textSize="24sp"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:src="@mipmap/car_side"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
+            android:layout_width="116dp"
+            android:layout_height="142dp"
+            app:srcCompat="@android:color/background_dark"
+            android:id="@+id/showMap"
+            android:src="@mipmap/nap"
             android:scaleType="fitXY"
-            />
+            android:layout_alignTop="@+id/ShowCar" />
 
-        <ImageButton
-            android:text="הצג נוסעים"
-            android:background="@android:color/transparent"
-            android:id="@+id/show_friends"
-            android:textSize="24sp"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:src="@mipmap/passengers"
-            android:layout_width="110dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY" />
+        <ImageView
+            android:layout_width="116dp"
+            android:layout_height="142dp"
+            app:srcCompat="@android:color/background_dark"
+            android:src="@mipmap/car"
+            android:id="@+id/ShowCar"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
-    </TableRow>
+        <ImageView
+            android:layout_width="116dp"
+            android:layout_height="142dp"
+            app:srcCompat="@android:color/background_dark"
+            android:id="@+id/showPassenger"
+            android:src="@mipmap/passangers"
+            android:scaleType="fitXY"
+            android:layout_alignTop="@+id/ShowCar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </LinearLayout>

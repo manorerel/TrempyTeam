@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
@@ -75,6 +76,7 @@ public class searchTrempFragment extends Fragment {
 
             ActionBar actionBar = getActivity().getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
+        getActivity().getActionBar().setDisplayShowTitleEnabled(false);
             setHasOptionsMenu(true);
 
         atvPlaces = (AutoCompleteTextView)rootView.findViewById(R.id.destination);
@@ -199,6 +201,9 @@ public class searchTrempFragment extends Fragment {
                     intent.putExtra("from", f);
                     intent.putExtra("date", text);
                     intent.putExtra("time", time_);
+
+                  /*  ProgressDialog  dialog = ProgressDialog.show(getActivity(), "",
+                            "טוען ...", false);*/
                     startActivity(intent);
 
                 }
