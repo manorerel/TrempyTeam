@@ -1,5 +1,6 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 
 import android.app.AlertDialog;
@@ -7,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -93,6 +96,12 @@ public class CreateNewTrempActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_tremp);
 
+        ActionBar actionBar = this.getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        getActionBar().setDisplayShowTitleEnabled(false);
+        actionBar.setBackgroundDrawable(colorDrawable);
+        getActionBar().setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         atvPlaces = (AutoCompleteTextView)findViewById(R.id.dest);
         atvPlaces_ = (AutoCompleteTextView)findViewById(R.id.exitfrom);
        /* atvPlaces.setThreshold(1);
