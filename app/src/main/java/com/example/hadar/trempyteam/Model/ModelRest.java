@@ -41,6 +41,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class ModelRest {
     private String RIDE_URL="http://193.106.55.103:80/api/rides";
+    private String USER_URL="http://193.106.55.103:80/api/users";
     private String FB_ID="fbId";
     private String DRIVER="driver";
     private String SOURCE="src";
@@ -63,6 +64,30 @@ public class ModelRest {
             modelRest = new ModelRest();
 
         return modelRest;
+    }
+
+    public void connectToServer(final String userId){
+        createThreadPool.submit(new Runnable() {
+            @Override
+            public void run() {
+                HttpClient httpClient = new DefaultHttpClient();
+                String url = USER_URL + "/" + userId;
+                HttpPost httpPost = new HttpPost(url);
+
+                try {
+                    HttpResponse response = httpClient.execute(httpPost);
+                    if(response.getStatusLine().getStatusCode()==200){
+                        Log.d("connect to server", "success");
+                    }
+                    else{
+                        Log.d("connect to server", "not success");
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public List<Tremp> getTremps(final String userID, final LatLng source, final LatLng dest, final String rideTime){
@@ -191,9 +216,7 @@ public class ModelRest {
                     StringEntity body = new StringEntity(tremp.toString(), "UTF8");
                     httpPost.setEntity(body);
                     httpPost.setHeader("Content-type", "application/json");
-//                    HttpGet httpGet = new HttpGet(RIDE_URL);
                     HttpResponse response = httpClient.execute(httpPost);
-//                    HttpResponse response = httpClient.execute(httpGet);
                     String server_response="";
                     InputStream instream;
 
@@ -203,16 +226,6 @@ public class ModelRest {
                         Log.d("instream",instream.toString());
                         JSONObject json = new JSONObject(server_response);
                         Object v = json.getJSONObject("ride");
-
-                    }
-
-
-
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                    String line = "";
-
-                    while ((line = rd.readLine()) != null) {
-                        System.out.println(line);
                     }
 
                 } catch (UnsupportedEncodingException e) {
@@ -228,8 +241,6 @@ public class ModelRest {
 
             });
     }
-
-
 
     public void updateTremp(final Tremp trempToUpdate){
         updateThreadPool.submit(new Runnable() {

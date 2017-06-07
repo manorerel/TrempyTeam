@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -111,6 +112,8 @@ public class LoginActivity extends Activity {
         startActivityForResult(intent, main);
         User.CreateAppUser(userId);
 
+        ModelRest modelRest = ModelRest.getInstance();
+//        modelRest.connectToServer(userId);
     }
 
 
