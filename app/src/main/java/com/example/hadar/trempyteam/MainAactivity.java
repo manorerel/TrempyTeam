@@ -2,17 +2,13 @@ package com.example.hadar.trempyteam;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,18 +27,16 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.hadar.trempyteam.Model.ModelSql;
-import com.example.hadar.trempyteam.Model.Tremp;
-import com.example.hadar.trempyteam.Model.User;
+
 import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 import static com.example.hadar.trempyteam.R.mipmap.join_icon;
@@ -51,6 +44,7 @@ import static com.example.hadar.trempyteam.R.mipmap.join_icon;
 public class MainAactivity extends Activity {
     FragmentManager fragmentManager;
     final int main = 1;
+    MenuItem myMenu;
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     String TAG = MapsActivity.class.getSimpleName();
@@ -67,14 +61,16 @@ public class MainAactivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
-        /*Intent intent = new Intent(MainAactivity.this, Main2Activity.class);
-        startActivityForResult(intent, main);*/
+        final ActionBar actionBar = this.getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
 
-        ActionBar actionBar = this.getActionBar();
+        actionBar.setBackgroundDrawable(colorDrawable);
+        getActionBar().setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayUseLogoEnabled(false);
         getActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
 
         fragmentManager = getFragmentManager();
 
@@ -85,11 +81,10 @@ public class MainAactivity extends Activity {
 
         transaction.commit();
 
-
-            mNavItems.add(new NavItem("טרמפים שיצרתי", "Meetup destination", R.mipmap.my));
-            mNavItems.add(new NavItem("טרמפים שהצטרפתי אליהם", "Change your preferences", join_icon));
-            mNavItems.add(new NavItem("צור טרמפ", "Change your preferences", R.mipmap.add));
-            mNavItems.add(new NavItem("התנתק", "Get to know about us", R.mipmap.logout));
+            mNavItems.add(new NavItem("טרמפים שיצרתי", "טרמפים שיצרתי", R.mipmap.my));
+            mNavItems.add(new NavItem("טרמפים שהצטרפתי אליהם", "טרמפים שהצטרפתי אליהם", join_icon));
+            mNavItems.add(new NavItem("צור טרמפ", "צור טרמפ", R.mipmap.add));
+            mNavItems.add(new NavItem("התנתק", "התנתק", R.mipmap.logout));
 
             // DrawerLayout
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -107,6 +102,7 @@ public class MainAactivity extends Activity {
                     selectItemFromDrawer(position);
                 }
             });
+
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
@@ -127,6 +123,32 @@ public class MainAactivity extends Activity {
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
+
+
+        final TextView user_name = (TextView) findViewById(R.id.userName);
+        try {
+
+            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    "/" + user_connected_id,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                user_name.setText(response.getJSONObject().getString("name"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).executeAsync();
+
+        }
+        catch (Exception e){
+            Log.d("exception", "can't get user name " + e.getMessage());
+        }
         }
 
     @Override
@@ -135,6 +157,7 @@ public class MainAactivity extends Activity {
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
         if (mDrawerToggle.onOptionsItemSelected(item)) {
+
             return true;
         }
 
@@ -189,7 +212,7 @@ public class MainAactivity extends Activity {
                 .commit();*/
 
         mDrawerList.setItemChecked(position, true);
-        setTitle(mNavItems.get(position).mTitle);
+       // setTitle(mNavItems.get(position).mTitle);
 
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
@@ -262,11 +285,14 @@ public class MainAactivity extends Activity {
                 view = convertView;
             }
 
+
             TextView titleView = (TextView) view.findViewById(R.id.title);
-            //TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
+           // TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
             ImageView iconView = (ImageView) view.findViewById(R.id.icon);
 
+
             titleView.setText( mNavItems.get(position).mTitle );
+
           //  subtitleView.setText( mNavItems.get(position).mSubtitle );
             iconView.setImageResource(mNavItems.get(position).mIcon);
 
@@ -278,10 +304,49 @@ public class MainAactivity extends Activity {
         }
     }
 
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+
+            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    "/" + user_connected_id,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                TextView user_name = (TextView) findViewById(R.id.userName);
+                                user_name.setText(response.getJSONObject().getString("name"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).executeAsync();
+
+        }
+        catch (Exception e){
+            Log.d("exception", "can't get user name " + e.getMessage());
+        }
+
+
+
+
+
+    }
+
+
 }
