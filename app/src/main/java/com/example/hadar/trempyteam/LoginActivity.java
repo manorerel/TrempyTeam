@@ -1,10 +1,13 @@
 package com.example.hadar.trempyteam;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -59,6 +62,11 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_facebook_login);
 
+        ActionBar actionBar = this.getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        getActionBar().setDisplayShowTitleEnabled(false);
+        actionBar.setBackgroundDrawable(colorDrawable);
+
         // check if is not the first time to use the app - already login to facebook
         if (AccessToken.getCurrentAccessToken() != null)
         {
@@ -70,15 +78,15 @@ public class LoginActivity extends Activity {
             callbackManager = CallbackManager.Factory.create();
             final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
-            loginButton.setReadPermissions("email", "public_profile", "user_friends");
             loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
                    String userID = AccessToken.getCurrentAccessToken().getUserId();
                     startApp(userID);
-
+                    loginButton.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent(LoginActivity.this, MainAactivity.class);
-                    startActivityForResult(intent, main);
+                    startActivity(intent);
+
             }
 
             @Override

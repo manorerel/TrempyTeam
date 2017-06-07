@@ -62,7 +62,14 @@ public class TrempDetailsActivity extends Activity {
 
         setContentView(R.layout.tremp_details);
         ActionBar actionBar = this.getActionBar();
+
         actionBar.setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        getActionBar().setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        actionBar.setBackgroundDrawable(colorDrawable);
+
         Intent intent = getIntent();
 
         final TextView PhoneNumber = (TextView) findViewById(R.id.detailsPhone);
@@ -105,7 +112,7 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
         String imageName = intent.getExtras().getString("image");
 
-        final TextView showImage = (TextView) findViewById(R.id.showImage);
+       final ImageView showImage = (ImageView) findViewById(R.id.ShowCar);
 
         showImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +133,8 @@ public class TrempDetailsActivity extends Activity {
         seet = (Long.toString(intent.getExtras().getLong("seets")));
 
 
-        ImageButton btnMap = (ImageButton) findViewById(R.id.btnMap);
+        ImageView btnMap = (ImageView) findViewById(R.id.showMap);
+
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,12 +147,13 @@ public class TrempDetailsActivity extends Activity {
                 intent.putExtra("DestLocation", c);
                 intent.putExtra("SourceLocation", s);
                 intent.putExtra("trempId", tremp_id);
+
                 startActivity(intent);
             }
         });
 
 
-        final TextView friends_passengers = (TextView) findViewById(R.id.show_friends);
+       final ImageView friends_passengers = (ImageView) findViewById(R.id.showPassenger);
 
 
         friends_passengers.setOnClickListener(new View.OnClickListener() {

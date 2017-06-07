@@ -35,7 +35,7 @@
             android:text="טלפון"
             android:id="@+id/student_phone"
             android:layout_marginRight="20dp"
-            android:textStyle="bold"
+
             android:layout_marginBottom="20dp" />
 
         <EditText
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="מוצא"
-            android:textStyle="bold"
+
             android:id="@+id/exit_from_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="יעד"
-            android:textStyle="bold"
+
             android:id="@+id/dest_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="מקומות פנויים"
-            android:textStyle="bold"
+
             android:id="@+id/avaliable_seats_"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="תאריך"
-            android:textStyle="bold"
+
             android:id="@+id/date_tremp"
             android:layout_marginRight="20dp" />
 
@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="שעה"
-            android:textStyle="bold"
+
             android:id="@+id/time_tremp"
             android:layout_marginRight="20dp"/>
         <com.example.hadar.trempyteam.TimeEditText
@@ -182,7 +182,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="סוג רכב"
-            android:textStyle="bold"
+
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp" />
 

@@ -7,6 +7,8 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +45,6 @@ public class EditTrempActivity extends Activity {
 
     AlertDialog.Builder dlgAlert;
 
-
     String dateString = "";
     String timeString = "";
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
@@ -54,6 +55,11 @@ public class EditTrempActivity extends Activity {
         setContentView(R.layout.edit_tremp);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+
+        actionBar.setBackgroundDrawable(colorDrawable);
+
 
         dlgAlert = new AlertDialog.Builder(EditTrempActivity.this);
         final TextView PhoneNumber = (TextView) findViewById(R.id.editPhone);

@@ -55,7 +55,7 @@
         <com.example.hadar.trempyteam.CustomAutoCompleteTextView
             android:id="@+id/from"
             android:layout_width="195dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/str_atv_places_source" />
@@ -81,7 +81,7 @@
         <com.example.hadar.trempyteam.CustomAutoCompleteTextView
             android:id="@+id/destination"
             android:layout_width="195dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/str_atv_places_source" />
@@ -101,7 +101,6 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="תאריך"
-            android:textStyle="bold"
             android:id="@+id/date"
             android:layout_marginRight="20dp" />
 
@@ -125,7 +124,6 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="שעה"
-            android:textStyle="bold"
             android:id="@+id/time"
             android:layout_marginRight="20dp"/>
         <com.example.hadar.trempyteam.TimeEditText
