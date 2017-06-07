@@ -48,7 +48,11 @@
             android:layout_marginRight="120dp"
             android:inputType="number"/>
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical">
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -73,7 +77,11 @@
             android:layout_marginRight="120dp"
             />
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical">
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -99,7 +107,11 @@
             android:layout_marginRight="120dp"
             />
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical">
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -123,7 +135,11 @@
             android:id="@+id/editDate"/>
 
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical">
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -146,7 +162,11 @@
             android:id="@+id/editTime"/>
 
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical">
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -170,5 +190,43 @@
             />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+    </RelativeLayout>
+    <TableRow
+        android:layout_width="260dp"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:backgroundTint="#00BCD4"
+            android:textStyle="normal|bold"
+            android:textColor="#FFFFFF"
+            android:text="שמור"
+            android:id="@+id/EditBtnSave"
+            android:background="@drawable/rounded_corners"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:backgroundTint="#00BCD4"
+            android:textStyle="normal|bold"
+            android:textColor="#FFFFFF"
+            android:text="בטל"
+            android:id="@+id/EditBtnCancle"
+            android:background="@drawable/rounded_corners"
+            />
+
+</TableRow>
 
 </LinearLayout>

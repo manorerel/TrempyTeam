@@ -60,9 +60,6 @@ public class ModelFirebase {
                         String ss = entry.getValue();
                         pass_ids.add(ss);
                     }
-
-
-
                 }
                 else
                 {

@@ -34,8 +34,11 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSql;
 import com.example.hadar.trempyteam.Model.Tremp;
+import com.example.hadar.trempyteam.Model.User;
+import com.example.hadar.trempyteam.Model.Utils;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -139,10 +142,12 @@ public class ListTrempActivity extends Activity {
         if (cameFrom != null && cameFrom.equals("personalArea")) {
             String isCreated = (String) getIntent().getExtras().get("isCreated");
             ModelSql modelSql = ModelSql.getInstance();
+            ModelRest modelRest = ModelRest.getInstance();
+            trempsList = modelRest.getTremps(User.GetAppUser().Id);
 
-            if(isCreated.equals("true"))
-                trempsList = modelSql.getAllTremps(true);
-            else trempsList = modelSql.getAllTremps(false);
+//            if(isCreated.equals("true"))
+//                trempsList = modelSql.getAllTremps(true);
+//            else trempsList = modelSql.getAllTremps(false);
 
             CreateList();
 
@@ -156,28 +161,32 @@ public class ListTrempActivity extends Activity {
             final String time = (String) getIntent().getExtras().get("time");
 
             ModelFirebase fbModel = new ModelFirebase();
-            fbModel.getAllTrempsByFilter(time,date,dest, from, new Model.GetAllTrempsByFilerListener() {
-                @Override
-                public void onComplete(List<Tremp> tremps) {
-
-                    trempsList = tremps;
+//            fbModel.getAllTrempsByFilter(time,date,dest, from, new Model.GetAllTrempsByFilerListener() {
+//                @Override
+//                public void onComplete(List<Tremp> tremps) {
+//
+//                    trempsList = tremps;
+//                    CreateList();
+//
+//                    if(trempsList.size() == 0)
+//                    {
+//                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+//                        dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
+//                        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                finish();
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                        dlgAlert.show();
+//                    }
+//                }
+//            });
+            ModelRest modelRest = ModelRest.getInstance();
+            trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
                     CreateList();
 
-                    if(trempsList.size() == 0)
-                    {
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
-                        dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
-                        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                dialog.dismiss();
-                            }
-                        });
-                        dlgAlert.show();
-                    }
-                }
-            });
             detailsSet = "Search";
        }
 
@@ -219,12 +228,21 @@ public class ListTrempActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Tremp tremp =  trempsList.get(i);
+                Utils.currentChosenTremp = tremp;
+                String source = "", dest="";
+
+                if(tremp.getSource() != null)
+                    source = Utils.getAddressFromLocation(ListTrempActivity.this, tremp.getSource());
+
+                if(tremp.getDest() != null)
+                    dest = Utils.getAddressFromLocation(ListTrempActivity.this, tremp.getDest());
+
 
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
                 intent.putExtra("id",  tremp.getId());
                 intent.putExtra("phone",  tremp.getPhoneNumber());
-                intent.putExtra("source",  tremp.getSourceAddress());
-                intent.putExtra("dest",  tremp.getDestAddress());
+                intent.putExtra("source",  source);
+                intent.putExtra("dest",  dest);
                 intent.putExtra("seets",  tremp.getSeets());
                 intent.putExtra("car",  tremp.getCarModel());
                 intent.putExtra("image",  tremp.getImageName());
@@ -322,7 +340,8 @@ public class ListTrempActivity extends Activity {
             final TextView seats = (TextView) view.findViewById(R.id.ava_seats);
             final Tremp st = trempsList.get(i);
             final String driver_id = st.getDriverId();
-              seats.setText(String.valueOf(st.getSeets()) + " Available Seats");
+            final String avilableSeats = String.valueOf(st.getSeets());
+              seats.setText(avilableSeats + " מקומות פנויים ");
 
             String dateTime = st.getTrempDateTime();
             String newTime = "";
