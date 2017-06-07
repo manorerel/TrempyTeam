@@ -58,8 +58,6 @@ public class ListTrempActivity extends Activity {
         
         String cameFrom = (String) getIntent().getExtras().get("cameFrom");
         if (cameFrom != null && cameFrom.equals("personalArea")) {
-            String isCreated = (String) getIntent().getExtras().get("isCreated");
-            ModelSql modelSql = ModelSql.getInstance();
             ModelRest modelRest = ModelRest.getInstance();
             trempsList = modelRest.getTremps(User.GetAppUser().Id);
 
@@ -77,36 +75,27 @@ public class ListTrempActivity extends Activity {
             final String from = (String) getIntent().getExtras().get("from");
             final String date = (String) getIntent().getExtras().get("date");
             final String time = (String) getIntent().getExtras().get("time");
-
-            ModelFirebase fbModel = new ModelFirebase();
-//            fbModel.getAllTrempsByFilter(time,date,dest, from, new Model.GetAllTrempsByFilerListener() {
-//                @Override
-//                public void onComplete(List<Tremp> tremps) {
-//
-//                    trempsList = tremps;
-//                    CreateList();
-//
-//                    if(trempsList.size() == 0)
-//                    {
-//                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
-//                        dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
-//                        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                finish();
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        dlgAlert.show();
-//                    }
-//                }
-//            });
             ModelRest modelRest = ModelRest.getInstance();
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
-                    CreateList();
+            CreateList();
+
 
             detailsSet = "Search";
        }
+
+        if(trempsList.size() == 0) {
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+            dlgAlert.setMessage("לא נמצאו טרמפים התואמים את בקשת החיפוש");
+            dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    dialog.dismiss();
+                }
+            });
+            dlgAlert.show();
+        }
+
     }
 
     public void CreateList()
@@ -164,17 +153,21 @@ public class ListTrempActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == Activity.RESULT_OK) {
-            ModelSql modelSql = ModelSql.getInstance();
-            trempsList = modelSql.getAllTremps(true);
+        ModelRest modelRest = ModelRest.getInstance();
 
-            CreateList();
+        if (detailsSet.equals("personalArea")) {
 
+            trempsList = modelRest.getTremps(User.GetAppUser().Id);
+        }
+        else{
+            final String dest = (String) getIntent().getExtras().get("dest");
+            final String from = (String) getIntent().getExtras().get("from");
+            final String date = (String) getIntent().getExtras().get("date");
+            final String time = (String) getIntent().getExtras().get("time");
+            trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
         }
 
-        if(requestCode == Activity.RESULT_FIRST_USER){
-            finish();
-        }
+        CreateList();
     }
     class TrempsAdapter extends BaseAdapter {
 

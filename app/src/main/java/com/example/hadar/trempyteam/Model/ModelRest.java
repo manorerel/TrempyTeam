@@ -339,7 +339,8 @@ public class ModelRest {
             LatLng dest = new LatLng(destJson.getDouble("lat"), destJson.getDouble("long"));
 
             String dateFromJson = j.getString("trempDateTime");
-            String dateTime = convertDateTime(dateFromJson);
+//            String dateTime = convertDateTime(dateFromJson);
+            String dateTime = j.getString("trempDateTime");
             ArrayList<String> passengers = new ArrayList<String>();
             JSONArray passengersJson = j.getJSONArray("Passengers");
             for(int i=0; i<passengersJson.length(); i++){
