@@ -107,7 +107,7 @@ public class TrempDetailsActivity extends Activity {
         CarModel.setText(intent.getExtras().getString("car"));
         String imageName = intent.getExtras().getString("image");
 
-        final TextView showImage = (TextView) findViewById(R.id.showImage);
+        final ImageButton showImage = (ImageButton) findViewById(R.id.showImage);
 
         showImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +146,7 @@ public class TrempDetailsActivity extends Activity {
         });
 
 
-        final TextView friends_passengers = (TextView) findViewById(R.id.show_friends);
+        final ImageButton friends_passengers = (ImageButton) findViewById(R.id.show_friends);
 
 
         friends_passengers.setOnClickListener(new View.OnClickListener() {
@@ -161,10 +161,6 @@ public class TrempDetailsActivity extends Activity {
             }
         });
     }
-
-
-
-
 
     private void showDialog() {
 
@@ -312,7 +308,7 @@ public class TrempDetailsActivity extends Activity {
         cameFrom = (String) intent.getExtras().get("cameFrom");
 
 
-        if(driverId.equals(User.GetAppUser().Id) && cameFrom.equals("personalArea")) {
+        if(driverId.equals(User.GetAppUser().Id)) {
 
             MenuItem edit = menu.findItem(R.id.editTremp);
             edit.setVisible(true);
@@ -368,7 +364,7 @@ public class TrempDetailsActivity extends Activity {
                         ModelRest modelRest = ModelRest.getInstance();
                         Intent resultIntent = getIntent();
                         modelRest.deleteTremp(Utils.currentChosenTremp.getId());
-                        setResult(Activity.RESULT_OK,returnIntent);
+                        setResult(Activity.RESULT_OK,resultIntent);
                         finish();
                         dialog.dismiss();
                     }
