@@ -71,7 +71,8 @@ public class ListTrempActivity extends Activity {
     RelativeLayout mDrawerPane;
     ActionBarDrawerToggle mDrawerToggle;
     DrawerLayout mDrawerLayout;
-
+     //ProgressDialog pd = new ProgressDialog(getApplicationContext());
+   public ProgressDialog pd ;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
     @Override
@@ -80,8 +81,9 @@ public class ListTrempActivity extends Activity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_list_tremps);
 
+        pd = new ProgressDialog(ListTrempActivity.this);
         final ActionBar actionBar = this.getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
         getActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
@@ -153,18 +155,48 @@ public class ListTrempActivity extends Activity {
             if (intent.getExtras().getString("isCreated").equals("true")) {
 
                 trempsList = modelRest.getTremps(User.GetAppUser().Id);
+
+                if (trempsList.size() == 0)
+                {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+                    dlgAlert.setMessage("לא יצרת טרמפים");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                            Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    dlgAlert.show();
+                }
+
             }
             else
             {
                 trempsList = modelRest.getTrempsJoined(User.GetAppUser().Id);
+
+                if (trempsList.size() == 0)
+                {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+                    dlgAlert.setMessage("לא הצטרפת לאף טרמפ");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                            Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    dlgAlert.show();
+                }
             }
 
-//            if(isCreated.equals("true"))
-//                trempsList = modelSql.getAllTremps(true);
-//            else trempsList = modelSql.getAllTremps(false);
 
             CreateList();
-           // progressdialog.dismiss();
+
             detailsSet = "personalArea";
         }
         else
@@ -179,6 +211,22 @@ public class ListTrempActivity extends Activity {
             ModelRest modelRest = ModelRest.getInstance();
 
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
+
+            if (trempsList.size() == 0)
+            {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
+                dlgAlert.setMessage("אין טרמפים העונים לחיפוש שביקשת");
+                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener()  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+                        startActivity(intent);
+                    }
+                });
+                dlgAlert.show();
+            }
                     CreateList();
 
             detailsSet = "Search";
@@ -415,6 +463,9 @@ public class ListTrempActivity extends Activity {
             intent.putExtra("cameFrom","personalArea");
             intent.putExtra("isCreated", "true");
 
+            pd.setMessage("מחפש טרמפים שיצרת ...");
+            pd.show();
+
             startActivity(intent);
         }
         else if (position == 1)
@@ -423,6 +474,8 @@ public class ListTrempActivity extends Activity {
             intent.putExtra("cameFrom","personalArea");
             intent.putExtra("isCreated", "false");
 
+            pd.setMessage("מחפש טרמפים שהצטרפת אליהם ...");
+            pd.show();
             startActivity(intent);
 
         }
@@ -566,17 +619,22 @@ public class ListTrempActivity extends Activity {
                             }
                         }
                     }).executeAsync();
-
         }
         catch (Exception e){
             Log.d("exception", "can't get user name " + e.getMessage());
         }
+    }
+    @Override
+    public void onBackPressed() {
 
-
-
+pd.dismiss();
+        Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+        startActivity(intent);
 
 
     }
+
+
 
 
 

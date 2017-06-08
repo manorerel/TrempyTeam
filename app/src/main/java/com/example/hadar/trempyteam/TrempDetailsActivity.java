@@ -67,7 +67,7 @@ public class TrempDetailsActivity extends Activity {
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowTitleEnabled(false);
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
         getActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         actionBar.setBackgroundDrawable(colorDrawable);
@@ -505,6 +505,5 @@ public class TrempDetailsActivity extends Activity {
 
         finish();
     }
-
 }
 

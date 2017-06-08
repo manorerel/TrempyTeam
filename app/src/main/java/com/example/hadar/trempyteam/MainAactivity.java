@@ -49,7 +49,7 @@ public class MainAactivity extends Activity {
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
     String TAG = MapsActivity.class.getSimpleName();
-
+    public ProgressDialog pd ;
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
     ActionBarDrawerToggle mDrawerToggle;
@@ -63,7 +63,7 @@ public class MainAactivity extends Activity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
         final ActionBar actionBar = this.getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
 
         actionBar.setBackgroundDrawable(colorDrawable);
         getActionBar().setDisplayShowTitleEnabled(false);
@@ -179,6 +179,9 @@ public class MainAactivity extends Activity {
             Intent intent = new Intent(getBaseContext(), ListTrempActivity.class);
             intent.putExtra("cameFrom","personalArea");
             intent.putExtra("isCreated", "true");
+            ProgressDialog pd = new ProgressDialog(MainAactivity.this);
+            pd.setMessage("מחפש טרמפים שיצרת ...");
+            pd.show();
 
             startActivity(intent);
         }
@@ -187,7 +190,9 @@ public class MainAactivity extends Activity {
             Intent intent = new Intent(getBaseContext(), ListTrempActivity.class);
             intent.putExtra("cameFrom","personalArea");
             intent.putExtra("isCreated", "false");
-
+            ProgressDialog pd = new ProgressDialog(MainAactivity.this);
+            pd.setMessage("מחפש טרמפים שהצטרפת אליהם ...");
+            pd.show();
             startActivity(intent);
 
         }
@@ -195,6 +200,7 @@ public class MainAactivity extends Activity {
         else if (position == 2)
         {
             Intent intent = new Intent(MainAactivity.this, CreateNewTrempActivity.class);
+
             startActivity(intent);
         }
         // Logout
@@ -314,7 +320,16 @@ public class MainAactivity extends Activity {
     @Override
     public void onBackPressed() {
 
+
+
     }
+    @Override
+    public void onResume () {
+        super.onResume();
+
+
+    }
+
 
     @Override
     protected void onStart() {
@@ -342,10 +357,6 @@ public class MainAactivity extends Activity {
         catch (Exception e){
             Log.d("exception", "can't get user name " + e.getMessage());
         }
-
-
-
-
 
     }
 
