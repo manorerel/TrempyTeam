@@ -27,9 +27,13 @@
         android:id="@+id/textView"
         android:typeface="sans"
         android:textSize="60sp"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="sans-serif"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:shadowColor="@color/colorDarkOrange"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:shadowRadius="5"/>
 
     <ImageView
         android:layout_width="wrap_content"
