@@ -20,12 +20,14 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,9 +63,9 @@ public class searchTrempFragment extends Fragment {
      AutoCompleteTextView atvPlaces;
      AutoCompleteTextView atvPlaces_;
     FragmentManager fragmentManager;
+     ProgressDialog pd;
     final String destii = "";
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
-
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
 
     @Override
@@ -71,13 +73,15 @@ public class searchTrempFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
+
         // Inflate the fragment layout file
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.search_tremp, container, false);
-
-            ActionBar actionBar = getActivity().getActionBar();
+        pd = new ProgressDialog(getActivity());
+           final ActionBar actionBar = getActivity().getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
             setHasOptionsMenu(true);
+
 
         atvPlaces = (AutoCompleteTextView)rootView.findViewById(R.id.destination);
         atvPlaces_ = (AutoCompleteTextView)rootView.findViewById(R.id.from);
@@ -202,7 +206,8 @@ public class searchTrempFragment extends Fragment {
                     intent.putExtra("date", text);
                     intent.putExtra("time", time_);
 
-
+                    pd.setMessage("מחפש טרמפים התואמים לחיפוש ...");
+                    pd.show();
 
                     startActivity(intent);
 
@@ -210,10 +215,21 @@ public class searchTrempFragment extends Fragment {
                 }
             });
 
+
+
+
+
         return rootView;
     }
 
 
+  /*  public void onBackPressed()
+    {
+        if (pd.isShowing())
+        {
+            pd.dismiss();
+        }
+    }*/
     // Fetches all places from GooglePlaces AutoComplete Web Service
     private class PlacesTask extends AsyncTask<String, Void, String> {
 
@@ -396,12 +412,15 @@ public class searchTrempFragment extends Fragment {
                 public void onResume () {
                     super.onResume();
 
+
                 }
 
                 @Override
                 public void onStart () {
                     super.onStart();
+
                 }
+
 
                 @Override
                 public void onStop () {

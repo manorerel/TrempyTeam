@@ -59,7 +59,7 @@ public class EditTrempActivity extends Activity {
         setContentView(R.layout.edit_tremp);
         ActionBar actionBar = getActionBar();
 
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
         getActionBar().setDisplayShowTitleEnabled(false);
         actionBar.setBackgroundDrawable(colorDrawable);
         getActionBar().setIcon(

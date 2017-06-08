@@ -50,7 +50,7 @@ public class ListPassengersActivity extends Activity {
 
 
         ActionBar actionBar = this.getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
 
         actionBar.setBackgroundDrawable(colorDrawable);
         getActionBar().setDisplayShowTitleEnabled(false);

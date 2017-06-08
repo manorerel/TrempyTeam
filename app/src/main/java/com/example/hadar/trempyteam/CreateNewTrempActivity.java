@@ -101,7 +101,7 @@ public class CreateNewTrempActivity extends Activity {
         progressdialog.setMessage("Please Wait....");
         progressdialog.show();
         ActionBar actionBar = this.getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#E0E0E0"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
         getActionBar().setDisplayShowTitleEnabled(false);
         actionBar.setBackgroundDrawable(colorDrawable);
         getActionBar().setIcon(
