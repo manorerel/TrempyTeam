@@ -85,7 +85,7 @@ public class MainAactivity extends Activity {
 
         ModelSocketIo.getInstance().addMoodListener(joinListener);
 
-//        ModelRest.getInstance().joinOrUnjoinTremp("59b277bee5ee783be48ad494", "10210930221645779", true);
+
 
         fragmentManager = getFragmentManager();
 

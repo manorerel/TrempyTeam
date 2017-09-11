@@ -37,7 +37,7 @@ import java.util.List;
 
 public class ModelSocketIo {
     private static ModelSocketIo modelSocketIo;
-    private String urlConnection = "http://jkmodrihlj.localtunnel.me:8080";
+    private String urlConnection = "http://192.168.1.115:8080";
     private List _listeners = new ArrayList();
 
 
@@ -89,7 +89,7 @@ public class ModelSocketIo {
         public void call(Object... args) {
             Log.d("message arrived", args.toString());
 
-                String stringToPrint = "משתמש " + getUserName(args.toString()) + "הצטרף לטרמפ שלך";
+                String stringToPrint = "משתמש הצטרף לטרמפ שלך";
 
                 NotificationEvent event = new NotificationEvent( this, stringToPrint );
                 Iterator listeners = _listeners.iterator();
@@ -102,7 +102,7 @@ public class ModelSocketIo {
 
     };
 
-
+    //TODO: put it in thread pool and handle it
     private String getUserName(String userId){
         final String[] name = new String[1];
         try {
