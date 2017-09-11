@@ -121,8 +121,8 @@ public class LoginActivity extends Activity {
         startActivityForResult(intent, main);
         User.CreateAppUser(userId);
 
-//        ModelRest modelRest = ModelRest.getInstance();
-//        modelRest.connectToServer(userId);
+        ModelRest modelRest = ModelRest.getInstance();
+        modelRest.connectToServer(userId);
 
         ModelSocketIo modelSocketIo = ModelSocketIo.getInstance();
         modelSocketIo.connectToServer(userId);

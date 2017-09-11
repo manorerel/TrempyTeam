@@ -37,7 +37,8 @@ import java.util.List;
 
 public class ModelSocketIo {
     private static ModelSocketIo modelSocketIo;
-    private String urlConnection = "http://192.168.1.115:8080";
+//    private String urlConnection = "http://192.168.1.115:8080";
+    private String urlConnection = "http://193.106.55.103:8080";
     private List _listeners = new ArrayList();
 
 

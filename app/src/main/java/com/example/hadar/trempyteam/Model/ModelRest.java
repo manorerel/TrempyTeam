@@ -46,11 +46,11 @@ import com.github.nkzawa.socketio.client.Socket;
 import com.github.nkzawa.emitter.Emitter;
 
 public class ModelRest {
-//    private String RIDE_URL="http://193.106.55.103:80/api/rides";
-//    private String USER_URL="http://193.106.55.103:80/api/users";
+    private String RIDE_URL="http://193.106.55.103:80/api/rides";
+    private String USER_URL="http://193.106.55.103:80/api/users";
 
-    private String RIDE_URL="http://192.168.1.115:80/api/rides";
-    private String USER_URL="http://192.168.1.115:80/api/users";
+//    private String RIDE_URL="http://192.168.1.115:80/api/rides";
+//    private String USER_URL="http://192.168.1.115:80/api/users";
     private String FB_ID="fbId";
     private String DRIVER="driver";
     private String SOURCE="src";
