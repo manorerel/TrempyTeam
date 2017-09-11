@@ -3,6 +3,8 @@ package com.example.hadar.trempyteam;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +20,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +50,7 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.text.DateFormat;
@@ -63,6 +67,8 @@ public class ListTrempActivity extends Activity {
     List<Tremp> trempsList ;
     Boolean check = false;
     final TrempsAdapter adapter = new TrempsAdapter();
+     int index_choosen_tremp = 0;
+
     MenuItem myMenu;
     public static final int  REQUEST_CODE_ASK_PERMISSIONS = 1;
     final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
@@ -212,6 +218,7 @@ public class ListTrempActivity extends Activity {
 
             trempsList = modelRest.getTremps(user_connected_id, Utils.getLocationFromAddress(ListTrempActivity.this, from), Utils.getLocationFromAddress(ListTrempActivity.this, dest), date + "T" + time);
 
+
             if (trempsList.size() == 0)
             {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(ListTrempActivity.this);
@@ -261,6 +268,7 @@ public class ListTrempActivity extends Activity {
 
     public void CreateList()
     {
+
         ListView list = (ListView) findViewById(R.id.Tremps_listView1);
         list.setAdapter(adapter);
 
@@ -268,6 +276,7 @@ public class ListTrempActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                index_choosen_tremp =  i;
                 Tremp tremp =  trempsList.get(i);
                 Utils.currentChosenTremp = tremp;
                 String source = "", dest="";
@@ -279,8 +288,10 @@ public class ListTrempActivity extends Activity {
                     dest = Utils.getAddressFromLocation(ListTrempActivity.this, tremp.getDest());
 
 
+
                 Intent intent = new Intent(ListTrempActivity.this, TrempDetailsActivity.class);
                 intent.putExtra("id",  tremp.getId());
+                intent.putExtra("index",  String.valueOf(index_choosen_tremp));
                 intent.putExtra("phone",  tremp.getPhoneNumber());
                 intent.putExtra("source",  source);
                 intent.putExtra("dest",  dest);
@@ -299,23 +310,6 @@ public class ListTrempActivity extends Activity {
 
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.menu_buttons, menu);
-
-        View view = (View) LayoutInflater.from(getBaseContext() ).inflate(R.layout.check, null);
-        com.example.hadar.trempyteam.ProfilePictureView editText =  (com.example.hadar.trempyteam.ProfilePictureView) view.findViewById(R.id.friendProfilePicture);
-        editText.setProfileId(user_connected_id);
-
-        MenuItem personalArea =  menu.findItem(R.id.personalArea);
-        personalArea.setVisible(true);
-        personalArea.setActionView(view);
-
-        return true;
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -342,11 +336,12 @@ public class ListTrempActivity extends Activity {
             trempsList = modelSql.getAllTremps(true);
 
             CreateList();
-
         }
 
-        if(requestCode == Activity.RESULT_FIRST_USER){
-            finish();
+        if(resultCode == Activity.RESULT_FIRST_USER){
+            Log.d("gggggggg", String.valueOf(index_choosen_tremp));
+
+            // send to server the array with user id and the index
         }
     }
     class TrempsAdapter extends BaseAdapter {

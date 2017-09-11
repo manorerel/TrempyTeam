@@ -4,9 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-//import android.app.Notification;
-//import android.app.NotificationManager;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -119,8 +119,6 @@ public class MainAactivity extends Activity {
             mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                     selectItemFromDrawer(position);
                 }
             });
@@ -145,9 +143,6 @@ public class MainAactivity extends Activity {
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-
-
 
 
 

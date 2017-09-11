@@ -82,6 +82,8 @@ public class TrempDetailsActivity extends Activity {
         TimeEditText TrempTime = (TimeEditText) findViewById(R.id.detailsTime);
         final TextView CarModel = (TextView) findViewById(R.id.detailsCar_model);
 
+        final String index;
+        index = intent.getExtras().getString("index");
         String date = intent.getExtras().getString("date");
         String newDate = "";
         String newTime = "";
@@ -237,12 +239,12 @@ public class TrempDetailsActivity extends Activity {
 
     private void joinTremp(){
         final String tremp_id = getIntent().getExtras().getString("id");
-
+        final String index = getIntent().getExtras().getString("index");
 
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
 
         ModelRest modelRest = ModelRest.getInstance();
-        modelRest.joinOrUnjoinTremp(tremp_id, user_id, true);
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id, index, true);
 
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
         dlgAlert.setMessage("יש לך מקום שמור בטרמפ (:");
@@ -252,7 +254,6 @@ public class TrempDetailsActivity extends Activity {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_FIRST_USER,returnIntent);
                 finish();
-
                 dialog.dismiss();
             }
         });
@@ -263,9 +264,9 @@ public class TrempDetailsActivity extends Activity {
         final String tremp_id = getIntent().getExtras().getString("id");
 
         String user_id = AccessToken.getCurrentAccessToken().getUserId();
-
+        String index_tremp_choose = getIntent().getExtras().getString("index");
         ModelRest modelRest = ModelRest.getInstance();
-        modelRest.joinOrUnjoinTremp(tremp_id, user_id, false);
+        modelRest.joinOrUnjoinTremp(tremp_id, user_id,index_tremp_choose, false);
 
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(TrempDetailsActivity.this);
         dlgAlert.setMessage("יצאת מהטרמפ בהצלחה");
@@ -273,7 +274,7 @@ public class TrempDetailsActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_FIRST_USER,returnIntent);
+                setResult(Activity.RESULT_CANCELED,returnIntent);
                 finish();
 
                 dialog.dismiss();
@@ -501,9 +502,13 @@ public class TrempDetailsActivity extends Activity {
         {
             Intent returnIntent = new Intent();
             setResult(Activity.RESULT_OK,returnIntent);
+            finish();
         }
 
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED,returnIntent);
         finish();
+
     }
 }
 

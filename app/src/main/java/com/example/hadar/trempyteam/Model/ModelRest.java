@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam.Model;
 /**
  * Created by manor on 5/26/2017.
  */
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,6 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.gcm.Task;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -27,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.ClientProtocolException;
@@ -48,9 +54,6 @@ import com.github.nkzawa.emitter.Emitter;
 public class ModelRest {
     private String RIDE_URL="http://193.106.55.103:80/api/rides";
     private String USER_URL="http://193.106.55.103:80/api/users";
-
-//    private String RIDE_URL="http://192.168.1.115:80/api/rides";
-//    private String USER_URL="http://192.168.1.115:80/api/users";
     private String FB_ID="fbId";
     private String DRIVER="driver";
     private String SOURCE="src";
@@ -64,26 +67,26 @@ public class ModelRest {
     private ExecutorService updateThreadPool = Executors.newFixedThreadPool(5);
     private ExecutorService deleteThreadPool = Executors.newFixedThreadPool(5);
     private ExecutorService readThreadPool = Executors.newFixedThreadPool(5);
-
-
+    final String user_connected_id = AccessToken.getCurrentAccessToken().getUserId();
+    String save_server_response = "s";
     private static ModelRest modelRest;
+    JSONArray ret_tremps = new JSONArray();
+    String to = "";
 
-    public static ModelRest getInstance(){
-        if(modelRest == null)
+    public static ModelRest getInstance() {
+        if (modelRest == null)
             modelRest = new ModelRest();
 
         return modelRest;
     }
 
-    public void connectToServer(final String userId){
+    public void connectToServer(final String userId) {
         createThreadPool.submit(new Runnable() {
             @Override
             public void run() {
                 HttpClient httpClient = new DefaultHttpClient();
                 String url = USER_URL + "/" + userId;
                 HttpPost httpPost = new HttpPost(url);
-
-
 
                 try {
                     HttpResponse response = httpClient.execute(httpPost);
@@ -105,6 +108,8 @@ public class ModelRest {
 
         final List<Tremp> tremps = new LinkedList<Tremp>();
         final Future<List<Tremp>> futureTremps;
+        final Future<List<Tremp>> testFT;
+
 
         futureTremps = readThreadPool.submit(new Callable<List<Tremp>>() {
             @Override
@@ -122,21 +127,32 @@ public class ModelRest {
 
                     if(response.getStatusLine().getStatusCode()==200){
                         String server_response = EntityUtils.toString(response.getEntity());
-                        JSONArray trempsJson = new JSONArray(server_response);
-                        for(int i=0; i< trempsJson.length(); i++){
-                            Tremp t = convertJsonToTremp(trempsJson.getJSONObject(i));
-                            tremps.add(t);
+                        ret_tremps = new JSONArray(server_response);
+                        save_server_response = server_response;
+                        final JSONArray trempsJson = new JSONArray(server_response);
+                        final JSONArray trempsJson_to_return = new JSONArray(save_server_response);
+
+                        Thread[] threads = new Thread[trempsJson.length()];
+                        for (int i = 0; i < trempsJson.length(); i++) {
+                            int j = i;
+                           checkIfRelevant(trempsJson, trempsJson_to_return, j, tremps);
                         }
-                        Log.i("Server response", server_response );
+
+                        Log.i("Server response", server_response);
                     } else {
-                        Log.i("Server response", "Failed to get server response" );
+                        Log.i("Server response", "Failed to get server response");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }
-                return tremps;
+
+
+                final List<Tremp> trempsToReturn_ = callToKNN();
+
+                return trempsToReturn_;
+
             }
         });
 
@@ -154,10 +170,197 @@ public class ModelRest {
         } catch (Exception e){
             Log.d("exception: ", e.getMessage());
             return null;
-        }
+        }}
 
+    private void checkIfRelevant(final JSONArray trempsJson, final JSONArray trempsJson_to_return, int i, final List<Tremp> tremps) throws JSONException {
+        final int j = i;
+        final Tremp t = convertJsonToTremp(trempsJson.getJSONObject(j).getJSONObject("ride"));
+
+        try {
+            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    user_connected_id + "/friends/" + t.driverId,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
+
+                            final JSONObject resObject = response.getJSONObject();
+                            JSONArray friendData = null;
+                            try {
+                                friendData = resObject.getJSONArray("data");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (friendData.length() > 0) {
+                                callToMutualFriends(t, trempsJson_to_return, j, tremps);
+                            }
+                            else
+                            {
+                                JSONObject js = null;
+                                try {
+                                    js = trempsJson_to_return.getJSONObject(j);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    js.put("isFriends", 0);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    ret_tremps.put(j, js);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+                        }
+                    }).executeAndWait();
+        } catch (Exception e) {
+            Log.d("exception", "can't get user name " + e.getMessage());
+        }
     }
 
+    private void callToMutualFriends(Tremp t, final JSONArray trempsJson_to_return, final int j, final List<Tremp> tremps) {
+        try {
+
+            Bundle params = new Bundle();
+            params.putString("fields", "context.fields(mutual_friends)");
+
+            new GraphRequest(AccessToken.getCurrentAccessToken(),
+                    t.driverId,
+                    params,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse res) {
+                            JSONObject friensdData = null;
+                            try {
+                                friensdData =  res.getJSONObject().getJSONObject("context").getJSONObject("mutual_friends").getJSONObject("summary");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                final String total_count = friensdData.getString("total_count");
+                                JSONObject js = trempsJson_to_return.getJSONObject(j);
+                                js.put("mutualFriends", Integer.parseInt(total_count));
+                                js.put("isFriends", 1);
+                                ret_tremps.put(j, js);
+
+                                Log.d("lemgth", Integer.toString( ret_tremps.length()));
+                                int l = ret_tremps.length();
+                                int i = 0;
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).executeAndWait();
+
+        } catch (Exception e) {
+            Log.d("exception", "can't get user name " + e.getMessage());
+        }
+    }
+
+    private List<Tremp> callToKNN() throws JSONException {
+
+        final List<Tremp> tremps = new LinkedList<Tremp>();
+        final Future<List<Tremp>> futureTremps;
+
+                JSONObject ret_Obj = new JSONObject();
+                ret_Obj.put("fbId", user_connected_id);
+                ret_Obj.put("extendedRides", ret_tremps);
+                final String s = ret_Obj.toString();
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPut httpPost = new HttpPut(RIDE_URL + "/knn");
+
+                try {
+                    JSONObject body = new JSONObject();
+                    body.put("Source_Array_preferences", s);
+
+                    httpPost.setEntity(new StringEntity(body.toString(), "UTF8"));
+                    httpPost.setHeader("Content-type", "application/json");
+
+                    HttpResponse responsee = httpClient.execute(httpPost);
+                    String server_response = "";
+                    InputStream instream;
+
+                    if (responsee.getStatusLine().getStatusCode() == 200) {
+                        server_response = EntityUtils.toString(responsee.getEntity());
+                        to = server_response;
+                        JSONArray trempsJson = new JSONArray(server_response);
+                        for (int i = 0; i < trempsJson.length(); i++) {
+                            Tremp t = convertJsonToTremp(trempsJson.getJSONObject(i).getJSONObject("ride"));
+                            tremps.add(t);
+                        }
+
+                        return tremps;
+                    }
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+        return tremps;
+    }
+
+
+    public void test(String tremps) throws JSONException {
+
+        JSONObject ret_Obj = new JSONObject();
+        ret_Obj.put("fbId", user_connected_id);
+        ret_Obj.put("extendedRides", tremps);
+        final String s = ret_Obj.toString();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPut httpPost = new HttpPut(RIDE_URL + "/knn");
+
+                try {
+                    JSONObject body = new JSONObject();
+                    body.put("Source_Array_preferences", s);
+
+                    httpPost.setEntity(new StringEntity(body.toString(), "UTF8"));
+                    httpPost.setHeader("Content-type", "application/json");
+
+                    HttpResponse responsee = httpClient.execute(httpPost);
+                    String server_response = "";
+                    InputStream instream;
+
+                    if (responsee.getStatusLine().getStatusCode() == 200) {
+                        server_response = EntityUtils.toString(responsee.getEntity());
+                        instream = responsee.getEntity().getContent();
+                        Log.d("instream", instream.toString());
+                        JSONObject json = new JSONObject(server_response);
+                        Object v = json.getJSONObject("ride");
+                    }
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        });
+
+
+        t.start();
+    }
 
     public List<Tremp> getTrempsJoined(final String userId){
         final List<com.example.hadar.trempyteam.Model.Tremp> tremps = new LinkedList<com.example.hadar.trempyteam.Model.Tremp>();
@@ -328,8 +531,7 @@ public class ModelRest {
                     HttpResponse response = httpClient.execute(httpPut);
                     if(response.getStatusLine().getStatusCode()==200){
                         Log.d("update ride", "success");
-                    }
-                    else Log.d("update ride", "not success");
+                    } else Log.d("update ride", "not success");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (ClientProtocolException e) {
@@ -353,9 +555,7 @@ public class ModelRest {
 
                     if(response.getStatusLine().getStatusCode()==200){
                         Log.d("delete ride", "success");
-                    }
-                    else Log.d("delete ride", "not success");
-
+                    } else Log.d("delete ride", "not success");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -363,7 +563,7 @@ public class ModelRest {
         });
     }
 
-    public void joinOrUnjoinTremp(final String trempToJoinId, final String useId, final boolean isJoin){
+    public void joinOrUnjoinTremp(final String trempToJoinId, final String useId, final String choose_index, final boolean isJoin) {
         updateThreadPool.submit(new Runnable() {
             @Override
             public void run() {
@@ -373,19 +573,22 @@ public class ModelRest {
                     url = RIDE_URL + "/" + JOIN;
                 else url = RIDE_URL + "/" + UNJOIN;
 
+                // what to do with unjoin ???
+
                 HttpPut httpPut = new HttpPut(url);
                 try {
                     JSONObject body = new JSONObject();
-                    body.put("rideId", trempToJoinId);
+                    // body.put("rideId", trempToJoinId);
                     body.put("userId", useId);
+                    body.put("choose_index", choose_index);
+                    body.put("Source_Array_preferences", to);
                     httpPut.setEntity(new StringEntity(body.toString(), "UTF8"));
                     httpPut.setHeader("Content-type", "application/json");
                     HttpResponse response = httpClient.execute(httpPut);
 
                     if(response.getStatusLine().getStatusCode()==200){
                         Log.d("join or unjoin", "success");
-                    }
-                    else Log.d("join or unjoin", "not success");
+                    } else Log.d("join or unjoin", "not success");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -470,8 +673,7 @@ public class ModelRest {
             tremp.put("carModel", newTremp.carModel);
             tremp.put("trempDateTime", newTremp.trempDateTime);
             tremp.put("imageName", newTremp.imageName);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
