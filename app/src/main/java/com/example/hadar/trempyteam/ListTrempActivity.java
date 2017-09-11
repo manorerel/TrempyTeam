@@ -341,8 +341,19 @@ public class ListTrempActivity extends Activity {
         if(resultCode == Activity.RESULT_FIRST_USER){
             Log.d("gggggggg", String.valueOf(index_choosen_tremp));
 
-            // send to server the array with user id and the index
+            Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+            startActivity(intent);
+
         }
+
+        if(resultCode == Activity.RESULT_CANCELED){
+
+
+            Intent intent = new Intent(ListTrempActivity.this, MainAactivity.class);
+            startActivity(intent);
+
+        }
+
     }
     class TrempsAdapter extends BaseAdapter {
 
