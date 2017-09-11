@@ -37,6 +37,7 @@ import com.example.hadar.trempyteam.Model.JoinNotificationListener;
 import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.ModelSocketIo;
 import com.example.hadar.trempyteam.Model.NotificationListener;
+import com.example.hadar.trempyteam.Model.UnJoinNotificationListener;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -63,6 +64,7 @@ public class MainAactivity extends Activity {
     ActionBarDrawerToggle mDrawerToggle;
     DrawerLayout mDrawerLayout;
     JoinNotificationListener joinListener;
+    UnJoinNotificationListener unJoinNotificationListener;
 
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
@@ -84,6 +86,9 @@ public class MainAactivity extends Activity {
         joinListener = new JoinNotificationListener(this);
 
         ModelSocketIo.getInstance().addMoodListener(joinListener);
+
+        unJoinNotificationListener = new UnJoinNotificationListener(this);
+        ModelSocketIo.getInstance().addUnJoinListener(unJoinNotificationListener);
 
 
 
