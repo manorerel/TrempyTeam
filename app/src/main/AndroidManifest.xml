@@ -9,7 +9,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.example.hadar.trempyteam.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.hadar.trempyteam.permission.C2D_MESSAGE" />
     <uses-feature android:name="android.hardware.location.gps" />
 
     <activity android:name=".ShareImageActivity" />
@@ -68,5 +72,34 @@
             android:name=".ListPassengersActivity"
             android:label="@string/title_activity_list_passengers" />
     </application>
+
+
+    <receiver
+        android:name="com.google.android.gms.gcm.GcmReceiver"
+        android:exported="true"
+        android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            <category android:name="com.example.gcm" />
+        </intent-filter>
+    </receiver>
+    <service
+        android:name="com.example.MyGcmListenerService"
+        android:exported="false" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        </intent-filter>
+    </service>
+    <service
+        android:name="com.example.MyInstanceIDListenerService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.android.gms.iid.InstanceID" />
+        </intent-filter>
+    </service>
+    <service
+        android:name="gcm.play.android.samples.com.gcmquickstart.RegistrationIntentService"
+        android:exported="false">
+    </service>
 
 </manifest>

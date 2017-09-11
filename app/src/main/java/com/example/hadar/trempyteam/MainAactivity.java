@@ -4,6 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -199,6 +203,32 @@ public class MainAactivity extends Activity {
         // Create New Tremp
         else if (position == 2)
         {
+            Intent intent4 = new Intent(this.getApplicationContext(), MainAactivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent4, PendingIntent.FLAG_UPDATE_CURRENT);
+              final int MY_NOTIFICATION_ID=1;
+            NotificationManager  notificationManager;
+            Notification myNotification;
+
+
+            Context context = getApplicationContext();
+
+
+            myNotification = new Notification.Builder(context)
+                    .setContentTitle("בקשת הצטרפות לטרמפ שלך")
+                    .setContentText("כנס לבדוק מי")
+                    .setTicker("Notification!")
+                    .setWhen(System.currentTimeMillis())
+                    .setContentIntent(contentIntent)
+                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .setAutoCancel(true)
+                    .setSmallIcon(R.mipmap.h)
+                    .build();
+
+
+            notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
+
+
             Intent intent = new Intent(MainAactivity.this, CreateNewTrempActivity.class);
 
             startActivity(intent);

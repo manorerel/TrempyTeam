@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -100,6 +101,13 @@ public class CreateNewTrempActivity extends Activity {
         ProgressDialog progressdialog = new ProgressDialog(CreateNewTrempActivity.this);
         progressdialog.setMessage("Please Wait....");
         progressdialog.show();
+
+        Notification noti = new Notification.Builder(this.getApplicationContext())
+                .setContentTitle("New mail from hadar test")
+                .setContentText("hhhh")
+                .setSmallIcon(R.drawable.com_facebook_send_button_icon)
+                .build();
+
         ActionBar actionBar = this.getActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#212121"));
         getActionBar().setDisplayShowTitleEnabled(false);
