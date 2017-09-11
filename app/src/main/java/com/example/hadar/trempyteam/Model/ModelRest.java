@@ -3,6 +3,7 @@ package com.example.hadar.trempyteam.Model;
 /**
  * Created by manor on 5/26/2017.
  */
+import android.os.Bundle;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,9 +41,16 @@ import cz.msebera.android.httpclient.protocol.BasicHttpContext;
 import cz.msebera.android.httpclient.protocol.HttpContext;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.github.nkzawa.emitter.Emitter;
+
 public class ModelRest {
-    private String RIDE_URL="http://193.106.55.103:80/api/rides";
-    private String USER_URL="http://193.106.55.103:80/api/users";
+//    private String RIDE_URL="http://193.106.55.103:80/api/rides";
+//    private String USER_URL="http://193.106.55.103:80/api/users";
+
+    private String RIDE_URL="http://jkmodrihlj.localtunnel.me:3000/api/rides";
+    private String USER_URL="http://jkmodrihlj.localtunnel.me:3000/api/users";
     private String FB_ID="fbId";
     private String DRIVER="driver";
     private String SOURCE="src";
@@ -73,6 +82,8 @@ public class ModelRest {
                 HttpClient httpClient = new DefaultHttpClient();
                 String url = USER_URL + "/" + userId;
                 HttpPost httpPost = new HttpPost(url);
+
+
 
                 try {
                     HttpResponse response = httpClient.execute(httpPost);

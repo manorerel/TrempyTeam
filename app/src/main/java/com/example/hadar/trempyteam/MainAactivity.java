@@ -4,6 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+//import android.app.Notification;
+//import android.app.NotificationManager;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -29,6 +33,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.example.hadar.trempyteam.Model.JoinNotificationListener;
+import com.example.hadar.trempyteam.Model.ModelRest;
+import com.example.hadar.trempyteam.Model.ModelSocketIo;
+import com.example.hadar.trempyteam.Model.NotificationListener;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -54,6 +62,8 @@ public class MainAactivity extends Activity {
     RelativeLayout mDrawerPane;
     ActionBarDrawerToggle mDrawerToggle;
     DrawerLayout mDrawerLayout;
+    JoinNotificationListener joinListener;
+
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
@@ -71,7 +81,11 @@ public class MainAactivity extends Activity {
         actionBar.setDisplayUseLogoEnabled(false);
         getActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        joinListener = new JoinNotificationListener(this);
 
+        ModelSocketIo.getInstance().addMoodListener(joinListener);
+
+//        ModelRest.getInstance().joinOrUnjoinTremp("59b277bee5ee783be48ad494", "10210930221645779", true);
 
         fragmentManager = getFragmentManager();
 
@@ -100,6 +114,8 @@ public class MainAactivity extends Activity {
             mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                     selectItemFromDrawer(position);
                 }
             });
@@ -124,6 +140,9 @@ public class MainAactivity extends Activity {
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
+
 
 
 
