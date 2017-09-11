@@ -211,7 +211,7 @@ public class searchTrempFragment extends Fragment {
                     pd.show();
 
                     startActivity(intent);
-//                    ModelRest.getInstance().joinOrUnjoinTremp("59b6ba7fe585912cf891d84e", "10210930221645779", true);
+//                    ModelRest.getInstance().joinOrUnjoinTremp("59b6ba7fe585912cf891d84e", "10210930221645779", false);
 
                 }
             });

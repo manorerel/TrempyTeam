@@ -40,6 +40,7 @@ public class ModelSocketIo {
 //    private String urlConnection = "http://192.168.1.115:8080";
     private String urlConnection = "http://193.106.55.103:8080";
     private List _listeners = new ArrayList();
+    private NotificationListener unJoinListener;
 
 
     public static ModelSocketIo getInstance(){
@@ -51,6 +52,10 @@ public class ModelSocketIo {
 
     public ModelSocketIo(){
 
+    }
+
+    public void addUnJoinListener(NotificationListener listener){
+        unJoinListener = listener;
     }
 
     public synchronized void addMoodListener( NotificationListener l ) {
@@ -72,6 +77,7 @@ public class ModelSocketIo {
 
 //            mSocket = IO.socket(urlConnection);
             mSocket.on("onJoinTremp",onMessageArrived);
+            mSocket.on("onUnJoinTremp", onUnJoinMessageArrived);
             mSocket.connect();
             mSocket.emit("onInit", userId);
         }
@@ -98,6 +104,23 @@ public class ModelSocketIo {
                     ( (NotificationListener) listeners.next() ).notificationReceived(event);
                 }
             }
+
+
+
+    };
+
+
+    private Emitter.Listener onUnJoinMessageArrived = new Emitter.Listener(){
+
+        @Override
+        public void call(Object... args) {
+            Log.d("message arrived", args.toString());
+
+            String stringToPrint = "משתמש ביטל הצטרפות לטרמפ שלך";
+
+            NotificationEvent event = new NotificationEvent( this, stringToPrint );
+            unJoinListener.notificationReceived(event);
+        }
 
 
 
