@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,20 +47,22 @@ import cz.msebera.android.httpclient.protocol.BasicHttpContext;
 import cz.msebera.android.httpclient.protocol.HttpContext;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.github.nkzawa.emitter.Emitter;
+
 public class ModelRest {
-    private String RIDE_URL = "http://193.106.55.103:80/api/rides";
-    private String USER_URL = "http://193.106.55.103:80/api/users";
-    private String FB_ID = "fbId";
-    private String DRIVER = "driver";
-    private String SOURCE = "src";
-    private String DEST = "dst";
-    private String DATE = "date";
-    private String RIDE_ID = "ride_id";
-    private String JOIN = "join";
-    private String UNJOIN = "unjoin";
-    boolean isFriend = false;
-    private final Object lock = new Object();
-    int counter = 0;
+    private String RIDE_URL="http://193.106.55.103:80/api/rides";
+    private String USER_URL="http://193.106.55.103:80/api/users";
+    private String FB_ID="fbId";
+    private String DRIVER="driver";
+    private String SOURCE="src";
+    private String DEST="dst";
+    private String DATE="date";
+    private String RIDE_ID="ride_id";
+    private String JOIN="join";
+    private String UNJOIN="unjoin";
+
     private ExecutorService createThreadPool = Executors.newFixedThreadPool(5);
     private ExecutorService updateThreadPool = Executors.newFixedThreadPool(5);
     private ExecutorService deleteThreadPool = Executors.newFixedThreadPool(5);
@@ -87,9 +90,10 @@ public class ModelRest {
 
                 try {
                     HttpResponse response = httpClient.execute(httpPost);
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         Log.d("connect to server", "success");
-                    } else {
+                    }
+                    else{
                         Log.d("connect to server", "not success");
                     }
 
@@ -100,7 +104,7 @@ public class ModelRest {
         });
     }
 
-    public List<Tremp> getTremps(final String userID, final LatLng source, final LatLng dest, final String rideTime) {
+    public List<Tremp> getTremps(final String userID, final LatLng source, final LatLng dest, final String rideTime){
 
         final List<Tremp> tremps = new LinkedList<Tremp>();
         final Future<List<Tremp>> futureTremps;
@@ -109,17 +113,19 @@ public class ModelRest {
 
         futureTremps = readThreadPool.submit(new Callable<List<Tremp>>() {
             @Override
-            public List<Tremp> call() throws Exception {
+            public List<Tremp> call() throws Exception{
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpContext localContext = new BasicHttpContext();
-                String url = RIDE_URL + "/params?" + FB_ID + "=" + userID + "&" + SOURCE + "=" + convertLocationToString(source) + "&" + DEST + "=" +
+                String url = RIDE_URL + "/params?" + FB_ID +"=" +userID +"&" + SOURCE + "=" + convertLocationToString(source) + "&" + DEST + "=" +
                         convertLocationToString(dest) + "&" + DATE + "=" + rideTime;
+
+//                HttpGet httpGet = new HttpGet(RIDE_URL);
 
                 try {
                     HttpGet httpGet = new HttpGet(url);
                     HttpResponse response = httpClient.execute(httpGet, localContext);
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         String server_response = EntityUtils.toString(response.getEntity());
                         ret_tremps = new JSONArray(server_response);
                         save_server_response = server_response;
@@ -161,11 +167,10 @@ public class ModelRest {
         } catch (ExecutionException e) {
             e.printStackTrace();
             return null;
-        } catch (Exception e) {
+        } catch (Exception e){
             Log.d("exception: ", e.getMessage());
             return null;
-        }
-    }
+        }}
 
     private void checkIfRelevant(final JSONArray trempsJson, final JSONArray trempsJson_to_return, int i, final List<Tremp> tremps) throws JSONException {
         final int j = i;
@@ -357,7 +362,7 @@ public class ModelRest {
         t.start();
     }
 
-    public List<Tremp> getTrempsJoined(final String userId) {
+    public List<Tremp> getTrempsJoined(final String userId){
         final List<com.example.hadar.trempyteam.Model.Tremp> tremps = new LinkedList<com.example.hadar.trempyteam.Model.Tremp>();
         final Future<List<com.example.hadar.trempyteam.Model.Tremp>> futureTremps;
 
@@ -369,23 +374,24 @@ public class ModelRest {
                 String url = RIDE_URL + "/joined/" + userId;
                 HttpGet httpGet = new HttpGet(url);
 
-                try {
+                try{
                     HttpResponse response = httpClient.execute(httpGet, localContext);
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         String server_response = EntityUtils.toString(response.getEntity());
                         JSONArray trempsJson = new JSONArray(server_response);
-                        for (int i = 0; i < trempsJson.length(); i++) {
+                        for(int i=0; i< trempsJson.length(); i++){
                             com.example.hadar.trempyteam.Model.Tremp t = convertJsonToTremp(trempsJson.getJSONObject(i));
                             tremps.add(t);
                         }
-                        Log.i("Server response", server_response);
+                        Log.i("Server response", server_response );
                     } else {
-                        Log.i("Server response", "Failed to get server response");
+                        Log.i("Server response", "Failed to get server response" );
                     }
 
                     return tremps;
-                } catch (Exception e) {
+                }
+                catch (Exception e){
                     e.printStackTrace();
 
                 }
@@ -404,14 +410,14 @@ public class ModelRest {
         } catch (ExecutionException e) {
             e.printStackTrace();
             return null;
-        } catch (Exception e) {
+        } catch (Exception e){
             Log.d("exception: ", e.getMessage());
             return null;
         }
 
     }
 
-    public List<Tremp> getTremps(final String driverID) {
+    public List<Tremp> getTremps(final String driverID){
         final List<Tremp> tremps = new LinkedList<Tremp>();
         final Future<List<Tremp>> futureTremps;
 
@@ -423,23 +429,24 @@ public class ModelRest {
                 String url = RIDE_URL + "/" + DRIVER + "/" + driverID;
                 HttpGet httpGet = new HttpGet(url);
 
-                try {
+                try{
                     HttpResponse response = httpClient.execute(httpGet, localContext);
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         String server_response = EntityUtils.toString(response.getEntity());
                         JSONArray trempsJson = new JSONArray(server_response);
-                        for (int i = 0; i < trempsJson.length(); i++) {
+                        for(int i=0; i< trempsJson.length(); i++){
                             Tremp t = convertJsonToTremp(trempsJson.getJSONObject(i));
                             tremps.add(t);
                         }
-                        Log.i("Server response", server_response);
+                        Log.i("Server response", server_response );
                     } else {
-                        Log.i("Server response", "Failed to get server response");
+                        Log.i("Server response", "Failed to get server response" );
                     }
 
                     return tremps;
-                } catch (Exception e) {
+                }
+                catch (Exception e){
                     e.printStackTrace();
 
                 }
@@ -458,12 +465,14 @@ public class ModelRest {
         } catch (ExecutionException e) {
             e.printStackTrace();
             return null;
-        } catch (Exception e) {
+        } catch (Exception e){
             Log.d("exception: ", e.getMessage());
             return null;
         }
 
     }
+
+
 
 
     public void createTremp(final Tremp newTremp) {
@@ -481,13 +490,13 @@ public class ModelRest {
                     httpPost.setEntity(body);
                     httpPost.setHeader("Content-type", "application/json");
                     HttpResponse response = httpClient.execute(httpPost);
-                    String server_response = "";
+                    String server_response="";
                     InputStream instream;
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         server_response = EntityUtils.toString(response.getEntity());
                         instream = response.getEntity().getContent();
-                        Log.d("instream", instream.toString());
+                        Log.d("instream",instream.toString());
                         JSONObject json = new JSONObject(server_response);
                         Object v = json.getJSONObject("ride");
                     }
@@ -503,10 +512,10 @@ public class ModelRest {
                 }
             }
 
-        });
+            });
     }
 
-    public void updateTremp(final Tremp trempToUpdate) {
+    public void updateTremp(final Tremp trempToUpdate){
         updateThreadPool.submit(new Runnable() {
             @Override
             public void run() {
@@ -520,7 +529,7 @@ public class ModelRest {
                     httpPut.setEntity(trempString);
                     httpPut.setHeader("Content-type", "application/json");
                     HttpResponse response = httpClient.execute(httpPut);
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         Log.d("update ride", "success");
                     } else Log.d("update ride", "not success");
                 } catch (UnsupportedEncodingException e) {
@@ -534,7 +543,7 @@ public class ModelRest {
         });
     }
 
-    public void deleteTremp(final String trempToDeleteId) {
+    public void deleteTremp(final String trempToDeleteId){
         deleteThreadPool.submit(new Runnable() {
             @Override
             public void run() {
@@ -544,7 +553,7 @@ public class ModelRest {
                 try {
                     HttpResponse response = httpClient.execute(httpDelete);
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         Log.d("delete ride", "success");
                     } else Log.d("delete ride", "not success");
                 } catch (IOException e) {
@@ -560,7 +569,7 @@ public class ModelRest {
             public void run() {
                 HttpClient httpClient = new DefaultHttpClient();
                 String url = "";
-                if (isJoin)
+                if(isJoin)
                     url = RIDE_URL + "/" + JOIN;
                 else url = RIDE_URL + "/" + UNJOIN;
 
@@ -577,7 +586,7 @@ public class ModelRest {
                     httpPut.setHeader("Content-type", "application/json");
                     HttpResponse response = httpClient.execute(httpPut);
 
-                    if (response.getStatusLine().getStatusCode() == 200) {
+                    if(response.getStatusLine().getStatusCode()==200){
                         Log.d("join or unjoin", "success");
                     } else Log.d("join or unjoin", "not success");
                 } catch (JSONException e) {
@@ -607,33 +616,34 @@ public class ModelRest {
             String dateTime = j.getString("trempDateTime");
             ArrayList<String> passengers = new ArrayList<String>();
             JSONArray passengersJson = j.getJSONArray("Passengers");
-            for (int i = 0; i < passengersJson.length(); i++) {
+            for(int i=0; i<passengersJson.length(); i++){
                 passengers.add(passengersJson.getString(i));
             }
 
-            return new Tremp(j.getString("_id"), j.getLong("seets"), j.getString("driverId"), dateTime, source, dest, j.getString("phoneNumber"), j.getString("carModel"), j.getString("imageName"), passengers);
+            return new Tremp(j.getString("_id"),j.getLong("seets"),j.getString("driverId"), dateTime, source, dest, j.getString("phoneNumber"),j.getString("carModel"), j.getString("imageName"), passengers);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private String convertLocationToString(LatLng location) {
+    private String convertLocationToString(LatLng location){
 
         //first long second lat
-        if (location == null)
+        if(location == null)
             return 0 + "T" + 0;
-        return location.longitude + "T" + location.latitude;
+        return  location.longitude + "T" + location.latitude;
     }
 
-    private String convertDateTime(String dateToConvert) {
+    private String convertDateTime(String dateToConvert){
         String[] dates = dateToConvert.split("T");
-        String date = "";
-        String time = "";
-        if (dates.length == 2) {
+        String date="";
+        String time="";
+        if(dates.length == 2){
             String[] part1 = dates[0].split("-");
             String[] part2 = dates[1].split(":");
-            if (part1.length == 3 && part2.length > 2) {
+            if(part1.length == 3 && part2.length > 2)
+            {
                 date = part1[2] + "/" + part1[1] + "/" + part1[0];
                 time = part2[0] + ":" + part2[1];
             }
@@ -642,7 +652,7 @@ public class ModelRest {
         return date + " " + time;
     }
 
-    private JSONObject convertTrempToJson(Tremp newTremp) {
+    private JSONObject convertTrempToJson(Tremp newTremp){
         JSONObject tremp = new JSONObject();
 
         try {

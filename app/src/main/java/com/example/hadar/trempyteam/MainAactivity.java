@@ -14,9 +14,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +33,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.example.hadar.trempyteam.Model.JoinNotificationListener;
+import com.example.hadar.trempyteam.Model.ModelRest;
+import com.example.hadar.trempyteam.Model.ModelSocketIo;
+import com.example.hadar.trempyteam.Model.NotificationListener;
+import com.example.hadar.trempyteam.Model.UnJoinNotificationListener;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -58,6 +63,9 @@ public class MainAactivity extends Activity {
     RelativeLayout mDrawerPane;
     ActionBarDrawerToggle mDrawerToggle;
     DrawerLayout mDrawerLayout;
+    JoinNotificationListener joinListener;
+    UnJoinNotificationListener unJoinNotificationListener;
+
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
@@ -75,6 +83,13 @@ public class MainAactivity extends Activity {
         actionBar.setDisplayUseLogoEnabled(false);
         getActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        joinListener = new JoinNotificationListener(this);
+
+        ModelSocketIo.getInstance().addMoodListener(joinListener);
+
+        unJoinNotificationListener = new UnJoinNotificationListener(this);
+        ModelSocketIo.getInstance().addUnJoinListener(unJoinNotificationListener);
+
 
 
         fragmentManager = getFragmentManager();
@@ -203,32 +218,6 @@ public class MainAactivity extends Activity {
         // Create New Tremp
         else if (position == 2)
         {
-            Intent intent4 = new Intent(this.getApplicationContext(), MainAactivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent4, PendingIntent.FLAG_UPDATE_CURRENT);
-              final int MY_NOTIFICATION_ID=1;
-            NotificationManager  notificationManager;
-            Notification myNotification;
-
-
-            Context context = getApplicationContext();
-
-
-            myNotification = new Notification.Builder(context)
-                    .setContentTitle("בקשת הצטרפות לטרמפ שלך")
-                    .setContentText("כנס לבדוק מי")
-                    .setTicker("Notification!")
-                    .setWhen(System.currentTimeMillis())
-                    .setContentIntent(contentIntent)
-                    .setDefaults(Notification.DEFAULT_SOUND)
-                    .setAutoCancel(true)
-                    .setSmallIcon(R.mipmap.h)
-                    .build();
-
-
-            notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
-
-
             Intent intent = new Intent(MainAactivity.this, CreateNewTrempActivity.class);
 
             startActivity(intent);

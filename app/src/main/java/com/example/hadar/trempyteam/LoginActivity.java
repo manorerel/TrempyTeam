@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hadar.trempyteam.Model.ModelRest;
+import com.example.hadar.trempyteam.Model.ModelSocketIo;
 import com.example.hadar.trempyteam.Model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -122,6 +123,9 @@ public class LoginActivity extends Activity {
 
         ModelRest modelRest = ModelRest.getInstance();
         modelRest.connectToServer(userId);
+
+        ModelSocketIo modelSocketIo = ModelSocketIo.getInstance();
+        modelSocketIo.connectToServer(userId);
     }
 
 
