@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.example.hadar.trempyteam.Model.Model;
 import com.example.hadar.trempyteam.Model.ModelFirebase;
+import com.example.hadar.trempyteam.Model.ModelRest;
 import com.example.hadar.trempyteam.Model.Tremp;
 import com.facebook.AccessToken;
 import com.facebook.login.widget.ProfilePictureView;
@@ -210,7 +211,7 @@ public class searchTrempFragment extends Fragment {
                     pd.show();
 
                     startActivity(intent);
-
+//                    ModelRest.getInstance().joinOrUnjoinTremp("59b6ba7fe585912cf891d84e", "10210930221645779", true);
 
                 }
             });
